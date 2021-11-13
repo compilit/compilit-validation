@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>solidcoding-validation</artifactId>
+  <groupId>org.solidcoding</groupId>
+  <version>1.0.0</version>
+
+  <dependencies>
+    <dependency>
+      <artifactId>assertj-core</artifactId>
+      <groupId>org.assertj</groupId>
+      <version>${assertj.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <version>${junit.jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <version>${junit.jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <properties>
+    <jdk.version>11</jdk.version>
+    <assertj.version>3.21.0</assertj.version>
+    <junit.jupiter.version>5.8.1</junit.jupiter.version>
+    <mockito.version>4.0.0</mockito.version>
+    <maven.compiler.source>${jdk.version}</maven.compiler.source>
+    <maven.compiler.target>${jdk.version}</maven.compiler.target>
+    <maven.compiler.version>3.8.1</maven.compiler.version>
+    <maven.surefire.plugin.version>3.0.0-M3</maven.surefire.plugin.version>
+  </properties>
+
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Harvey the Rabbit Apache Maven Packages</name>
+      <url>https://maven.pkg.github.com/harveytherabbit/solidcoding-validation</url>
+    </repository>
+  </distributionManagement>
+
+</project>
