@@ -46,7 +46,7 @@ class ValidatorTests {
     };
     Assertions.assertThat(Validator.makeSure(TEST_CONTENT)
                                    .compliesWith(rule)
-                                   .orElseThrow(RuntimeException::new)).isTrue();
+                                   .orElseThrow(new RuntimeException())).isTrue();
   }
 
   @Test
@@ -59,7 +59,7 @@ class ValidatorTests {
     };
     Assertions.assertThatThrownBy(() -> Validator.makeSure(TEST_CONTENT)
                                                  .compliesWith(rule)
-                                                 .orElseThrow(RuntimeException::new))
+                                                 .orElseThrow(new RuntimeException()))
               .isInstanceOf(RuntimeException.class);
   }
 

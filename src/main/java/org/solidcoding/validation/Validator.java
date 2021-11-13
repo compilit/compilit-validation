@@ -14,23 +14,40 @@ public final class Validator<T> {
     this.rules = new ArrayList<>();
   }
 
+  /**
+   * @param value the value on which to apply the rules.
+   * @param <T> the type of the value.
+   * @return a Validator to add rules to.
+   */
   public static <T> Validator<T> makeSure(T value) {
     return new Validator<>(value);
   }
 
+  /**
+   * @param rule the rule which the value needs to comply with.
+   * @return the Validator to add more rules.
+   */
   public Validator<T> compliesWith(Rule<T> rule) {
     rules.add(rule);
     return this;
   }
 
+  /**
+   * @return true if all rules pass.
+   */
   public boolean validate() {
     return rules.stream().allMatch(x -> x.validate(value));
   }
 
-  public <E extends RuntimeException> boolean orElseThrow(Supplier<E> runnable) {
+  /**
+   * @param throwable the Exception that needs to be thrown when a rule is broken.
+   * @param <E> the bound of the Exception that needs to be thrown when a rule is broken.
+   * @return true if all rules pass.
+   */
+  public <E extends RuntimeException> boolean orElseThrow(E throwable) {
     var isValid = validate();
     if (!isValid) {
-      throw runnable.get();
+      throw throwable;
     }
     return true;
   }
