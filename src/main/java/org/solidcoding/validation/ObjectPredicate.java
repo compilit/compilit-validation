@@ -24,6 +24,15 @@ public class ObjectPredicate<T> implements Predicate<T> {
   }
 
   /**
+   * @param clazz the class of the object to validate. This is only a compiler flag.
+   * @param <T> the type upon which the validations are tested.
+   * @return ObjectPredicate to continue adding rules.
+   */
+  public static <T> ObjectPredicate<T> beAn(Class<T> clazz) {
+    return beA(clazz);
+  }
+
+  /**
    * @param rule the custom predicate to test against the T.
    * @return ObjectPredicate to continue adding rules.
    */
