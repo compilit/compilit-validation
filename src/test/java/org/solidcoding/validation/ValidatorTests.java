@@ -2,6 +2,7 @@ package org.solidcoding.validation;
 
 import static org.solidcoding.validation.testutil.TestValue.TEST_CONTENT;
 
+import java.util.function.Predicate;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,9 +15,9 @@ class ValidatorTests {
 
   @Test
   void compliesWith_validInput_shouldReturnValidator() {
-    var rule = new Rule<String>() {
+    var rule = new Predicate<String>() {
       @Override
-      public boolean validate(String value) {
+      public boolean test(String value) {
         return true;
       }
     };
@@ -26,9 +27,9 @@ class ValidatorTests {
 
   @Test
   void compliesWith_invalidInput_shouldReturnValidator() {
-    var rule = new Rule<String>() {
+    var rule = new Predicate<String>() {
       @Override
-      public boolean validate(String value) {
+      public boolean test(String value) {
         return false;
       }
     };
@@ -38,9 +39,9 @@ class ValidatorTests {
 
   @Test
   void orElse_validInput_shouldReturnTrue() {
-    var rule = new Rule<String>() {
+    var rule = new Predicate<String>() {
       @Override
-      public boolean validate(String value) {
+      public boolean test(String value) {
         return true;
       }
     };
@@ -51,9 +52,9 @@ class ValidatorTests {
 
   @Test
   void orElse_invalidInput_shouldThrowGivenAException() {
-    var rule = new Rule<String>() {
+    var rule = new Predicate<String>() {
       @Override
-      public boolean validate(String value) {
+      public boolean test(String value) {
         return false;
       }
     };

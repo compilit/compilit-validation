@@ -9,7 +9,7 @@ public class StringPredicate implements Predicate<String> {
 
   public List<Predicate<String>> rules = new ArrayList<>();
 
-  private StringPredicate() {}
+  StringPredicate() {}
 
   private StringPredicate(Predicate<String> rule) {
     this.rules.add(rule);
@@ -19,14 +19,6 @@ public class StringPredicate implements Predicate<String> {
   private StringPredicate(Predicate<String>... rules) {
     Objects.requireNonNull(rules);
     this.rules.addAll(List.of(rules));
-  }
-
-  /**
-   * @param characters the character sequence that needs to be present in the String.
-   * @return StringPredicate to continue adding rules.
-   */
-  public StringPredicate containing(CharSequence characters) {
-    return new StringPredicate(x -> x.contains(characters));
   }
 
   /**
@@ -62,6 +54,7 @@ public class StringPredicate implements Predicate<String> {
 
   /**
    * Adds a check if all characters are in fact digits.
+   *
    * @return StringPredicate to continue adding rules.
    */
   public static StringPredicate beNumeric() {
@@ -70,6 +63,7 @@ public class StringPredicate implements Predicate<String> {
 
   /**
    * Adds a check if all characters are in fact digits.
+   *
    * @param amountOfDigits the expected amount of digits.
    * @return StringPredicate to continue adding rules.
    */
@@ -80,6 +74,7 @@ public class StringPredicate implements Predicate<String> {
 
   /**
    * Adds a check if all characters are in fact digits.
+   *
    * @return StringPredicate to continue adding rules.
    */
   public static StringPredicate beAlphabetic() {
@@ -88,12 +83,36 @@ public class StringPredicate implements Predicate<String> {
 
   /**
    * Adds a check if all characters are in fact letters.
+   *
    * @param amountOfLetters the expected amount of letters.
    * @return StringPredicate to continue adding rules.
    */
   public static StringPredicate beAlphabetic(int amountOfLetters) {
     return new StringPredicate(x -> x.chars().allMatch(Character::isAlphabetic),
                                x -> x.length() == amountOfLetters);
+  }
+
+  /**
+   * @param charSequence  the character sequence that needs to be present in the String.
+   * @param charSequences the optional extra character sequences that need to be present in the
+   *                      String.
+   * @return StringPredicate to continue adding rules.
+   */
+  public StringPredicate containing(CharSequence charSequence, CharSequence... charSequences) {
+    rules.add(x -> x.contains(charSequence));
+    for (var c : charSequences) {
+      rules.add(x -> x.contains(c));
+    }
+    return this;
+  }
+
+  /**
+   * @param first first of the constraints. Can be either the high constraint or the low
+   *              constraint.
+   * @return StringLengthPredicate to continue statement.
+   */
+  public StringLengthPredicate withLengthBetween(int first) {
+    return new StringLengthPredicate(first, this);
   }
 
   /**

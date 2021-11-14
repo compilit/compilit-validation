@@ -2,7 +2,7 @@ package org.solidcoding.validation;
 
 import java.util.function.Predicate;
 
-class BusinessRule<T> implements Rule<T> {
+class BusinessRule<T> implements Predicate<T> {
 
   private final Predicate<T> rule;
 
@@ -11,7 +11,7 @@ class BusinessRule<T> implements Rule<T> {
   }
 
   @Override
-  public boolean validate(T value) {
+  public boolean test(T value) {
     return rule.test(value);
   }
 
