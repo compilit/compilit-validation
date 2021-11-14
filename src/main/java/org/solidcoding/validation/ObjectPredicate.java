@@ -25,7 +25,7 @@ public class ObjectPredicate<T> implements Predicate<T> {
 
   /**
    * @param rule the custom predicate to test against the T.
-   * @return TPredicate to continue adding rules.
+   * @return ObjectPredicate to continue adding rules.
    */
   public ObjectPredicate<T> that(Predicate<T> rule) {
     return new ObjectPredicate<>(rule);
