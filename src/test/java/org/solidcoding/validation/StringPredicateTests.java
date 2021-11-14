@@ -34,10 +34,12 @@ class StringPredicateTests {
     var rule2 = DefineThat.itShould(beAStringWithLength(40).containing("54353"));
     var rule3 = DefineThat.itShould(beAString(with -> with.length() == 40));
     var rule4 = DefineThat.itShould(beNumeric());
+    var rule5 = DefineThat.itShould(beAlphabetic());
     Assertions.assertThat(Validator.makeSure(value).compliesWith(rule0).validate()).isFalse();
     Assertions.assertThat(Validator.makeSure(value).compliesWith(rule1).validate()).isFalse();
     Assertions.assertThat(Validator.makeSure(value).compliesWith(rule2).validate()).isFalse();
     Assertions.assertThat(Validator.makeSure(value).compliesWith(rule3).validate()).isFalse();
     Assertions.assertThat(Validator.makeSure(value).compliesWith(rule4).validate()).isFalse();
+    Assertions.assertThat(Validator.makeSure("123465").compliesWith(rule5).validate()).isFalse();
   }
 }
