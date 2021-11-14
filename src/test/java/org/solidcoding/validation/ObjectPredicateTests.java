@@ -5,6 +5,7 @@ import static org.solidcoding.validation.ObjectPredicate.beAn;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.solidcoding.validation.testutil.TestObject;
 
 class ObjectPredicateTests {
 
@@ -19,5 +20,20 @@ class ObjectPredicateTests {
     var actualObject = new Object();
     var rule = DefineThat.itShould(beAn(Object.class).that(x -> x.equals(actualObject)));
     Assertions.assertThat(Validator.makeSure(actualObject).compliesWith(rule).validate()).isTrue();
+  }
+
+  @Test
+  void beA_TestObjectWithoutValues_shouldReturnTrue() {
+    var actualObject = new TestObject();
+    actualObject.add("test");
+    var rule = DefineThat.itShould(beA(TestObject.class).that(x -> x.hasValues()));
+    Assertions.assertThat(Validator.makeSure(actualObject).compliesWith(rule).validate()).isTrue();
+  }
+
+  @Test
+  void beA_TestObjectWithValues_shouldReturnFalse() {
+    var actualObject = new TestObject();
+    var rule = DefineThat.itShould(beA(TestObject.class).that(x -> x.hasValues()));
+    Assertions.assertThat(Validator.makeSure(actualObject).compliesWith(rule).validate()).isFalse();
   }
 }
