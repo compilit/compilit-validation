@@ -21,17 +21,17 @@ Validator class.
 First define a rule (another Predicate) using the DefineThat entrypoint for the fluent API:
 
 ```
-    var rule = DefineThat.itShould(beAString("test")); //for String
+    var rule = DefineThat.itShould(beAString("test")); //for strings
 
-    var rule = DefineThat.itShould(beAString("test")); //for String
+    var rule = DefineThat.itShould(beAString("test")); //for strings
 
-    var rule = DefineThat.itShould(beAString().containing("test")); //for String
+    var rule = DefineThat.itShould(beAString().containing("test")); //for strings
 
-    var rule = DefineThat.itShould(beAStringWithLength(4).containing("t")); //for String
+    var rule = DefineThat.itShould(beAStringWithLength(4).containing("t")); //for strings
 
-    var rule = DefineThat.itShould(beAString(with -> with.length() == 4)); //for String
+    var rule = DefineThat.itShould(beAString(with -> with.length() == 4)); //for strings
 
-    var rule = DefineThat.itShould(beAlphabetic()); //for String
+    var rule = DefineThat.itShould(beAlphabetic()); //for strings
 
     var rule = DefineThat.itShould(beANumber(2)); //for integers
 
