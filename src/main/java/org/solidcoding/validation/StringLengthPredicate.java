@@ -1,11 +1,11 @@
 package org.solidcoding.validation;
 
-public final class StringLengthPredicate {
+class StringLengthPredicate implements ChainingPredicate<Integer, StringPredicate> {
 
   private final StringPredicate originalPredicate;
   private final int first;
 
-  StringLengthPredicate(int first, StringPredicate originalPredicate) {
+  StringLengthPredicate(Integer first, StringPredicate originalPredicate) {
     this.first = first;
     this.originalPredicate = originalPredicate;
   }
@@ -15,7 +15,7 @@ public final class StringLengthPredicate {
    *               constraint.
    * @return StringPredicate to continue adding rules.
    */
-  public StringPredicate and(int second) {
+  public StringPredicate and(Integer second) {
     if (second > first) {
       originalPredicate.rules.add(x -> x.length() <= second && x.length() >= first);
     } else {

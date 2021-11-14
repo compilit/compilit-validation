@@ -116,6 +116,15 @@ public class StringPredicate implements Predicate<String> {
   }
 
   /**
+   * @param rule the custom predicate to test against the String.
+   * @return StringLengthPredicate to continue adding rules.
+   */
+  public StringPredicate that(Predicate<String> rule) {
+    rules.add(rule);
+    return this;
+  }
+
+  /**
    * @param value check the given value against all specified rules
    * @return true when all checks pass.
    */

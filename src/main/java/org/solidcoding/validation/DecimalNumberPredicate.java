@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class DecimalNumberPredicate implements Predicate<Double> {
+class DecimalNumberPredicate implements Predicate<Double> {
 
   public List<Predicate<Double>> rules = new ArrayList<>();
 

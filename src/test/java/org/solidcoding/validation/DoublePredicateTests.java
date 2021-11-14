@@ -24,7 +24,7 @@ class DoublePredicateTests {
   void itShould_doubleNotMatchingRule_shouldReturnFalse() {
     var value = .2;
     var rule0 = DefineThat.itShould(beADecimalNumber(1));
-    var rule1 = DefineThat.itShould(beADecimalNumber().between(5).and(50));
+    var rule1 = DefineThat.itShould(beADecimalNumber().between(5).and(.55));
     var rule3 = DefineThat.itShould(beADecimalNumber(that -> that.equals(.5435)));
     Assertions.assertThat(Validator.makeSure(value).compliesWith(rule0).validate()).isFalse();
     Assertions.assertThat(Validator.makeSure(value).compliesWith(rule1).validate()).isFalse();

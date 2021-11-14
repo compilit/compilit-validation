@@ -51,23 +51,30 @@ First define a rule (another Predicate) using the DefineThat entrypoint for the 
 Then validate the rule (returning a boolean):
 
 ```
-    Validator.makeSure("test").compliesWith(rule).validate();
+    var result = Validator.makeSure("test").compliesWith(rule).validate();
 ```
 
-Or define what Exception should be thrown if a rule is broken:
+Or define what Exception should be thrown if a rule is broken (otherwise also returning a boolean):
 
 ```
-    Validator.makeSure("test").compliesWith(rule).orElseThrow(new RuntimeException("whoops!));
+    var result = Validator.makeSure("test").compliesWith(rule).orElseThrow(new RuntimeException("whoops!));
 ```
 
 You can also chain multiple rules for one value:
 
 ```
-    Validator.makeSure("test")
+    var result = Validator.makeSure("test")
         .compliesWith(rule1)
         .compliesWith(rule2)
         .orElseThrow(new RuntimeException("whoops!));
 ```
 
-Currently, the package offers String Predicates and Integer Predicates. More will be added in the
+Or pass a list of rules:
+```
+    var result = Validator.makeSure("test")
+        .compliesWith(ruleList)
+        .orElseThrow(new RuntimeException("whoops!));
+```
+
+Currently, the package offers string Predicates, number Predicates, decimal number predicates and custom object predicates. More will likely be added in the
 future.

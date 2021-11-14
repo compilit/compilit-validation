@@ -1,11 +1,11 @@
 package org.solidcoding.validation;
 
-public final class NumberConstraintPredicate {
+class NumberConstraintPredicate implements ChainingPredicate<Integer, NumberPredicate> {
 
   private final NumberPredicate originalPredicate;
   private final int first;
 
-  NumberConstraintPredicate(int first, NumberPredicate originalPredicate) {
+  NumberConstraintPredicate(Integer first, NumberPredicate originalPredicate) {
     this.first = first;
     this.originalPredicate = originalPredicate;
   }
@@ -15,7 +15,7 @@ public final class NumberConstraintPredicate {
    *               constraint.
    * @return IntegerPredicate to continue adding rules.
    */
-  public NumberPredicate and(int second) {
+  public NumberPredicate and(Integer second) {
     if (second > first) {
       originalPredicate.rules.add(x -> x <= second && x >= first);
     } else {
