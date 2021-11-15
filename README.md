@@ -76,5 +76,13 @@ Or pass a list of rules:
         .orElseThrow(new RuntimeException("whoops!));
 ```
 
+Finally, after validating, it's also possible to chain a process by passing a supplier. Because it returns an actual value, the orElse clause is required to finish the statement:
+```
+    return Validator.makeSure("test")
+        .compliesWith(rule)
+        .andThen(() -> someAction())
+        .orElseThrow(new RuntimeException("whoops!));
+```
+
 Currently, the package offers string Predicates, number Predicates, decimal number predicates and custom object predicates. More will likely be added in the
 future.
