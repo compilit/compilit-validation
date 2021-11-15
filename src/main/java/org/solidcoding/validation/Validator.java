@@ -2,6 +2,7 @@ package org.solidcoding.validation;
 
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public interface Validator<T> {
 
@@ -30,6 +31,12 @@ public interface Validator<T> {
    * @return boolean true if all rules pass. False if at least one rule fails.
    */
   boolean validate();
+
+  /**
+   * Same as validate(); but returns a custom object in the form of a supplier;
+   * @return R in the form of a supplier.
+   */
+  <R> ReturningValidator<R> andThen(Supplier<R> supplier);
 
   /**
    * @param throwable the Exception that needs to be thrown when a rule is broken.

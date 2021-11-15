@@ -3,6 +3,7 @@ package org.solidcoding.validation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 class BusinessRuleValidator<T> implements Validator<T> {
 
@@ -38,6 +39,14 @@ class BusinessRuleValidator<T> implements Validator<T> {
   @Override
   public boolean validate() {
     return rules.stream().allMatch(x -> x.test(value));
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public <R> ReturningValidator<R> andThen(Supplier<R> supplier) {
+      return new EndingValidator<>(supplier, this);
   }
 
   /**

@@ -6,6 +6,7 @@ import static org.solidcoding.validation.StringPredicate.beAlphabetic;
 import static org.solidcoding.validation.StringPredicate.beNumeric;
 import static org.solidcoding.validation.testutil.TestValue.TEST_CONTENT;
 
+import java.util.function.Supplier;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +25,14 @@ class StringPredicateTests {
     Assertions.assertThat(Validator.makeSure(value).compliesWith(rule2).validate()).isTrue();
     Assertions.assertThat(Validator.makeSure(value).compliesWith(rule3).validate()).isTrue();
     Assertions.assertThat(Validator.makeSure(value).compliesWith(rule4).validate()).isTrue();
+  }
+
+  @Test
+  void andThen_stringMatchingRule_shouldReturnWantedObject() {
+    var value = TEST_CONTENT;
+    var rule0 = DefineThat.itShould(beAString("test"));
+    Supplier<String> supplier = () -> value;
+    Assertions.assertThat(Validator.makeSure(value).compliesWith(rule0).andThen(supplier).orElseThrow(new RuntimeException())).isEqualTo(value);
   }
 
   @Test
