@@ -12,13 +12,19 @@ public class EndingValidator<T, R> implements ReturningValidator<R> {
     this.businessRuleValidator = businessRuleValidator;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   public <E extends RuntimeException> R orElseThrow(E throwable) {
     var isValid = businessRuleValidator.validate();
     if (!isValid) {
       throw throwable;
+    }
+    return supplier.get();
+  }
+
+  @Override
+  public R orElseReturn(R other) {
+    var isValid = businessRuleValidator.validate();
+    if (!isValid) {
+      return other;
     }
     return supplier.get();
   }

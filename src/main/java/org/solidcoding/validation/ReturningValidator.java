@@ -8,4 +8,10 @@ public interface ReturningValidator<R> {
    * @return R the return type
    */
   <E extends RuntimeException> R orElseThrow(E throwable);
+
+  /**
+   * @param other the backup/default return type if the validation fails.
+   * @return R the return type.
+   */
+  R orElseReturn(R other);
 }
