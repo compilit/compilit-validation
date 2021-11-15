@@ -1,6 +1,6 @@
 package org.solidcoding.validation;
 
-class DecimalNumberConstraintPredicate implements ChainingPredicate<Double, DecimalNumberPredicate> {
+final class DecimalNumberConstraintPredicate implements ChainingPredicate<Double, DecimalNumberPredicate> {
 
   private final DecimalNumberPredicate originalPredicate;
   private final double first;

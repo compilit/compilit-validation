@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class ObjectPredicate<T> implements Predicate<T> {
+public final class ObjectPredicate<T> implements Predicate<T> {
 
-  public List<Predicate<T>> rules = new ArrayList<>();
+  List<Predicate<T>> rules = new ArrayList<>();
 
   private ObjectPredicate() {}
 

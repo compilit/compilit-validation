@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 
 public class StringPredicate implements Predicate<String> {
 
-  public List<Predicate<String>> rules = new ArrayList<>();
+  List<Predicate<String>> rules = new ArrayList<>();
 
   StringPredicate() {}
 

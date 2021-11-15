@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class NumberPredicate implements Predicate<Integer> {
+public final class NumberPredicate implements Predicate<Integer> {
 
-  public List<Predicate<Integer>> rules = new ArrayList<>();
+  List<Predicate<Integer>> rules = new ArrayList<>();
 
   private NumberPredicate() {}
 
