@@ -31,9 +31,11 @@ class ObjectPredicateTests {
   }
 
   @Test
-  void beA_TestObjectWithValues_shouldReturnFalse() {
+  void beA_TestObjectWithValues_shouldReturnOtherValue() {
     var actualObject = new TestObject();
+    var otherObject = new TestObject();
     var rule = DefineThat.itShould(beA(TestObject.class).that(x -> x.hasValues()));
-    Assertions.assertThat(Validator.makeSure(actualObject).compliesWith(rule).validate()).isFalse();
+    Assertions.assertThat(Validator.makeSure(actualObject).compliesWith(rule).orElseReturn(otherObject)).isEqualTo(otherObject);
+    Assertions.assertThat(Validator.makeSure(actualObject).compliesWith(rule).orElseReturn(otherObject)).isNotEqualTo(actualObject);
   }
 }

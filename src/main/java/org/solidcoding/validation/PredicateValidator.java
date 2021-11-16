@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-class BusinessRuleValidator<T> implements Validator<T> {
+class PredicateValidator<T> implements Validator<T> {
 
   private final T value;
   private final List<Predicate<T>> rules;
 
-  BusinessRuleValidator(T value) {
+  PredicateValidator(T value) {
     this.value = value;
     this.rules = new ArrayList<>();
   }
@@ -44,6 +44,15 @@ class BusinessRuleValidator<T> implements Validator<T> {
       throw throwable;
     }
     return true;
+  }
+
+  @Override
+  public T orElseReturn(T objectToReturn) {
+    var isValid = validate();
+    if (!isValid) {
+      return objectToReturn;
+    }
+    return value;
   }
 
 }

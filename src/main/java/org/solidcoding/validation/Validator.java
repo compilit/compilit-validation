@@ -12,7 +12,7 @@ public interface Validator<T> {
    * @return a Validator to add rules to.
    */
   static <T> Validator<T> makeSure(T value) {
-    return new BusinessRuleValidator<>(value);
+    return new PredicateValidator<>(value);
   }
 
   /**
@@ -34,6 +34,7 @@ public interface Validator<T> {
 
   /**
    * Same as validate(); but returns a custom object in the form of a supplier;
+   *
    * @return R in the form of a supplier.
    */
   <R> ReturningValidator<R> andThen(Supplier<R> supplier);
@@ -44,4 +45,11 @@ public interface Validator<T> {
    * @return true if all rules pass.
    */
   <E extends RuntimeException> boolean orElseThrow(E throwable);
+
+
+  /**
+   * @param objectToReturn the object you wish to return.
+   * @return T
+   */
+  T orElseReturn(T objectToReturn);
 }

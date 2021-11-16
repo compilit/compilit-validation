@@ -36,6 +36,16 @@ class StringPredicateTests {
   }
 
   @Test
+  void andThen_stringNotMatchingRule_shouldReturnOtherObject() {
+    var value = TEST_CONTENT;
+    var otherValue = TEST_CONTENT + TEST_CONTENT;
+    var rule0 = DefineThat.itShould(beAString("blah"));
+    Supplier<String> supplier = () -> value;
+    Assertions.assertThat(Validator.makeSure(value).compliesWith(rule0).andThen(supplier).orElseReturn(otherValue)).isEqualTo(otherValue);
+    Assertions.assertThat(Validator.makeSure(value).compliesWith(rule0).andThen(supplier).orElseReturn(otherValue)).isNotEqualTo(value);
+  }
+
+  @Test
   void itShould_stringNotMatchingRule_shouldReturnFalse() {
     var value = TEST_CONTENT;
     var rule0 = DefineThat.itShould(beAString(""));

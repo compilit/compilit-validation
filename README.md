@@ -86,3 +86,15 @@ Finally, after validating, it's also possible to chain a process by passing a su
 
 Currently, the package offers string Predicates, number Predicates, decimal number predicates and custom object predicates. More will likely be added in the
 future.
+
+# Custom Predicate<T> implementations
+The "that", "and" and "itShouldBe" methods invite you to implement your own Predicates in the following way:
+```
+var rule = DefineThat.itShould(beAString("test").that(followsThisWeirdPattern());
+
+private Predicate<String> followsThisWeirdPattern() {
+  return input -> {
+    (...something something input something...)
+  };
+}
+```
