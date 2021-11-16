@@ -23,8 +23,6 @@ First define a rule (another Predicate) using the DefineThat entrypoint for the 
 ```
     var rule = DefineThat.itShould(beAString("test")); //for strings
 
-    var rule = DefineThat.itShould(beAString("test")); //for strings
-
     var rule = DefineThat.itShould(beAString().containing("test")); //for strings
 
     var rule = DefineThat.itShould(beAStringWithLength(4).containing("t")); //for strings
