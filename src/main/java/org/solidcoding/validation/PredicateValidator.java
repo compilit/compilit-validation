@@ -10,12 +10,10 @@ class PredicateValidator<T> implements Validator<T> {
  
   private String message = "Nothing to report";
   private final T value;
-  private final List<Predicate<T>> rules;
   private final List<Rule<T>> ruleDefinitions;
 
   PredicateValidator(T value) {
     this.value = value;
-    this.rules = new ArrayList<>();
     this.ruleDefinitions = new ArrayList<>();
   }
 
@@ -26,7 +24,7 @@ class PredicateValidator<T> implements Validator<T> {
 
   @Override
   public Validator<T> compliesWith(Predicate<T> rule) {
-    rules.add(rule);
+    ruleDefinitions.add(new RuleDefinition<>(rule, message));
     return this;
   }
 
@@ -38,7 +36,7 @@ class PredicateValidator<T> implements Validator<T> {
 
   @Override
   public Validator<T> compliesWith(List<Predicate<T>> rules) {
-    this.rules.addAll(rules);
+    rules.forEach(x -> ruleDefinitions.add(new RuleDefinition<>(x, message)));
     return this;
   }
 
@@ -75,8 +73,8 @@ class PredicateValidator<T> implements Validator<T> {
     }
     return value;
   }
- 
-   @Override
+
+  @Override
   public T orElseReturn(Function<String, T> other) {
     var isValid = validate();
     var message = getMessage();
