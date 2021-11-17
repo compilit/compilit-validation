@@ -75,4 +75,14 @@ class PredicateValidator<T> implements Validator<T> {
     }
     return value;
   }
+ 
+   @Override
+  public T orElseReturn(Function<String, T> other) {
+    var isValid = validate();
+    var message = getMessage();
+    if (!isValid) {
+      return other.apply(message);
+    }
+    return value;
+  }
 }
