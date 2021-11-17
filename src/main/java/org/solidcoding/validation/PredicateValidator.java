@@ -7,17 +7,32 @@ import java.util.function.Supplier;
 
 class PredicateValidator<T> implements Validator<T> {
 
+ 
+  private String message = "Nothing to report";
   private final T value;
   private final List<Predicate<T>> rules;
+  private final List<Rule<T>> ruleDefinitions;
 
   PredicateValidator(T value) {
     this.value = value;
     this.rules = new ArrayList<>();
+    this.ruleDefinitions = new ArrayList<>();
+  }
+
+  @Override
+  public String getMessage() {
+    return message;
   }
 
   @Override
   public Validator<T> compliesWith(Predicate<T> rule) {
     rules.add(rule);
+    return this;
+  }
+
+  @Override
+  public Validator<T> compliesWith(Predicate<T> rule, String failMessage) {
+    ruleDefinitions.add(new RuleDefinition<>(rule, failMessage));
     return this;
   }
 
@@ -29,12 +44,18 @@ class PredicateValidator<T> implements Validator<T> {
 
   @Override
   public boolean validate() {
-    return rules.stream().allMatch(x -> x.test(value));
+    for (var ruleDefinition : ruleDefinitions) {
+      if (!ruleDefinition.getPredicate().test(value)) {
+        message = ruleDefinition.getMessage();
+        return false;
+      }
+    }
+    return true;
   }
 
   @Override
   public <R> ReturningValidator<R> andThen(Supplier<R> supplier) {
-      return new EndingValidator<>(supplier, this);
+    return new EndingValidator<>(supplier, this);
   }
 
   @Override
@@ -47,12 +68,11 @@ class PredicateValidator<T> implements Validator<T> {
   }
 
   @Override
-  public T orElseReturn(T objectToReturn) {
+  public T orElseReturn(T other) {
     var isValid = validate();
     if (!isValid) {
-      return objectToReturn;
+      return other;
     }
     return value;
   }
-
 }
