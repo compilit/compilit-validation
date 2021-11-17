@@ -2,12 +2,12 @@ package org.solidcoding.validation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 class PredicateValidator<T> implements Validator<T> {
 
- 
   private String message = "Nothing to report";
   private final T value;
   private final List<Rule<T>> ruleDefinitions;
@@ -15,11 +15,6 @@ class PredicateValidator<T> implements Validator<T> {
   PredicateValidator(T value) {
     this.value = value;
     this.ruleDefinitions = new ArrayList<>();
-  }
-
-  @Override
-  public String getMessage() {
-    return message;
   }
 
   @Override
@@ -43,8 +38,8 @@ class PredicateValidator<T> implements Validator<T> {
   @Override
   public boolean validate() {
     for (var ruleDefinition : ruleDefinitions) {
-      if (!ruleDefinition.getPredicate().test(value)) {
-        message = ruleDefinition.getMessage();
+      if (!ruleDefinition.test(value)) {
+        message = ruleDefinition.getFailMessage();
         return false;
       }
     }
@@ -77,10 +72,11 @@ class PredicateValidator<T> implements Validator<T> {
   @Override
   public T orElseReturn(Function<String, T> other) {
     var isValid = validate();
-    var message = getMessage();
+    var message = this.message;
     if (!isValid) {
       return other.apply(message);
     }
     return value;
   }
+
 }

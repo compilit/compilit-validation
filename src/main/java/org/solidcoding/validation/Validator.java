@@ -1,11 +1,11 @@
 package org.solidcoding.validation;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public interface Validator<T> {
-  String getMessage();
   /**
    * @param value the value on which to apply the rules.
    * @param <T> the type of the value.

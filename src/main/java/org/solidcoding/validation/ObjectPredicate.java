@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 
 public final class ObjectPredicate<T> implements Predicate<T> {
 
-  List<Predicate<T>> rules = new ArrayList<>();
+  private final List<Predicate<T>> rules = new ArrayList<>();
 
   private ObjectPredicate() {}
 
@@ -15,7 +15,7 @@ public final class ObjectPredicate<T> implements Predicate<T> {
   }
 
   /**
-   * @param clazz the class of the object to validate. This is only a compiler flag.
+   * @param clazz the class of the object to validate. This is only a compiler flag to treat T as its instance.
    * @param <T> the type upon which the validations are tested.
    * @return ObjectPredicate to continue adding rules.
    */
@@ -24,7 +24,7 @@ public final class ObjectPredicate<T> implements Predicate<T> {
   }
 
   /**
-   * @param clazz the class of the object to validate. This is only a compiler flag.
+   * @param clazz the class of the object to validate. This is only a compiler flag to treat T as its instance.
    * @param <T> the type upon which the validations are tested.
    * @return ObjectPredicate to continue adding rules.
    */
