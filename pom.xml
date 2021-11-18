@@ -3,6 +3,14 @@
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
+  <artifactId>solidcoding-validation</artifactId>
+  <groupId>org.solidcoding</groupId>
+  <version>1.0.0</version>
+
+  <name>Solidcoding validation</name>
+  <description>A small package that enables validation of (business) rules through a fluent API.</description>
+  <url>https://github.com/harveytherabbit/solidcoding-validation</url>
+
   <dependencies>
     <dependency>
       <artifactId>assertj-core</artifactId>
@@ -26,11 +34,11 @@
   <distributionManagement>
     <snapshotRepository>
       <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
     <repository>
       <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
   </distributionManagement>
   <modelVersion>4.0.0</modelVersion>
@@ -46,13 +54,9 @@
     <maven-scm-provider-gitexe.version>1.9.5</maven-scm-provider-gitexe.version>
     <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
     <maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
-    <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+    <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
     <nexus-staging-maven-plugin.version>1.6.7</nexus-staging-maven-plugin.version>
   </properties>
-
-  <artifactId>solidcoding-validation</artifactId>
-  <groupId>org.solidcoding</groupId>
-  <version>1.0.0</version>
 
   <licenses>
     <license>
@@ -63,7 +67,7 @@
 
   <developers>
     <developer>
-      <id>harveytherabbit</id>
+      <id>HarveyTheRabbit</id>
       <name>Bastiën Bonsel</name>
       <email>harvey.rabbit@protonmail.com</email>
     </developer>
@@ -78,6 +82,7 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-deploy-plugin</artifactId>
         <version>${maven-deploy-plugin.version}</version>
         <executions>
@@ -115,7 +120,7 @@
         <extensions>true</extensions>
         <configuration>
           <serverId>ossrh</serverId>
-          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
           <autoReleaseAfterClose>true</autoReleaseAfterClose>
         </configuration>
       </plugin>
@@ -179,6 +184,10 @@
                 <goals>
                   <goal>sign</goal>
                 </goals>
+                <configuration>
+                  <keyname>${gpg.keyname}</keyname>
+                  <passphraseServerId>${gpg.keyname}</passphraseServerId>
+                </configuration>
               </execution>
             </executions>
           </plugin>

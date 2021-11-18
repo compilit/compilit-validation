@@ -38,8 +38,10 @@ public interface Validator<T> {
   boolean validate();
 
   /**
-   * Same as validate(); but returns a custom object in the form of a supplier;
+   * Same as validate(); but returns a custom object in the form of a supplier.
    *
+   * @param supplier the supplier which encapsulated the return type.
+   * @param <R> the type you wish to return.
    * @return R in the form of a supplier.
    */
   <R> ReturningValidator<R> andThen(Supplier<R> supplier);
