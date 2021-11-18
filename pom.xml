@@ -162,7 +162,6 @@
     </plugins>
   </build>
   <profiles>
-    <!-- GPG Signature on release -->
     <profile>
       <id>release-sign-artifacts</id>
       <activation>
