@@ -4,14 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestObject {
-  private final List<String> testList = new ArrayList<>();
 
-   public void add(String value) {
-     testList.add(value);
-   }
+    private final String message;
 
-   public boolean hasValues() {
-     return !testList.isEmpty();
-   }
+    private final List<String> testList = new ArrayList<>();
 
+    public void add(String value) {
+        testList.add(value);
+    }
+
+    public boolean hasValues() {
+        return !testList.isEmpty();
+    }
+
+    public TestObject() {
+        this.message = "Nothing to report";
+    }
+
+    public TestObject(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }

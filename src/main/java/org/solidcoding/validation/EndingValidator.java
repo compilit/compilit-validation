@@ -1,5 +1,6 @@
 package org.solidcoding.validation;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class EndingValidator<T, R> implements ReturningValidator<R> {
@@ -25,6 +26,16 @@ public class EndingValidator<T, R> implements ReturningValidator<R> {
     var isValid = businessRuleValidator.validate();
     if (!isValid) {
       return other;
+    }
+    return supplier.get();
+  }
+
+  @Override
+  public R orElseReturn(Function<String, R> other) {
+    var isValid = businessRuleValidator.validate();
+    var message = businessRuleValidator.getMessage();
+    if (!isValid) {
+      return other.apply(message);
     }
     return supplier.get();
   }

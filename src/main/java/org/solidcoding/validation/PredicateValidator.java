@@ -18,6 +18,11 @@ class PredicateValidator<T> implements Validator<T> {
   }
 
   @Override
+  public String getMessage() {
+    return message;
+  }
+
+  @Override
   public Validator<T> compliesWith(Predicate<T> rule) {
     ruleDefinitions.add(new RuleDefinition<>(rule, message));
     return this;

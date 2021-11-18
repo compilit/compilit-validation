@@ -5,7 +5,7 @@
 
   <artifactId>solidcoding-validation</artifactId>
   <groupId>org.solidcoding</groupId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 
   <name>Solidcoding validation</name>
   <description>A small package that enables validation of (business) rules through a fluent API.</description>

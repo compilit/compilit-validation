@@ -6,6 +6,12 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public interface Validator<T> {
+
+  /**
+   * @return the optional failure message;
+   */
+  String getMessage();
+
   /**
    * @param value the value on which to apply the rules.
    * @param <T> the type of the value.
@@ -61,7 +67,7 @@ public interface Validator<T> {
 
   /**
    * @param other the backup/default return type if the validation fails with the optional message that is contained in the Validator.
-   * @return R the return type.
+   * @return T the return type.
    */
   T orElseReturn(Function<String, T> other);
 }
