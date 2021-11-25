@@ -30,9 +30,10 @@ public interface Validator<T> {
   /**
    * @param rule the rule which the value needs to comply with.
    * @param failMessage the message to propagate to the client when breaking the rule.
+   * @param formatArguments the message arguments you with to replace the '%s' symbol with.
    * @return the Validator to add more rules.
    */
-  Validator<T> compliesWith(Predicate<T> rule, String failMessage);
+  Validator<T> compliesWith(Predicate<T> rule, String failMessage, String... formatArguments);
 
   /**
    * @param rules the rules which the value needs to comply with.

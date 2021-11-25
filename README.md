@@ -16,7 +16,15 @@ Get this dependency with the latest version
 # Usage
 
 The package offers a set of Predicates to define business rules that can be validated through the
-Validator class.
+Validator class. It should be noted that no validation will be taking place until requested by the validate() or the orElse*() methods.
+Requesting the failMessage before validation has taken place will always result in a placeholder message like "Nothing to report".
+If you would like to get the failMessage of a validation. You could do it like this:
+
+```
+    var validator = Validator.makeSure(value);
+    validator.compliesWith(rule, ruleFailMessage, value).validate();
+    var actual = validator.getMessage();
+```
 
 First define a rule (another Predicate) using the DefineThat entrypoint for the fluent API:
 

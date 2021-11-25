@@ -29,7 +29,12 @@ class PredicateValidator<T> implements Validator<T> {
   }
 
   @Override
-  public Validator<T> compliesWith(Predicate<T> rule, String failMessage) {
+  public Validator<T> compliesWith(Predicate<T> rule, String failMessage, String... formatArguments) {
+    if (formatArguments != null) {
+      var actualMessage = String.format(failMessage, (Object[]) formatArguments);
+      ruleDefinitions.add(new RuleDefinition<>(rule, actualMessage));
+      return this;
+    }
     ruleDefinitions.add(new RuleDefinition<>(rule, failMessage));
     return this;
   }

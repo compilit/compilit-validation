@@ -11,7 +11,7 @@
   </parent>
 
   <artifactId>solidcoding-validation</artifactId>
-  <version>1.0.1</version>
+  <version>1.1.0</version>
 
   <name>Solidcoding validation</name>
   <description>A small package that enables validation of (business) rules through a fluent API.</description>
@@ -37,26 +37,5 @@
       <version>${junit.jupiter.version}</version>
     </dependency>
   </dependencies>
-
-<!--  <licenses>-->
-<!--    <license>-->
-<!--      <name>MIT</name>-->
-<!--      <url>https://github.com/harveytherabbit/solidcoding-parent/blob/main/LICENSE</url>-->
-<!--    </license>-->
-<!--  </licenses>-->
-
-<!--  <developers>-->
-<!--    <developer>-->
-<!--      <id>HarveyTheRabbit</id>-->
-<!--      <name>Bastiën Bonsel</name>-->
-<!--      <email>harvey.rabbit@protonmail.com</email>-->
-<!--    </developer>-->
-<!--  </developers>-->
-
-<!--  <scm>-->
-<!--    <connection>scm:git@github.com:harveytherabbit/solidcoding-validation.git</connection>-->
-<!--    <developerConnection>scm:git@github.com:harveytherabbit/solidcoding-validation.git</developerConnection>-->
-<!--    <url>https://github.com/harveytherabbit/solidcoding-validation</url>-->
-<!--  </scm>-->
 
 </project>

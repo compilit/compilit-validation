@@ -1,5 +1,6 @@
 package org.solidcoding.validation;
 
+import static org.solidcoding.validation.StringPredicate.beAString;
 import static org.solidcoding.validation.testutil.TestValue.TEST_CONTENT;
 
 import java.util.ArrayList;
@@ -84,6 +85,18 @@ class ValidatorTests {
                                                  .compliesWith(rule)
                                                  .orElseThrow(new RuntimeException()))
               .isInstanceOf(RuntimeException.class);
+  }
+
+  @Test
+  void completeRule_formattedMessage_shouldReturnFormattedMessage() {
+    var rule = DefineThat.itShould(beAString().containing("123"));
+    var ruleFailMessage = "It's not a String! %s";
+    var value = "4";
+    var expectedMessage = String.format(ruleFailMessage, value);
+    var validator = Validator.makeSure(value);
+    validator.compliesWith(rule, ruleFailMessage, value).validate();
+    var actual = validator.getMessage();
+    Assertions.assertThat(actual).isEqualTo(expectedMessage);
   }
 
 }
