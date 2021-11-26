@@ -8,7 +8,7 @@ public class EndingValidator<T, R> implements ReturningValidator<R> {
   private final Supplier<R> supplier;
   private final Validator<T> businessRuleValidator;
 
-  public EndingValidator(Supplier<R> supplier, Validator<T> businessRuleValidator) {
+  EndingValidator(Supplier<R> supplier, Validator<T> businessRuleValidator) {
     this.supplier = supplier;
     this.businessRuleValidator = businessRuleValidator;
   }

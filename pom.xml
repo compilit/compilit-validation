@@ -15,7 +15,7 @@
 
   <name>Solidcoding validation</name>
   <description>A small package that enables validation of (business) rules through a fluent API.</description>
-  <url>https://github.com/harveytherabbit/solidcoding-validation</url>
+  <url>https://github.com/solidcoding-org/solidcoding-validation</url>
 
   <dependencies>
     <dependency>
