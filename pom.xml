@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <artifactId>solidcoding-parent</artifactId>
-    <groupId>org.solidcoding</groupId>
-    <version>1.0.3</version>
-  </parent>
+    <parent>
+        <artifactId>solidcoding-parent</artifactId>
+        <groupId>org.solidcoding</groupId>
+        <version>1.0.3</version>
+    </parent>
 
-  <artifactId>solidcoding-validation</artifactId>
-  <version>1.1.1</version>
+    <artifactId>solidcoding-validation</artifactId>
+    <version>1.2.0</version>
 
-  <name>Solidcoding validation</name>
-  <description>A small package that enables validation of (business) rules through a fluent API.</description>
-  <url>https://github.com/solidcoding-org/solidcoding-validation</url>
+    <name>Solidcoding validation</name>
+    <description>A small package that enables validation of (business) rules through a fluent API.</description>
+    <url>https://github.com/solidcoding-org/solidcoding-validation</url>
 
-  <dependencies>
-    <dependency>
-      <artifactId>assertj-core</artifactId>
-      <groupId>org.assertj</groupId>
-      <scope>test</scope>
-      <version>${assertj.version}</version>
-    </dependency>
-    <dependency>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <groupId>org.junit.jupiter</groupId>
-      <scope>test</scope>
-      <version>${junit.jupiter.version}</version>
-    </dependency>
-    <dependency>
-      <artifactId>junit-jupiter-params</artifactId>
-      <groupId>org.junit.jupiter</groupId>
-      <scope>test</scope>
-      <version>${junit.jupiter.version}</version>
-    </dependency>
-  </dependencies>
+    <dependencies>
+        <dependency>
+            <artifactId>assertj-core</artifactId>
+            <groupId>org.assertj</groupId>
+            <scope>test</scope>
+            <version>${assertj.version}</version>
+        </dependency>
+        <dependency>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <scope>test</scope>
+            <version>${junit.jupiter.version}</version>
+        </dependency>
+        <dependency>
+            <artifactId>junit-jupiter-params</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <scope>test</scope>
+            <version>${junit.jupiter.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
