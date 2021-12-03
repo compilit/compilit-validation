@@ -8,6 +8,7 @@ final class ContinuingPredicateValidator<T> implements ContinuingValidator<T> {
 
     private final List<Rule<T>> ruleDefinitions;
     private final T value;
+    private static final String DEFAULT_MESSAGE = "Nothing to report";
     private String message;
 
     ContinuingPredicateValidator(List<Rule<T>> ruleDefinitions, T value) {
@@ -28,7 +29,7 @@ final class ContinuingPredicateValidator<T> implements ContinuingValidator<T> {
 
     @Override
     public boolean validate() {
-        message = "Nothing to report";
+        message = DEFAULT_MESSAGE;
         var stringBuilder = new StringBuilder();
         var isValid = true;
         for (var ruleDefinition : ruleDefinitions) {

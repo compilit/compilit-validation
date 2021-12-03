@@ -7,7 +7,6 @@ final class RuleValidationBuilder<T> implements ValidationBuilder<T> {
 
     private final T value;
     private final List<Rule<T>> ruleDefinitions;
-    private String message = "Nothing to report";
 
     public RuleValidationBuilder(T value) {
         this.value = value;
