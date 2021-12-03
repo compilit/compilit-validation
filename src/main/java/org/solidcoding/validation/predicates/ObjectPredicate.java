@@ -20,7 +20,7 @@ public final class ObjectPredicate<T> implements Predicate<T> {
      * @param <T>   the type upon which the validations are tested.
      * @return ObjectPredicate to continue adding rules.
      */
-    public static <T> ObjectPredicate<T> beA(Class<T> clazz) {
+    public static <T> ObjectPredicate<T> shouldBeA(Class<T> clazz) {
         return new ObjectPredicate<>();
     }
 
@@ -29,8 +29,8 @@ public final class ObjectPredicate<T> implements Predicate<T> {
      * @param <T>   the type upon which the validations are tested.
      * @return ObjectPredicate to continue adding rules.
      */
-    public static <T> ObjectPredicate<T> beAn(Class<T> clazz) {
-        return beA(clazz);
+    public static <T> ObjectPredicate<T> shouldBeAn(Class<T> clazz) {
+        return shouldBeA(clazz);
     }
 
     /**

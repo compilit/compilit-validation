@@ -2,10 +2,9 @@ package org.solidcoding.validation.api;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.solidcoding.validation.api.*;
 
-import static org.solidcoding.validation.predicates.StringPredicate.beAString;
-import static org.solidcoding.validation.predicates.StringPredicate.beAStringWithLength;
+import static org.solidcoding.validation.predicates.StringPredicate.shouldBeAString;
+import static org.solidcoding.validation.predicates.StringPredicate.shouldBeAStringWithLength;
 import static testutil.TestValue.TEST_CONTENT;
 
 class ValidatorTests {
@@ -50,8 +49,8 @@ class ValidatorTests {
     void completeRule_formattedMessage_shouldReturnFormattedMessage() {
         var ruleFailMessage = "%s does not contain 123!";
         var value = "4";
-        var rule1 = DefineThat.itShould(beAString().containing("123")).otherWiseReport(ruleFailMessage, value);
-        var rule2 = DefineThat.itShould(beAStringWithLength(1)).otherWiseReport(ruleFailMessage, value);
+        var rule1 = DefineThat.it(shouldBeAString().containing("123")).otherWiseReport(ruleFailMessage, value);
+        var rule2 = DefineThat.it(shouldBeAStringWithLength(1)).otherWiseReport(ruleFailMessage, value);
         var expectedMessage = String.format(ruleFailMessage, value);
         var validator = Validator.makeSure(value).compliesWith(rule1).and(rule2);
         validator.validate();

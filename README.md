@@ -24,29 +24,29 @@ rule.
 First define a rule (another Predicate) using the DefineThat entrypoint for the fluent API:
 
 ```
-    var rule = DefineThat.itShould(beAString("test")).otherwiseReport("it is not equal to 'test'"); //for strings
+    var rule = DefineThat.it(shouldBeAString("test")).otherwiseReport("it is not equal to 'test'"); //for strings
 
-    var rule = DefineThat.itShould(beAString().containing("test")).otherwiseReport("it does not contain to 'test'"); //for strings
+    var rule = DefineThat.it(shouldBeAString().containing("test")).otherwiseReport("it does not contain to 'test'"); //for strings
 
-    var rule = DefineThat.itShould(beAStringWithLength(4).containing("test")).otherwiseReport("One or more rules failed"); //for strings
+    var rule = DefineThat.it(shouldBeAStringWithLength(4).containing("test")).otherwiseReport("One or more rules failed"); //for strings
 
-    var rule = DefineThat.itShould(beAString(with -> with.length() == 4)).otherwiseReport("I am a failure"); //for strings
+    var rule = DefineThat.it(shouldBeAString(with -> with.length() == 4)).otherwiseReport("I am a failure"); //for strings
 
-    var rule = DefineThat.itShould(beAlphabetic()).otherwiseReport("I am a failure"); //for strings
+    var rule = DefineThat.it(shouldBeAlphabetic()).otherwiseReport("I am a failure"); //for strings
 
-    var rule = DefineThat.itShould(beANumber(2)).otherwiseReport("I am a failure"); //for integers
+    var rule = DefineThat.it(shouldBeANumber(2)).otherwiseReport("I am a failure"); //for integers
 
-    var rule = DefineThat.itShould(beANumber().between(1).and(5)).otherwiseReport("I am a failure"); //for integers
+    var rule = DefineThat.it(shouldBeANumber().between(1).and(5)).otherwiseReport("I am a failure"); //for integers
 
-    var rule = DefineThat.itShould(beANumberOfLength(1)).otherwiseReport("I am a failure"); //for integers
+    var rule = DefineThat.it(shouldBeANumberOfLength(1)).otherwiseReport("I am a failure"); //for integers
 
-    var rule = DefineThat.itShould(beANumber(that -> that.equals(2))).otherwiseReport("I am a failure"); //for integers
+    var rule = DefineThat.it(shouldBeANumber(that -> that.equals(2))).otherwiseReport("I am a failure"); //for integers
 
-    var rule = DefineThat.itShould(beANumber().containing(2)).otherwiseReport("I am a failure"); //for integers
+    var rule = DefineThat.it(shouldBeANumber().containing(2)).otherwiseReport("I am a failure"); //for integers
 
-    var rule = DefineThat.itShould(beA(String.class).that(x -> x.contains("test"))).otherwiseReport("I am a failure");  //for custom objects
+    var rule = DefineThat.it(shouldBeA(String.class).that(x -> x.contains("test"))).otherwiseReport("I am a failure");  //for custom objects
 
-    var rule = DefineThat.itShould(beA(TestObject.class).that(x -> x.isAwesome())).otherwiseReport("I am a failure");  //for custom objects
+    var rule = DefineThat.it(shouldBeA(TestObject.class).that(x -> x.isAwesome())).otherwiseReport("I am a failure");  //for custom objects
     
 ```
 
@@ -87,12 +87,12 @@ adding your own custom predicates.
 
 ### Custom Predicate<T> implementations
 
-The "that", "and" and "itShould" methods invite you to implement your own Predicates in the following way:
+The "that", "where", "and" and "it" methods invite you to implement your own Predicates in the following way:
 
 ```
-var rule = DefineThat.itShould(haveSomeAmazingProperties());
+var rule = DefineThat.it(shouldHaveSomeAmazingProperties());
 
-private Predicate<CustomObject> haveSomeAmazingProperties() {
+private Predicate<CustomObject> shouldHaveSomeAmazingProperties() {
   return input -> {
     (...something something input something...)
   };

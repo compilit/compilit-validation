@@ -2,8 +2,9 @@ package org.solidcoding.validation.api;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.solidcoding.validation.predicates.StringPredicate;
 
-import static org.solidcoding.validation.predicates.StringPredicate.beAString;
+import static org.solidcoding.validation.predicates.StringPredicate.shouldBeAString;
 
 class BusinessExample {
 
@@ -12,7 +13,7 @@ class BusinessExample {
         var passwordRuleFailMessage = "Password did not meet our requirements!";
         var goodPassword = "#This%Should*BeAGoodPassword(";
         var badPassword = "Whatever";
-        var passwordRule = DefineThat.itShould(beAString().containing("#", "%", "*", "(")).otherWiseReport(passwordRuleFailMessage);
+        var passwordRule = DefineThat.it(StringPredicate.shouldBeAString().containing("#", "%", "*", "(")).otherWiseReport(passwordRuleFailMessage);
 
         Assertions.assertThat(Validator.makeSure(goodPassword)
                 .compliesWith(passwordRule)

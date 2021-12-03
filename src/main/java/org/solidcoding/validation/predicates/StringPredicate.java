@@ -25,7 +25,7 @@ public final class StringPredicate implements Predicate<String> {
     /**
      * @return StringPredicate to continue adding rules.
      */
-    public static StringPredicate beAString() {
+    public static StringPredicate shouldBeAString() {
         return new StringPredicate();
     }
 
@@ -33,15 +33,15 @@ public final class StringPredicate implements Predicate<String> {
      * @param value the exact expected value.
      * @return StringPredicate to continue adding rules.
      */
-    public static StringPredicate beAString(String value) {
-        return new StringPredicate(beAString(x -> Objects.equals(x, value)));
+    public static StringPredicate shouldBeAString(String value) {
+        return new StringPredicate(shouldBeAString(x -> Objects.equals(x, value)));
     }
 
     /**
      * @param rule the custom predicate to test against the String.
      * @return StringPredicate to continue adding rules.
      */
-    public static StringPredicate beAString(Predicate<String> rule) {
+    public static StringPredicate shouldBeAString(Predicate<String> rule) {
         return new StringPredicate(rule);
     }
 
@@ -49,8 +49,8 @@ public final class StringPredicate implements Predicate<String> {
      * @param length the exact length of the String.
      * @return StringPredicate to continue adding rules.
      */
-    public static StringPredicate beAStringWithLength(int length) {
-        return beAString(x -> x.length() == length);
+    public static StringPredicate shouldBeAStringWithLength(int length) {
+        return shouldBeAString(x -> x.length() == length);
     }
 
     /**
@@ -58,8 +58,8 @@ public final class StringPredicate implements Predicate<String> {
      *
      * @return StringPredicate to continue adding rules.
      */
-    public static StringPredicate beNumeric() {
-        return beAString(x -> x.chars().allMatch(Character::isDigit));
+    public static StringPredicate shouldBeNumeric() {
+        return shouldBeAString(x -> x.chars().allMatch(Character::isDigit));
     }
 
     /**
@@ -68,7 +68,7 @@ public final class StringPredicate implements Predicate<String> {
      * @param amountOfDigits the expected amount of digits.
      * @return StringPredicate to continue adding rules.
      */
-    public static StringPredicate beNumeric(int amountOfDigits) {
+    public static StringPredicate shouldBeNumeric(int amountOfDigits) {
         return new StringPredicate(x -> x.chars().allMatch(Character::isDigit),
                 x -> x.length() == amountOfDigits);
     }
@@ -78,8 +78,8 @@ public final class StringPredicate implements Predicate<String> {
      *
      * @return StringPredicate to continue adding rules.
      */
-    public static StringPredicate beAlphabetic() {
-        return beAString(x -> x.chars().allMatch(Character::isAlphabetic));
+    public static StringPredicate shouldBeAlphabetic() {
+        return shouldBeAString(x -> x.chars().allMatch(Character::isAlphabetic));
     }
 
     /**
@@ -88,7 +88,7 @@ public final class StringPredicate implements Predicate<String> {
      * @param amountOfLetters the expected amount of letters.
      * @return StringPredicate to continue adding rules.
      */
-    public static StringPredicate beAlphabetic(int amountOfLetters) {
+    public static StringPredicate shouldBeAlphabetic(int amountOfLetters) {
         return new StringPredicate(x -> x.chars().allMatch(Character::isAlphabetic),
                 x -> x.length() == amountOfLetters);
     }

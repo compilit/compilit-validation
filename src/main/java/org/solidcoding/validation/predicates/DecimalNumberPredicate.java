@@ -18,7 +18,7 @@ public final class DecimalNumberPredicate implements Predicate<Double> {
     /**
      * @return DoublePredicate to continue adding rules.
      */
-    public static DecimalNumberPredicate beADecimalNumber() {
+    public static DecimalNumberPredicate shouldBeADecimalNumber() {
         return new DecimalNumberPredicate();
     }
 
@@ -26,7 +26,7 @@ public final class DecimalNumberPredicate implements Predicate<Double> {
      * @param value the exact expected value.
      * @return DoublePredicate to continue adding rules.
      */
-    public static DecimalNumberPredicate beADecimalNumber(double value) {
+    public static DecimalNumberPredicate shouldBeADecimalNumber(double value) {
         return new DecimalNumberPredicate(x -> x == value);
     }
 
@@ -34,7 +34,7 @@ public final class DecimalNumberPredicate implements Predicate<Double> {
      * @param rule the custom predicate to test against the Double.
      * @return DoublePredicate to continue adding rules.
      */
-    public static DecimalNumberPredicate beADecimalNumber(Predicate<Double> rule) {
+    public static DecimalNumberPredicate shouldBeADecimalNumber(Predicate<Double> rule) {
         return new DecimalNumberPredicate(rule);
     }
 

@@ -4,10 +4,11 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.solidcoding.validation.predicates.StringPredicate;
 
 import java.util.stream.Stream;
 
-import static org.solidcoding.validation.predicates.StringPredicate.beAString;
+import static org.solidcoding.validation.predicates.StringPredicate.shouldBeAString;
 import static testutil.TestValue.TEST_CONTENT;
 
 class StringLengthPredicateTests {
@@ -47,14 +48,14 @@ class StringLengthPredicateTests {
     @ParameterizedTest
     @MethodSource("validTestCases")
     void and_stringMatchingRule_shouldReturnTrue(int first, int second) {
-        var rule0 = DefineThat.itShould(beAString().withLengthBetween(first).and(second)).otherWiseReport("failure");
+        var rule0 = DefineThat.it(StringPredicate.shouldBeAString().withLengthBetween(first).and(second)).otherWiseReport("failure");
         Assertions.assertThat(Validator.makeSure(TEST_CONTENT).compliesWith(rule0).validate()).isTrue();
     }
 
     @ParameterizedTest
     @MethodSource("invalidTestCases")
     void and_stringNotMatchingRule_shouldReturnFalse(int first, int second) {
-        var rule0 = DefineThat.itShould(beAString().withLengthBetween(first).and(second)).otherWiseReport("failure");
+        var rule0 = DefineThat.it(StringPredicate.shouldBeAString().withLengthBetween(first).and(second)).otherWiseReport("failure");
         Assertions.assertThat(Validator.makeSure(TEST_CONTENT).compliesWith(rule0).validate()).isFalse();
     }
 

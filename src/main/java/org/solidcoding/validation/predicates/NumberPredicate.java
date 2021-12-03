@@ -18,7 +18,7 @@ public final class NumberPredicate implements Predicate<Integer> {
     /**
      * @return IntegerPredicate to continue adding rules.
      */
-    public static NumberPredicate beANumber() {
+    public static NumberPredicate shouldBeANumber() {
         return new NumberPredicate();
     }
 
@@ -26,7 +26,7 @@ public final class NumberPredicate implements Predicate<Integer> {
      * @param value the exact expected value.
      * @return IntegerPredicate to continue adding rules.
      */
-    public static NumberPredicate beANumber(int value) {
+    public static NumberPredicate shouldBeANumber(int value) {
         return new NumberPredicate(x -> x == value);
     }
 
@@ -34,7 +34,7 @@ public final class NumberPredicate implements Predicate<Integer> {
      * @param rule the custom predicate to test against the Integer.
      * @return IntegerPredicate to continue adding rules.
      */
-    public static NumberPredicate beANumber(Predicate<Integer> rule) {
+    public static NumberPredicate shouldBeANumber(Predicate<Integer> rule) {
         return new NumberPredicate(rule);
     }
 
@@ -43,7 +43,7 @@ public final class NumberPredicate implements Predicate<Integer> {
      * @return IntegerPredicate to continue adding rules.
      */
     public static NumberPredicate beANumberOfLength(int amountOfDigits) {
-        return beANumber(x -> String.valueOf(x).length() == amountOfDigits);
+        return shouldBeANumber(x -> String.valueOf(x).length() == amountOfDigits);
     }
 
     public NumberConstraintPredicate between(int first) {
