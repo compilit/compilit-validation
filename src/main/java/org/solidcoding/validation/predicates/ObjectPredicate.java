@@ -41,6 +41,14 @@ public final class ObjectPredicate<T> implements Predicate<T> {
         return new ObjectPredicate<>(rule);
     }
 
+    /**
+     * @param rule the custom predicate to test against properties of T.
+     * @return ObjectPredicate to continue adding rules.
+     */
+    public ObjectPredicate<T> where(Predicate<T> rule) {
+        return new ObjectPredicate<>(rule);
+    }
+
     @Override
     public boolean test(T value) {
         return rules.stream().allMatch(x -> x.test(value));
