@@ -1,17 +1,15 @@
 package org.solidcoding.validation.predicates;
 
-import org.solidcoding.validation.api.ChainingPredicate;
-
 import java.util.function.Predicate;
 
 final class StringLengthConstraintPredicateBuilder implements ChainingPredicate<Integer, Predicate<String>> {
 
-    private final PredicateContainer<String> originalPredicate;
+    private final ObjectPredicateBuilder<String> originalPredicate;
     private final int first;
 
-    StringLengthConstraintPredicateBuilder(Integer first, PredicateContainer<String> originalPredicate) {
+    StringLengthConstraintPredicateBuilder(Integer first) {
         this.first = first;
-        this.originalPredicate = originalPredicate;
+        this.originalPredicate = new ObjectPredicateBuilder<>();
     }
 
     /**

@@ -6,7 +6,8 @@ import org.solidcoding.validation.api.Define;
 import org.solidcoding.validation.api.MakeSure;
 import testutil.TestObject;
 
-import static org.solidcoding.validation.predicates.ObjectPredicateBuilder.*;
+import static org.solidcoding.validation.predicates.ObjectPredicateBuilder.isA;
+import static org.solidcoding.validation.predicates.ObjectPredicateBuilder.isAn;
 import static org.solidcoding.validation.predicates.StringPredicateBuilder.isNotNull;
 
 class ObjectPredicateBuilderTests {

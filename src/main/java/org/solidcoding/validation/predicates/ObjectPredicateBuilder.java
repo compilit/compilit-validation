@@ -1,17 +1,23 @@
 package org.solidcoding.validation.predicates;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
-public final class ObjectPredicateBuilder<T> extends PredicateContainer<T> {
+public class ObjectPredicateBuilder<T> implements GenericPredicate<T> {
 
-    private ObjectPredicateBuilder() {
-        super();
+    private final List<Predicate<T>> predicates = new ArrayList<>();
+
+    protected ObjectPredicateBuilder() {
     }
 
-    private ObjectPredicateBuilder(Predicate<T> predicate) {
-        super();
-        addPredicate(predicate);
+    protected ObjectPredicateBuilder(Predicate<T> predicate) {
+        predicates.add(predicate);
+    }
+
+    protected ObjectPredicateBuilder(List<Predicate<T>> predicates) {
+        this.predicates.addAll(predicates);
     }
 
     /**
@@ -28,6 +34,7 @@ public final class ObjectPredicateBuilder<T> extends PredicateContainer<T> {
      * @param <T>   the type upon which the validations are tested.
      * @return ObjectPredicate to continue adding rules.
      */
+    @SuppressWarnings("unused")
     public static <T> GenericPredicate<T> isA(Class<T> clazz) {
         return new ObjectPredicateBuilder<>();
     }
@@ -41,4 +48,46 @@ public final class ObjectPredicateBuilder<T> extends PredicateContainer<T> {
         return isA(clazz);
     }
 
+    /**
+     * Check if the actual value is equal to the given one.
+     *
+     * @param value the exact expected value.
+     * @return StringPredicate to continue adding rules.
+     */
+    public static <T> Predicate<T> isEqualTo(T value) {
+        return new ObjectPredicateBuilder<>(x -> Objects.equals(x, value));
+    }
+
+    @Override
+    public boolean test(T value) {
+        return predicates.stream().allMatch(x -> x.test(value));
+    }
+
+    @Override
+    public Predicate<T> where(Predicate<T> predicate) {
+        addPredicate(predicate);
+        return this;
+    }
+
+    static <T> GenericPredicate<T> contains(Object value, Object... values) {
+        var rules = new ArrayList<Predicate<T>>();
+        rules.add(x -> x.toString().contains(value.toString()));
+        for (var v : values) {
+            rules.add(x -> x.toString().contains(v.toString()));
+        }
+        return new ObjectPredicateBuilder<>(rules);
+    }
+
+    static <T> GenericPredicate<T> doesNotContain(Object value, Object... values) {
+        var rules = new ArrayList<Predicate<T>>();
+        rules.add(x -> !x.toString().contains(value.toString()));
+        for (var v : values) {
+            rules.add(x -> !x.toString().contains(v.toString()));
+        }
+        return new ObjectPredicateBuilder<>(rules);
+    }
+
+    void addPredicate(Predicate<T> predicate) {
+        predicates.add(predicate);
+    }
 }

@@ -32,8 +32,7 @@ class BusinessExampleTests {
     @Test
     void useCase_alphabeticInputValidation_shouldNotThrowException() {
         Assertions.assertThatNoException().isThrownBy(
-                () -> MakeSure.that("test").compliesWith(
-                                thatIt(isAlphabetic().and(isNotNumeric())).otherWiseReport("fail"))
+                () -> MakeSure.that("test").compliesWith(thatIt(isAlphabetic().and(isNotNumeric())).otherWiseReport("It's not alphabetic"))
                         .andThen(() -> System.out.println("yay")).orElseThrow(RuntimeException::new));
     }
 

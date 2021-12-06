@@ -1,16 +1,11 @@
 package org.solidcoding.validation.predicates;
 
-import org.solidcoding.validation.api.ChainingPredicate;
-
 import java.util.function.Predicate;
 
-public final class NumberPredicateBuilder extends PredicateContainer<Integer> implements NumberPredicate {
+public final class NumberPredicateBuilder extends ObjectPredicateBuilder<Integer> {
 
-    private NumberPredicateBuilder() {
-    }
-
-    private NumberPredicateBuilder(Predicate<Integer> rule) {
-        addPredicate(rule);
+    private NumberPredicateBuilder(Predicate<Integer> predicate) {
+        super(predicate);
     }
 
     /**
@@ -22,19 +17,13 @@ public final class NumberPredicateBuilder extends PredicateContainer<Integer> im
     }
 
     /**
-     * @return IntegerPredicate to continue adding rules.
-     */
-    public static NumberPredicate is() {
-        return new NumberPredicateBuilder();
-    }
-
-
-    /**
+     * Check if the actual value is equal to the given one.
+     *
      * @param value the exact expected value.
-     * @return IntegerPredicate to continue adding rules.
+     * @return StringPredicate to continue adding rules.
      */
-    public static Predicate<Integer> is(int value) {
-        return new NumberPredicateBuilder(x -> x == value);
+    public static Predicate<Integer> isEqualTo(int value) {
+        return ObjectPredicateBuilder.isEqualTo(value);
     }
 
     /**
@@ -46,6 +35,15 @@ public final class NumberPredicateBuilder extends PredicateContainer<Integer> im
     }
 
     /**
+     * @param first the first (inclusive) constraint. Can be either the high constraint or the low
+     *                             constraint.
+     * @return a ChainingPredicate to add the second constraint.
+     */
+    public static ChainingPredicate<Integer, Predicate<Integer>> isBetween(int first) {
+        return new NumberConstraintPredicateBuilder(first, new ObjectPredicateBuilder<>());
+    }
+
+    /**
      * Checks whether the given Integers are present anywhere in the value.
      *
      * @param value  the exact value that needs to be present in the toString of the original value.
@@ -53,7 +51,7 @@ public final class NumberPredicateBuilder extends PredicateContainer<Integer> im
      * @return NumberPredicate to continue adding rules.
      */
     public static Predicate<Integer> contains(Integer value, Integer... values) {
-        return PredicateContainer.contains(value, (Object[]) values);
+        return ObjectPredicateBuilder.contains(value, (Object[]) values);
     }
 
     /**
@@ -64,12 +62,7 @@ public final class NumberPredicateBuilder extends PredicateContainer<Integer> im
      * @return NumberPredicate to continue adding rules.
      */
     public static Predicate<Integer> doesNotContain(Integer value, Integer... values) {
-        return PredicateContainer.doesNotContain(value, (Object[]) values);
-    }
-
-    @Override
-    public ChainingPredicate<Integer, Predicate<Integer>> between(int first) {
-        return new NumberConstraintPredicateBuilder(first, this);
+        return ObjectPredicateBuilder.doesNotContain(value, (Object[]) values);
     }
 
 }

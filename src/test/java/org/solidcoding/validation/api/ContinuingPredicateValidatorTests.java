@@ -91,7 +91,16 @@ class ContinuingPredicateValidatorTests {
     }
 
     @Test
-    void orElseThrow_shouldAddAnExceptionFunction() {
+    void orElseThrow_valid_shouldReturnTrue() {
+        var value = "test";
+        var rules = new ArrayList<Rule<String>>();
+        rules.add(new RuleDefinition<>(x -> true, "failure"));
+        var predicate = new ContinuingPredicateValidator<>(rules, value);
+        Assertions.assertThat(predicate.andThen(() -> true).orElseThrow(RuntimeException::new)).isTrue();
+    }
+
+    @Test
+    void orElseThrow_invalid_shouldThrowException() {
         var value = "test";
         var rules = new ArrayList<Rule<String>>();
         rules.add(new RuleDefinition<>(x -> false, "failure"));

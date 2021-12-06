@@ -1,26 +1,18 @@
 package org.solidcoding.validation.predicates;
 
-import org.solidcoding.validation.api.ChainingPredicate;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public final class DecimalNumberPredicateBuilder extends PredicateContainer<Double> implements DecimalNumberPredicate {
+public final class DecimalNumberPredicateBuilder extends ObjectPredicateBuilder<Double> {
 
-    private DecimalNumberPredicateBuilder() {
-    }
-
-    private DecimalNumberPredicateBuilder(Predicate<Double> rule) {
-        addPredicate(rule);
-    }
-
-    private DecimalNumberPredicateBuilder(List<Predicate<Double>> rules) {
-        rules.forEach(this::addPredicate);
+    private DecimalNumberPredicateBuilder(List<Predicate<Double>> predicates) {
+        super(predicates);
     }
 
     /**
      * Checks whether the actual value is present.*
+     *
      * @return Predicate to continue adding rules.
      */
     public static Predicate<Double> isNotNull() {
@@ -28,26 +20,22 @@ public final class DecimalNumberPredicateBuilder extends PredicateContainer<Doub
     }
 
     /**
-     * @return DoublePredicate to continue adding rules.
+     * @param first the first (inclusive) constraint. Can be either the high constraint or the low
+     *              constraint.
+     * @return a ChainingPredicate to add the second constraint.
      */
-    public static DecimalNumberPredicate is() {
-        return new DecimalNumberPredicateBuilder();
+    public static ChainingPredicate<Double, Predicate<Double>> isBetween(double first) {
+        return new DecimalNumberConstraintPredicate(first);
     }
 
     /**
+     * Check if the actual value is equal to the given one.
+     *
      * @param value the exact expected value.
-     * @return Predicate to continue adding rules.
+     * @return StringPredicate to continue adding rules.
      */
-    public static DecimalNumberPredicate is(double value) {
-        return new DecimalNumberPredicateBuilder(x -> x == value);
-    }
-
-    /**
-     * @param rule the custom predicate to test against the Double.
-     * @return Predicate to continue adding rules.
-     */
-    public static DecimalNumberPredicate is(Predicate<Double> rule) {
-        return new DecimalNumberPredicateBuilder(rule);
+    public static Predicate<Double> isEqualTo(double value) {
+        return ObjectPredicateBuilder.isEqualTo(value);
     }
 
     /**
@@ -57,7 +45,7 @@ public final class DecimalNumberPredicateBuilder extends PredicateContainer<Doub
      * @param values the optional exact values that needs to be present in the toString of the original value.
      * @return DecimalNumberPredicate to continue adding rules.
      */
-    public static DecimalNumberPredicate contains(Integer value, Integer... values) {
+    public static Predicate<Double> contains(Integer value, Integer... values) {
         var rules = new ArrayList<Predicate<Double>>();
         rules.add(x -> x.toString().contains(value.toString()));
         for (var c : values) {
@@ -73,7 +61,7 @@ public final class DecimalNumberPredicateBuilder extends PredicateContainer<Doub
      * @param values the optional exact values that may not be present in the toString of the original value.
      * @return DecimalNumberPredicate to continue adding rules.
      */
-    public static DecimalNumberPredicate doesNotContain(Integer value, Integer... values) {
+    public static Predicate<Double> doesNotContain(Integer value, Integer... values) {
         var rules = new ArrayList<Predicate<Double>>();
         rules.add(x -> !x.toString().contains(value.toString()));
         for (var c : values) {
@@ -82,8 +70,5 @@ public final class DecimalNumberPredicateBuilder extends PredicateContainer<Doub
         return new DecimalNumberPredicateBuilder(rules);
     }
 
-    public ChainingPredicate<Double, Predicate<Double>> between(double first) {
-        return new DecimalNumberConstraintPredicate(first, this);
-    }
 
 }

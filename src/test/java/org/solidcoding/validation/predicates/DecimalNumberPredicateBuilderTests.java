@@ -12,14 +12,16 @@ class DecimalNumberPredicateBuilderTests {
     @Test
     void validate_doubleMatchingRule_shouldReturnTrue() {
         var value = .2;
-        var rule0 = Define.thatIt(is(0.2)).otherWiseReport("I am error");
-        var rule1 = Define.thatIt(is().between(.0).and(.5)).otherWiseReport("I am error");
-        var rule3 = Define.thatIt(is(that -> that.equals(0.2))).otherWiseReport("I am error");
-        var rule4 = Define.thatIt(contains(0, 2)).otherWiseReport("I am error");
-        var rule5 = Define.thatIt(contains(2)).otherWiseReport("I am error");
-        var rule6 = Define.thatIt(doesNotContain(4, 5643)).otherWiseReport("I am error");
+        var rule0 = Define.thatIt(isEqualTo(0.2)).otherWiseReport("I am error");
+        var rule1 = Define.thatIt(isBetween(.0).and(.5)).otherWiseReport("I am error");
+        var rule2 = Define.thatIt(isBetween(.5).and(.0)).otherWiseReport("I am error");
+        var rule3 = Define.thatIt(contains(0, 2)).otherWiseReport("I am error");
+        var rule4 = Define.thatIt(contains(2)).otherWiseReport("I am error");
+        var rule5 = Define.thatIt(doesNotContain(4, 5643)).otherWiseReport("I am error");
+        var rule6 = Define.thatIt(isNotNull()).otherWiseReport("I am error");
         Assertions.assertThat(MakeSure.that(value).compliesWith(rule0).validate()).isTrue();
         Assertions.assertThat(MakeSure.that(value).compliesWith(rule1).validate()).isTrue();
+        Assertions.assertThat(MakeSure.that(value).compliesWith(rule2).validate()).isTrue();
         Assertions.assertThat(MakeSure.that(value).compliesWith(rule3).validate()).isTrue();
         Assertions.assertThat(MakeSure.that(value).compliesWith(rule4).validate()).isTrue();
         Assertions.assertThat(MakeSure.that(value).compliesWith(rule5).validate()).isTrue();
@@ -29,16 +31,18 @@ class DecimalNumberPredicateBuilderTests {
     @Test
     void validate_doubleNotMatchingRule_shouldReturnFalse() {
         var value = .2;
-        var rule0 = Define.thatIt(is(1)).otherWiseReport("I am error");
-        var rule1 = Define.thatIt(is().between(5).and(.55)).otherWiseReport("I am error");
-        var rule3 = Define.thatIt(is(that -> that.equals(.5435))).otherWiseReport("I am error");
-        var rule4 = Define.thatIt(contains(54)).otherWiseReport("I am error");
-        var rule5 = Define.thatIt(doesNotContain(2)).otherWiseReport("I am error");
+        var rule0 = Define.thatIt(isEqualTo(1)).otherWiseReport("I am error");
+        var rule1 = Define.thatIt(isBetween(5).and(.55)).otherWiseReport("I am error");
+        var rule2 = Define.thatIt(isBetween(.55).and(.5)).otherWiseReport("I am error");
+        var rule3 = Define.thatIt(contains(54)).otherWiseReport("I am error");
+        var rule4 = Define.thatIt(doesNotContain(2)).otherWiseReport("I am error");
+        var rule5 = Define.thatIt(isNotNull()).otherWiseReport("I am error");
         Assertions.assertThat(MakeSure.that(value).compliesWith(rule0).validate()).isFalse();
         Assertions.assertThat(MakeSure.that(value).compliesWith(rule1).validate()).isFalse();
+        Assertions.assertThat(MakeSure.that(value).compliesWith(rule2).validate()).isFalse();
         Assertions.assertThat(MakeSure.that(value).compliesWith(rule3).validate()).isFalse();
         Assertions.assertThat(MakeSure.that(value).compliesWith(rule4).validate()).isFalse();
-        Assertions.assertThat(MakeSure.that(value).compliesWith(rule5).validate()).isFalse();
+        Assertions.assertThat(MakeSure.<Double>that(null).compliesWith(rule5).validate()).isFalse();
     }
 
     @Test

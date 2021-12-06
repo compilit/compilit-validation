@@ -1,23 +1,16 @@
 package org.solidcoding.validation.predicates;
 
-import org.solidcoding.validation.api.ChainingPredicate;
-
-import java.util.Objects;
 import java.util.function.Predicate;
 
-public final class StringPredicateBuilder extends PredicateContainer<String> {
+public final class StringPredicateBuilder extends ObjectPredicateBuilder<String> {
 
-    private StringPredicateBuilder() {
-        super();
-    }
-
-    private StringPredicateBuilder(Predicate<String> rule) {
-        super();
-        addPredicate(rule);
+    private StringPredicateBuilder(Predicate<String> predicate) {
+        super(predicate);
     }
 
     /**
      * Checks whether the actual value is present.*
+     *
      * @return Predicate to continue adding rules.
      */
     public static Predicate<String> isNotNull() {
@@ -32,7 +25,7 @@ public final class StringPredicateBuilder extends PredicateContainer<String> {
      * @return Predicate to continue adding rules.
      */
     public static Predicate<String> contains(CharSequence value, CharSequence... values) {
-       return contains(value, (Object[]) values);
+        return contains(value, (Object[]) values);
     }
 
     /**
@@ -52,24 +45,8 @@ public final class StringPredicateBuilder extends PredicateContainer<String> {
      * @param value the exact expected value.
      * @return StringPredicate to continue adding rules.
      */
-    public static Predicate<String> is(String value) {
-        return new StringPredicateBuilder(is(x -> Objects.equals(x, value)));
-    }
-
-    /**
-     * @param rule the custom predicate to test against the String.
-     * @return StringPredicate to continue adding rules.
-     */
-    public static Predicate<String> is(Predicate<String> rule) {
-        return new StringPredicateBuilder(rule);
-    }
-
-    /**
-     * @param length the exact length of the String.
-     * @return StringPredicate to continue adding rules.
-     */
-    public static ChainingPredicate<Integer, Predicate<String>> hasALengthBetween(int length) {
-        return new StringLengthConstraintPredicateBuilder(length, new StringPredicateBuilder());
+    public static Predicate<String> isEqualTo(String value) {
+        return ObjectPredicateBuilder.isEqualTo(value);
     }
 
     /**
@@ -77,7 +54,7 @@ public final class StringPredicateBuilder extends PredicateContainer<String> {
      * @return StringPredicate to continue adding rules.
      */
     public static Predicate<String> hasALengthOf(int length) {
-        return is(x -> x.length() == length);
+        return new StringPredicateBuilder(x -> x.length() == length);
     }
 
     /**
@@ -86,7 +63,7 @@ public final class StringPredicateBuilder extends PredicateContainer<String> {
      * @return StringPredicate to continue adding rules.
      */
     public static Predicate<String> isNumeric() {
-        return is(x -> x.chars().allMatch(Character::isDigit));
+        return new StringPredicateBuilder(x -> x.chars().allMatch(Character::isDigit));
     }
 
     /**
@@ -95,7 +72,7 @@ public final class StringPredicateBuilder extends PredicateContainer<String> {
      * @return StringPredicate to continue adding rules.
      */
     public static Predicate<String> isNotNumeric() {
-        return is(x -> x.chars().anyMatch(Character::isAlphabetic));
+        return new StringPredicateBuilder(x -> x.chars().anyMatch(Character::isAlphabetic));
     }
 
     /**
@@ -104,7 +81,7 @@ public final class StringPredicateBuilder extends PredicateContainer<String> {
      * @return StringPredicate to continue adding rules.
      */
     public static Predicate<String> isAlphabetic() {
-        return is(x -> x.chars().allMatch(Character::isAlphabetic));
+        return new StringPredicateBuilder(x -> x.chars().allMatch(Character::isAlphabetic));
     }
 
     /**
@@ -113,7 +90,15 @@ public final class StringPredicateBuilder extends PredicateContainer<String> {
      * @return StringPredicate to continue adding rules.
      */
     public static Predicate<String> isNotAlphabetic() {
-        return is(x -> x.chars().anyMatch(Character::isDigit));
+        return new StringPredicateBuilder(x -> x.chars().anyMatch(Character::isDigit));
+    }
+
+    /**
+     * @param length the exact length of the String.
+     * @return StringPredicate to continue adding rules.
+     */
+    public static ChainingPredicate<Integer, Predicate<String>> hasALengthBetween(int length) {
+        return new StringLengthConstraintPredicateBuilder(length);
     }
 
 }

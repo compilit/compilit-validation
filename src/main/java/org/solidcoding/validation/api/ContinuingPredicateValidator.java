@@ -36,7 +36,7 @@ final class ContinuingPredicateValidator<T> implements ContinuingValidator<T> {
         var isValid = true;
         for (var ruleDefinition : ruleDefinitions) {
             if (!ruleDefinition.test(value)) {
-                stringBuilder.append("Rule broken: ").append(ruleDefinition.getFailMessage()).append("\n");
+                stringBuilder.append("Broken rule: ").append(ruleDefinition.getFailMessage()).append("\n");
                 isValid = false;
             }
         }

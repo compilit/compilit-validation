@@ -5,9 +5,9 @@ import java.util.function.Predicate;
 public interface GenericPredicate<T> extends Predicate<T> {
 
     /**
-     * @param rule the custom predicate to test against properties of T.
+     * @param predicate the custom predicate to test against properties of T.
      * @return ObjectPredicate to continue adding rules.
      */
-    Predicate<T> where(Predicate<T> rule);
+    Predicate<T> where(Predicate<T> predicate);
 
 }

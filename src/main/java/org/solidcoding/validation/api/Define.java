@@ -7,8 +7,8 @@ public final class Define {
     private Define() {
     }
 
-    public static <T> RuleBuilder<T> thatIt(Predicate<T> rule) {
-        return new RuleDefinitionBuilder<>(rule);
+    public static <T> RuleBuilder<T> thatIt(Predicate<T> predicate) {
+        return new RuleDefinitionBuilder<>(predicate);
     }
 
 }

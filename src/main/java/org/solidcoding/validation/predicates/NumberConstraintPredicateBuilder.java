@@ -1,15 +1,13 @@
 package org.solidcoding.validation.predicates;
 
-import org.solidcoding.validation.api.ChainingPredicate;
-
 import java.util.function.Predicate;
 
 final class NumberConstraintPredicateBuilder implements ChainingPredicate<Integer, Predicate<Integer>> {
 
-    private final PredicateContainer<Integer> originalPredicate;
+    private final ObjectPredicateBuilder<Integer> originalPredicate;
     private final int first;
 
-    NumberConstraintPredicateBuilder(Integer first, PredicateContainer<Integer> originalPredicate) {
+    NumberConstraintPredicateBuilder(Integer first, ObjectPredicateBuilder<Integer> originalPredicate) {
         this.first = first;
         this.originalPredicate = originalPredicate;
     }

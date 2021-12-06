@@ -1,17 +1,15 @@
 package org.solidcoding.validation.predicates;
 
-import org.solidcoding.validation.api.ChainingPredicate;
-
 import java.util.function.Predicate;
 
 final class DecimalNumberConstraintPredicate implements ChainingPredicate<Double, Predicate<Double>> {
 
-    private final PredicateContainer<Double> originalPredicate;
+    private final ObjectPredicateBuilder<Double> originalPredicate;
     private final double first;
 
-    DecimalNumberConstraintPredicate(Double first, PredicateContainer<Double> originalPredicate) {
+    DecimalNumberConstraintPredicate(Double first) {
         this.first = first;
-        this.originalPredicate = originalPredicate;
+        this.originalPredicate = new ObjectPredicateBuilder<>();
     }
 
     /**
