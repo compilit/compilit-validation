@@ -105,6 +105,14 @@ Validator.makeSure(value)
     .orElseThrow(new Exception());
 ```
 
+I've made the choice to start all predicates with the word 'should'. But obviously you can just as easily choose
+different, more demanding words like 'has', 'is', 'must' etc. The reason I chose 'should' is that it is a rule about
+something that is not yet presented. In the best case it 'should' have some property. In the context of a Predicate,
+where the actual value is not yet present, it makes no sense to me to actually use the standard boolean conventional
+words like 'has', 'is', 'must' etc. But maybe that's just me.
+
+### When validation takes place
+
 It should be noted that no validation will be taking place until requested by the validate() or the orElse*() methods.
 Requesting the failMessage before validation has taken place will always result in a placeholder message like "Nothing
 to report". If you would like to get the failMessage of a validation. You could do it like this:

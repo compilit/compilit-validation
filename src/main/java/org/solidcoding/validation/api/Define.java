@@ -2,12 +2,12 @@ package org.solidcoding.validation.api;
 
 import java.util.function.Predicate;
 
-public final class DefineThat {
+public final class Define {
 
-    private DefineThat() {
+    private Define() {
     }
 
-    public static <T> RuleBuilder<T> it(Predicate<T> rule) {
+    public static <T> RuleBuilder<T> thatIt(Predicate<T> rule) {
         return new RuleDefinitionBuilder<>(rule);
     }
 

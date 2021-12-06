@@ -3,27 +3,26 @@ package org.solidcoding.validation.api;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-final class EndingValidator<T, R> implements ReturningValidator<R> {
+final class EndingValidator<T, R> extends AbstractLoggingValidator<T> implements ReturningValidator<R> {
 
     private final Supplier<R> supplier;
-    private final ContinuingValidator<T> businessRuleValidator;
 
-    EndingValidator(Supplier<R> supplier, ContinuingValidator<T> businessRuleValidator) {
+    EndingValidator(Supplier<R> supplier, ContinuingValidator<T> validator) {
+        super(validator);
         this.supplier = supplier;
-        this.businessRuleValidator = businessRuleValidator;
     }
 
-    public <E extends RuntimeException> R orElseThrow(E throwable) {
-        var isValid = businessRuleValidator.validate();
+    public <E extends RuntimeException> R orElseThrow(Function<String, E> throwableFunction) {
+        var isValid = validator.validate();
         if (!isValid) {
-            throw throwable;
+            throw throwableFunction.apply(validator.getMessage());
         }
         return supplier.get();
     }
 
     @Override
     public R orElseReturn(R other) {
-        var isValid = businessRuleValidator.validate();
+        var isValid = validator.validate();
         if (!isValid) {
             return other;
         }
@@ -32,11 +31,12 @@ final class EndingValidator<T, R> implements ReturningValidator<R> {
 
     @Override
     public R orElseReturn(Function<String, R> other) {
-        var isValid = businessRuleValidator.validate();
-        var message = businessRuleValidator.getMessage();
+        var isValid = validator.validate();
+        var message = validator.getMessage();
         if (!isValid) {
             return other.apply(message);
         }
         return supplier.get();
     }
+
 }

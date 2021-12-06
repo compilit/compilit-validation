@@ -3,7 +3,7 @@ package org.solidcoding.validation.api;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public interface ContinuingValidator<T> {
+public interface ContinuingValidator<T> extends ThrowingValidator<Boolean> {
 
     /**
      * @return the failure message;
@@ -27,11 +27,12 @@ public interface ContinuingValidator<T> {
     <R> ReturningValidator<R> andThen(Supplier<R> supplier);
 
     /**
-     * @param throwableFunction the function defining the Exception that needs to be thrown when a rule is broken. The String is the stored failure message of the validation.
-     * @param <E>               the bound of the Exception that needs to be thrown when a rule is broken.
-     * @return true if all rules pass.
+     * Same as validate(); but returns a custom object in the form of a supplier.
+     *
+     * @param runnable the runnable process which should be started after successful validation.
+     * @return R in the form of a supplier.
      */
-    <E extends RuntimeException> boolean orElseThrow(Function<String, E> throwableFunction);
+    VoidValidator<T> andThen(Runnable runnable);
 
     /**
      * @param other the backup/default return type if the validation fails.
@@ -44,4 +45,5 @@ public interface ContinuingValidator<T> {
      * @return T the return type.
      */
     T orElseReturn(Function<String, T> other);
+
 }

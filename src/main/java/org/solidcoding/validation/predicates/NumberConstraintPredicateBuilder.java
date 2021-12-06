@@ -2,12 +2,14 @@ package org.solidcoding.validation.predicates;
 
 import org.solidcoding.validation.api.ChainingPredicate;
 
-public final class NumberConstraintPredicate implements ChainingPredicate<Integer, NumberPredicate> {
+import java.util.function.Predicate;
 
-    private final NumberPredicate originalPredicate;
+final class NumberConstraintPredicateBuilder implements ChainingPredicate<Integer, Predicate<Integer>> {
+
+    private final PredicateContainer<Integer> originalPredicate;
     private final int first;
 
-    NumberConstraintPredicate(Integer first, NumberPredicate originalPredicate) {
+    NumberConstraintPredicateBuilder(Integer first, PredicateContainer<Integer> originalPredicate) {
         this.first = first;
         this.originalPredicate = originalPredicate;
     }
@@ -17,11 +19,11 @@ public final class NumberConstraintPredicate implements ChainingPredicate<Intege
      *               constraint.
      * @return IntegerPredicate to continue adding rules.
      */
-    public NumberPredicate and(Integer second) {
+    public Predicate<Integer> and(Integer second) {
         if (second > first) {
-            originalPredicate.rules.add(x -> x <= second && x >= first);
+            originalPredicate.addPredicate(x -> x <= second && x >= first);
         } else {
-            originalPredicate.rules.add(x -> x <= first && x >= second);
+            originalPredicate.addPredicate(x -> x <= first && x >= second);
         }
         return originalPredicate;
     }

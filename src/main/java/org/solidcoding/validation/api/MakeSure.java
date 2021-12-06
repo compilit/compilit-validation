@@ -1,8 +1,8 @@
 package org.solidcoding.validation.api;
 
-public final class Validator {
+public final class MakeSure {
 
-    private Validator() {
+    private MakeSure() {
     }
 
     /**
@@ -10,7 +10,8 @@ public final class Validator {
      * @param <T>   the type of the value.
      * @return a Validator to add rules to.
      */
-    public static <T> ValidationBuilder<T> makeSure(T value) {
-        return new RuleValidationBuilder<T>(value);
+    public static <T> ValidationBuilder<T> that(T value) {
+        return new RuleValidationBuilder<>(value);
     }
+
 }

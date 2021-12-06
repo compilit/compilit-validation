@@ -1,70 +1,15 @@
 package org.solidcoding.validation.predicates;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.solidcoding.validation.api.ChainingPredicate;
+
 import java.util.function.Predicate;
 
-public final class DecimalNumberPredicate implements Predicate<Double> {
-
-    private final List<Predicate<Double>> rules = new ArrayList<>();
-
-    private DecimalNumberPredicate() {
-    }
-
-    private DecimalNumberPredicate(Predicate<Double> rule) {
-        this.rules.add(rule);
-    }
+public interface DecimalNumberPredicate extends GenericPredicate<Double> {
 
     /**
-     * @return DoublePredicate to continue adding rules.
+     * @param first the first (inclusive) constraint. Can be either the high constraint or the low constraint.
+     * @return a ChainingPredicate to add the second constraint.
      */
-    public static DecimalNumberPredicate shouldBeADecimalNumber() {
-        return new DecimalNumberPredicate();
-    }
-
-    /**
-     * @param value the exact expected value.
-     * @return DoublePredicate to continue adding rules.
-     */
-    public static DecimalNumberPredicate shouldBeADecimalNumber(double value) {
-        return new DecimalNumberPredicate(x -> x == value);
-    }
-
-    /**
-     * @param rule the custom predicate to test against the Double.
-     * @return DoublePredicate to continue adding rules.
-     */
-    public static DecimalNumberPredicate shouldBeADecimalNumber(Predicate<Double> rule) {
-        return new DecimalNumberPredicate(rule);
-    }
-
-    public DecimalNumberConstraintPredicate between(double first) {
-        return new DecimalNumberConstraintPredicate(first, this);
-    }
-
-    /**
-     * Determines if the given numbers are present or a part of the actual decimal number.
-     *
-     * @param number  the integer that needs to be present in the decimal number.
-     * @param numbers the optional numbers that need to be present in the decimal number.
-     * @return DecimalNumberPredicate to continue adding rules.
-     */
-    public DecimalNumberPredicate containing(int number, int... numbers) {
-        rules.add(x -> String.valueOf(x).contains(String.valueOf(number)));
-        for (var i : numbers) {
-            rules.add(x -> String.valueOf(x).contains(String.valueOf(i)));
-        }
-        return this;
-    }
-
-    public void addPredicate(Predicate<Double> predicate) {
-        rules.add(predicate);
-    }
-
-    @Override
-    public boolean test(Double value) {
-        return rules.stream().allMatch(x -> x.test(value));
-    }
-
+    ChainingPredicate<Double, Predicate<Double>> between(double first);
 
 }
