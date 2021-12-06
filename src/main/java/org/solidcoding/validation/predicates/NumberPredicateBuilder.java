@@ -14,6 +14,14 @@ public final class NumberPredicateBuilder extends PredicateContainer<Integer> im
     }
 
     /**
+     * Checks whether the actual value is present.*
+     * @return Predicate to continue adding rules.
+     */
+    public static Predicate<Integer> isNotNull() {
+        return ObjectPredicateBuilder.isNotNull();
+    }
+
+    /**
      * @return IntegerPredicate to continue adding rules.
      */
     public static NumberPredicate is() {
@@ -63,4 +71,5 @@ public final class NumberPredicateBuilder extends PredicateContainer<Integer> im
     public ChainingPredicate<Integer, Predicate<Integer>> between(int first) {
         return new NumberConstraintPredicateBuilder(first, this);
     }
+
 }

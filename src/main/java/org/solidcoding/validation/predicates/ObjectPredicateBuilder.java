@@ -3,7 +3,7 @@ package org.solidcoding.validation.predicates;
 import java.util.Objects;
 import java.util.function.Predicate;
 
-final class ObjectPredicateBuilder<T> extends PredicateContainer<T> {
+public final class ObjectPredicateBuilder<T> extends PredicateContainer<T> {
 
     private ObjectPredicateBuilder() {
         super();
@@ -16,10 +16,10 @@ final class ObjectPredicateBuilder<T> extends PredicateContainer<T> {
 
     /**
      * Checks whether the actual value is present.
-     *
+     * @param <T> the type upon which the validations are tested.
      * @return Predicate to continue adding rules.
      */
-    public static Predicate<String> isNotNull() {
+    public static <T> Predicate<T> isNotNull() {
         return new ObjectPredicateBuilder<>(Objects::nonNull);
     }
 

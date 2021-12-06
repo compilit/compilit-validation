@@ -20,6 +20,14 @@ public final class DecimalNumberPredicateBuilder extends PredicateContainer<Doub
     }
 
     /**
+     * Checks whether the actual value is present.*
+     * @return Predicate to continue adding rules.
+     */
+    public static Predicate<Double> isNotNull() {
+        return ObjectPredicateBuilder.isNotNull();
+    }
+
+    /**
      * @return DoublePredicate to continue adding rules.
      */
     public static DecimalNumberPredicate is() {

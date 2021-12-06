@@ -17,6 +17,14 @@ public final class StringPredicateBuilder extends PredicateContainer<String> {
     }
 
     /**
+     * Checks whether the actual value is present.*
+     * @return Predicate to continue adding rules.
+     */
+    public static Predicate<String> isNotNull() {
+        return ObjectPredicateBuilder.isNotNull();
+    }
+
+    /**
      * Checks whether the given charSequences are present anywhere in the value.
      *
      * @param value  the exact value that needs to be present in the original value.

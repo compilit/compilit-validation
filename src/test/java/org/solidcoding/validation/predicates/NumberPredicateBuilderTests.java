@@ -17,11 +17,13 @@ class NumberPredicateBuilderTests {
         var rule2 = Define.thatIt(hasAmountOfDigits(1)).otherWiseReport("failure");
         var rule3 = Define.thatIt(contains(2, 2)).otherWiseReport("failure");
         var rule4 = Define.thatIt(doesNotContain(43, 123)).otherWiseReport("failure");
+        var rule5 = Define.thatIt(isNotNull()).otherWiseReport("failure");
         Assertions.assertThat(MakeSure.that(value).compliesWith(rule0).validate()).isTrue();
         Assertions.assertThat(MakeSure.that(value).compliesWith(rule1).validate()).isTrue();
         Assertions.assertThat(MakeSure.that(value).compliesWith(rule2).validate()).isTrue();
         Assertions.assertThat(MakeSure.that(value).compliesWith(rule3).validate()).isTrue();
         Assertions.assertThat(MakeSure.that(value).compliesWith(rule4).validate()).isTrue();
+        Assertions.assertThat(MakeSure.that(value).compliesWith(rule5).validate()).isTrue();
     }
 
     @Test
@@ -32,11 +34,13 @@ class NumberPredicateBuilderTests {
         var rule2 = Define.thatIt(hasAmountOfDigits(10)).otherWiseReport("failure");
         var rule3 = Define.thatIt(is(5435)).otherWiseReport("failure");
         var rule4 = Define.thatIt(doesNotContain(2, 2)).otherWiseReport("failure");
+        var rule5 = Define.thatIt(isNotNull()).otherWiseReport("failure");
         Assertions.assertThat(MakeSure.that(value).compliesWith(rule0).validate()).isFalse();
         Assertions.assertThat(MakeSure.that(value).compliesWith(rule1).validate()).isFalse();
         Assertions.assertThat(MakeSure.that(value).compliesWith(rule2).validate()).isFalse();
         Assertions.assertThat(MakeSure.that(value).compliesWith(rule3).validate()).isFalse();
         Assertions.assertThat(MakeSure.that(value).compliesWith(rule4).validate()).isFalse();
+        Assertions.assertThat(MakeSure.<Integer>that(null).compliesWith(rule5).validate()).isFalse();
     }
 
     @Test
