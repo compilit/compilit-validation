@@ -2,7 +2,7 @@ package org.solidcoding.validation.api;
 
 import java.util.function.Function;
 
-final class VoidEndingValidator<T> extends AbstractLoggingValidator<T> implements VoidValidator<T> {
+final class VoidEndingValidator<T> extends AbstractLoggingValidator<T> implements VoidValidator {
 
     private final Runnable runnable;
 

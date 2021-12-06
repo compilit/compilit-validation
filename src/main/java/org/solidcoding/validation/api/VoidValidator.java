@@ -2,7 +2,7 @@ package org.solidcoding.validation.api;
 
 import java.util.function.Function;
 
-public interface VoidValidator<T> extends LoggingValidator, ThrowingValidator<Void> {
+public interface VoidValidator extends LoggingValidator, ThrowingValidator<Void> {
 
     /**
      * @param throwableFunction the function defining the Exception that needs to be thrown when a rule is broken. The String is the stored failure message of the validation.

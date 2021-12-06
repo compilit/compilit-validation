@@ -52,7 +52,7 @@ final class ContinuingPredicateValidator<T> implements ContinuingValidator<T> {
     }
 
     @Override
-    public VoidValidator<T> andThen(Runnable runnable) {
+    public VoidValidator andThen(Runnable runnable) {
         return new VoidEndingValidator<>(runnable, this);
     }
 

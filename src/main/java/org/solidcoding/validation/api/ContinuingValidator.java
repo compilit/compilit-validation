@@ -32,7 +32,7 @@ public interface ContinuingValidator<T> extends ThrowingValidator<Boolean> {
      * @param runnable the runnable process which should be started after successful validation.
      * @return R in the form of a supplier.
      */
-    VoidValidator<T> andThen(Runnable runnable);
+    VoidValidator andThen(Runnable runnable);
 
     /**
      * @param other the backup/default return type if the validation fails.
