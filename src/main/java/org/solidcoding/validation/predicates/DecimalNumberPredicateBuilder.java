@@ -32,7 +32,7 @@ public final class DecimalNumberPredicateBuilder extends ObjectPredicateBuilder<
      * Check if the actual value is equal to the given one.
      *
      * @param value the exact expected value.
-     * @return StringPredicate to continue adding rules.
+     * @return Predicate to continue adding rules.
      */
     public static Predicate<Double> isEqualTo(double value) {
         return ObjectPredicateBuilder.isEqualTo(value);
@@ -43,7 +43,7 @@ public final class DecimalNumberPredicateBuilder extends ObjectPredicateBuilder<
      *
      * @param value  the exact value that needs to be present in the toString of the original value.
      * @param values the optional exact values that needs to be present in the toString of the original value.
-     * @return DecimalNumberPredicate to continue adding rules.
+     * @return Predicate to continue adding rules.
      */
     public static Predicate<Double> contains(Integer value, Integer... values) {
         var rules = new ArrayList<Predicate<Double>>();
@@ -59,7 +59,7 @@ public final class DecimalNumberPredicateBuilder extends ObjectPredicateBuilder<
      *
      * @param value  the exact value that may not be present in the toString of the original value.
      * @param values the optional exact values that may not be present in the toString of the original value.
-     * @return DecimalNumberPredicate to continue adding rules.
+     * @return Predicate to continue adding rules.
      */
     public static Predicate<Double> doesNotContain(Integer value, Integer... values) {
         var rules = new ArrayList<Predicate<Double>>();

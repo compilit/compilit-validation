@@ -12,10 +12,6 @@ final class StringLengthConstraintPredicateBuilder implements ChainingPredicate<
         this.originalPredicate = new ObjectPredicateBuilder<>();
     }
 
-    /**
-     * @param second second of the constraints. Can be either the high constraint or the low constraint.
-     * @return StringPredicate to continue adding rules.
-     */
     public Predicate<String> and(Integer second) {
         if (second > first) {
             originalPredicate.addPredicate(x -> x.length() <= second && x.length() >= first);

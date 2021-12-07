@@ -15,7 +15,7 @@ final class NumberConstraintPredicateBuilder implements ChainingPredicate<Intege
     /**
      * @param second second of the constraints. Can be either the high constraint or the low
      *               constraint.
-     * @return IntegerPredicate to continue adding rules.
+     * @return Predicate to continue adding rules.
      */
     public Predicate<Integer> and(Integer second) {
         if (second > first) {

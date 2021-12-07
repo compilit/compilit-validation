@@ -43,7 +43,7 @@ public final class StringPredicateBuilder extends ObjectPredicateBuilder<String>
      * Check if the actual value is equal to the given one.
      *
      * @param value the exact expected value.
-     * @return StringPredicate to continue adding rules.
+     * @return Predicate to continue adding rules.
      */
     public static Predicate<String> isEqualTo(String value) {
         return ObjectPredicateBuilder.isEqualTo(value);
@@ -51,7 +51,7 @@ public final class StringPredicateBuilder extends ObjectPredicateBuilder<String>
 
     /**
      * @param length the exact length of the String.
-     * @return StringPredicate to continue adding rules.
+     * @return Predicate to continue adding rules.
      */
     public static Predicate<String> hasALengthOf(int length) {
         return new StringPredicateBuilder(x -> x.length() == length);
@@ -60,7 +60,7 @@ public final class StringPredicateBuilder extends ObjectPredicateBuilder<String>
     /**
      * Adds a check if all characters are in fact digits.
      *
-     * @return StringPredicate to continue adding rules.
+     * @return Predicate to continue adding rules.
      */
     public static Predicate<String> isNumeric() {
         return new StringPredicateBuilder(x -> x.chars().allMatch(Character::isDigit));
@@ -69,7 +69,7 @@ public final class StringPredicateBuilder extends ObjectPredicateBuilder<String>
     /**
      * Adds a check if any character is in fact not a digit.
      *
-     * @return StringPredicate to continue adding rules.
+     * @return Predicate to continue adding rules.
      */
     public static Predicate<String> isNotNumeric() {
         return new StringPredicateBuilder(x -> x.chars().anyMatch(Character::isAlphabetic));
@@ -78,7 +78,7 @@ public final class StringPredicateBuilder extends ObjectPredicateBuilder<String>
     /**
      * Adds a check if all characters are in fact digits.
      *
-     * @return StringPredicate to continue adding rules.
+     * @return Predicate to continue adding rules.
      */
     public static Predicate<String> isAlphabetic() {
         return new StringPredicateBuilder(x -> x.chars().allMatch(Character::isAlphabetic));
@@ -87,7 +87,7 @@ public final class StringPredicateBuilder extends ObjectPredicateBuilder<String>
     /**
      * Adds a check if any character is in fact not alphabetic.
      *
-     * @return StringPredicate to continue adding rules.
+     * @return Predicate to continue adding rules.
      */
     public static Predicate<String> isNotAlphabetic() {
         return new StringPredicateBuilder(x -> x.chars().anyMatch(Character::isDigit));
@@ -95,7 +95,7 @@ public final class StringPredicateBuilder extends ObjectPredicateBuilder<String>
 
     /**
      * @param length the exact length of the String.
-     * @return StringPredicate to continue adding rules.
+     * @return ChainingPredicate to continue adding rules.
      */
     public static ChainingPredicate<Integer, Predicate<String>> hasALengthBetween(int length) {
         return new StringLengthConstraintPredicateBuilder(length);

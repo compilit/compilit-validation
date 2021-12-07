@@ -20,7 +20,7 @@ public final class NumberPredicateBuilder extends ObjectPredicateBuilder<Integer
      * Check if the actual value is equal to the given one.
      *
      * @param value the exact expected value.
-     * @return StringPredicate to continue adding rules.
+     * @return Predicate to continue adding rules.
      */
     public static Predicate<Integer> isEqualTo(int value) {
         return ObjectPredicateBuilder.isEqualTo(value);
@@ -28,7 +28,7 @@ public final class NumberPredicateBuilder extends ObjectPredicateBuilder<Integer
 
     /**
      * @param amountOfDigits the exact amount of digits of the Integer.
-     * @return IntegerPredicate to continue adding rules.
+     * @return Predicate to continue adding rules.
      */
     public static Predicate<Integer> hasAmountOfDigits(int amountOfDigits) {
         return new NumberPredicateBuilder(x -> String.valueOf(x).length() == amountOfDigits);
@@ -48,7 +48,7 @@ public final class NumberPredicateBuilder extends ObjectPredicateBuilder<Integer
      *
      * @param value  the exact value that needs to be present in the toString of the original value.
      * @param values the optional exact values that needs to be present in the toString of the original value.
-     * @return NumberPredicate to continue adding rules.
+     * @return Predicate to continue adding rules.
      */
     public static Predicate<Integer> contains(Integer value, Integer... values) {
         return ObjectPredicateBuilder.contains(value, (Object[]) values);
@@ -59,7 +59,7 @@ public final class NumberPredicateBuilder extends ObjectPredicateBuilder<Integer
      *
      * @param value  the exact value that may not be present in the toString of the original value.
      * @param values the optional exact values that may not be present in the toString of the original value.
-     * @return NumberPredicate to continue adding rules.
+     * @return Predicate to continue adding rules.
      */
     public static Predicate<Integer> doesNotContain(Integer value, Integer... values) {
         return ObjectPredicateBuilder.doesNotContain(value, (Object[]) values);

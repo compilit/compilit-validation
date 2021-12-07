@@ -32,7 +32,7 @@ public class ObjectPredicateBuilder<T> implements GenericPredicate<T> {
     /**
      * @param clazz the class of the object to validate. This is only a compiler flag to treat T as its instance.
      * @param <T>   the type upon which the validations are tested.
-     * @return ObjectPredicate to continue adding rules.
+     * @return GenericPredicate to continue adding rules.
      */
     @SuppressWarnings("unused")
     public static <T> GenericPredicate<T> isA(Class<T> clazz) {
@@ -42,7 +42,7 @@ public class ObjectPredicateBuilder<T> implements GenericPredicate<T> {
     /**
      * @param clazz the class of the object to validate. This is only a compiler flag to treat T as its instance.
      * @param <T>   the type upon which the validations are tested.
-     * @return ObjectPredicate to continue adding rules.
+     * @return GenericPredicate to continue adding rules.
      */
     public static <T> GenericPredicate<T> isAn(Class<T> clazz) {
         return isA(clazz);
@@ -52,7 +52,7 @@ public class ObjectPredicateBuilder<T> implements GenericPredicate<T> {
      * Check if the actual value is equal to the given one.
      *
      * @param value the exact expected value.
-     * @return StringPredicate to continue adding rules.
+     * @return Predicate to continue adding rules.
      */
     public static <T> Predicate<T> isEqualTo(T value) {
         return new ObjectPredicateBuilder<>(x -> Objects.equals(x, value));

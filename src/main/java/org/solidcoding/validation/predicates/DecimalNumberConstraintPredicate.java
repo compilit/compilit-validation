@@ -15,7 +15,7 @@ final class DecimalNumberConstraintPredicate implements ChainingPredicate<Double
     /**
      * @param second the second of the (inclusive) constraints. Can be either the high constraint or the low
      *               constraint.
-     * @return DecimalNumberPredicate to continue adding rules.
+     * @return Predicate to continue adding rules.
      */
     public Predicate<Double> and(Double second) {
         if (second > first) {

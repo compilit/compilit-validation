@@ -6,7 +6,7 @@ public interface GenericPredicate<T> extends Predicate<T> {
 
     /**
      * @param predicate the custom predicate to test against properties of T.
-     * @return ObjectPredicate to continue adding rules.
+     * @return Predicate to continue adding rules.
      */
     Predicate<T> where(Predicate<T> predicate);
 
