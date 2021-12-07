@@ -1,23 +1,23 @@
 package org.solidcoding.validation.predicates;
 
-import org.solidcoding.validation.api.ChainingPredicate;
+import java.util.function.Predicate;
 
-public final class DecimalNumberConstraintPredicate implements ChainingPredicate<Double, DecimalNumberPredicate> {
+final class DecimalNumberConstraintPredicate implements ChainingPredicate<Double, Predicate<Double>> {
 
-    private final DecimalNumberPredicate originalPredicate;
+    private final ObjectPredicateBuilder<Double> originalPredicate;
     private final double first;
 
-    DecimalNumberConstraintPredicate(Double first, DecimalNumberPredicate originalPredicate) {
+    DecimalNumberConstraintPredicate(Double first) {
         this.first = first;
-        this.originalPredicate = originalPredicate;
+        this.originalPredicate = new ObjectPredicateBuilder<>();
     }
 
     /**
-     * @param second the second of the constraints. Can be either the high constraint or the low
+     * @param second the second of the (inclusive) constraints. Can be either the high constraint or the low
      *               constraint.
-     * @return DecimalNumberPredicate to continue adding rules.
+     * @return Predicate to continue adding rules.
      */
-    public DecimalNumberPredicate and(Double second) {
+    public Predicate<Double> and(Double second) {
         if (second > first) {
             originalPredicate.addPredicate(x -> x <= second && x >= first);
         } else {

@@ -6,9 +6,9 @@ import java.util.function.Supplier;
 
 final class ContinuingPredicateValidator<T> implements ContinuingValidator<T> {
 
+    static final String DEFAULT_MESSAGE = "Nothing to report";
     private final List<Rule<T>> ruleDefinitions;
     private final T value;
-    private static final String DEFAULT_MESSAGE = "Nothing to report";
     private String message;
 
     ContinuingPredicateValidator(List<Rule<T>> ruleDefinitions, T value) {
@@ -18,6 +18,8 @@ final class ContinuingPredicateValidator<T> implements ContinuingValidator<T> {
 
     @Override
     public String getMessage() {
+        if (message == null)
+            return DEFAULT_MESSAGE;
         return message;
     }
 
@@ -34,7 +36,7 @@ final class ContinuingPredicateValidator<T> implements ContinuingValidator<T> {
         var isValid = true;
         for (var ruleDefinition : ruleDefinitions) {
             if (!ruleDefinition.test(value)) {
-                stringBuilder.append("Rule broken: ").append(ruleDefinition.getFailMessage()).append("\n");
+                stringBuilder.append("Broken rule: ").append(ruleDefinition.getFailMessage()).append("\n");
                 isValid = false;
             }
         }
@@ -46,12 +48,17 @@ final class ContinuingPredicateValidator<T> implements ContinuingValidator<T> {
 
     @Override
     public <R> ReturningValidator<R> andThen(Supplier<R> supplier) {
-        return new EndingValidator<T, R>(supplier, this);
+        return new EndingValidator<>(supplier, this);
+    }
+
+    @Override
+    public VoidValidator andThen(Runnable runnable) {
+        return new VoidEndingValidator<>(runnable, this);
     }
 
 
     @Override
-    public <E extends RuntimeException> boolean orElseThrow(Function<String, E> throwableFunction) {
+    public <E extends RuntimeException> Boolean orElseThrow(Function<String, E> throwableFunction) {
         var isValid = validate();
         if (!isValid) {
             throw throwableFunction.apply(getMessage());
@@ -71,12 +78,10 @@ final class ContinuingPredicateValidator<T> implements ContinuingValidator<T> {
     @Override
     public T orElseReturn(Function<String, T> other) {
         var isValid = validate();
-        var message = this.message;
         if (!isValid) {
             return other.apply(message);
         }
         return value;
     }
-
 
 }
