@@ -3,8 +3,8 @@ package org.solidcoding.validation.api;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.solidcoding.validation.predicates.StringPredicateBuilder.contains;
-import static org.solidcoding.validation.predicates.StringPredicateBuilder.hasALengthOf;
+import static org.solidcoding.validation.predicates.StringPredicate.contains;
+import static org.solidcoding.validation.predicates.StringPredicate.hasALengthOf;
 import static testutil.TestValue.TEST_CONTENT;
 
 class MakeSureTests {

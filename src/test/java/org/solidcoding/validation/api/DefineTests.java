@@ -1,11 +1,10 @@
 package org.solidcoding.validation.api;
 
-import static org.solidcoding.validation.predicates.ObjectPredicateRuleBuilder.isA;
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import testutil.TestObject;
 
+import static org.solidcoding.validation.predicates.ObjectPredicate.isA;
 
 class DefineTests {
 

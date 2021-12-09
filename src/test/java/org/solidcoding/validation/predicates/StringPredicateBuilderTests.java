@@ -7,7 +7,7 @@ import org.solidcoding.validation.api.MakeSure;
 
 import java.util.function.Supplier;
 
-import static org.solidcoding.validation.predicates.StringPredicateBuilder.*;
+import static org.solidcoding.validation.predicates.StringPredicate.*;
 import static testutil.TestValue.TEST_CONTENT;
 
 class StringPredicateBuilderTests {

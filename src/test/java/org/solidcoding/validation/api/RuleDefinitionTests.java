@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 class RuleDefinitionTests {
 
     @Test
-    void getFailMessage_shouldReturnProvidedMessage() {
+    void getMessage_shouldReturnProvidedMessage() {
         var message = "failure";
         var ruleDefinition = new RuleDefinition<String>(x -> true, message);
-        Assertions.assertThat(ruleDefinition.getFailMessage()).isEqualTo(message);
+        Assertions.assertThat(ruleDefinition.getMessage()).isEqualTo(message);
     }
 
     @Test

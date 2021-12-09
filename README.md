@@ -21,7 +21,8 @@ application. An individual value or object can then be tested against these rule
 extension of the Predicate class. This extension allows you to add a message that is associated with the failure of this
 rule.
 
-First define a rule (another Predicate containing a fail message) using the Define entrypoint for the fluent API. Here are some examples:
+First define a rule (another Predicate containing a fail message) using the Define entrypoint for the fluent API. Here
+are some examples:
 
 ```
     var rule = Define.thatIt(contains("test")).otherwiseReport("it does not contain 'test'");
@@ -104,8 +105,8 @@ MakeSure.that(value)
 ### When validation takes place
 
 It should be noted that no validation will be taking place until requested by the validate() or the orElse*() methods.
-Requesting the failMessage before validation has taken place will always result in a placeholder message like "Nothing
-to report". If you would like to get the failMessage of a validation. You could do it like this:
+Requesting the message before validation has taken place will always result in a placeholder message like "Nothing
+to report". If you would like to get the message of a validation. You could do it like this:
 
 ```
     var validator = MakeSure.that(value).compliesWith(rule);

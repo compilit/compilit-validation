@@ -6,11 +6,12 @@ import org.solidcoding.validation.api.Define;
 import org.solidcoding.validation.api.MakeSure;
 import testutil.TestObject;
 
-import static org.solidcoding.validation.predicates.ObjectPredicateBuilder.isA;
-import static org.solidcoding.validation.predicates.ObjectPredicateBuilder.isAn;
-import static org.solidcoding.validation.predicates.StringPredicateBuilder.isNotNull;
+import static org.solidcoding.validation.predicates.ObjectPredicate.isA;
+import static org.solidcoding.validation.predicates.ObjectPredicate.isAn;
+import static org.solidcoding.validation.predicates.StringPredicate.isNotNull;
 
-class ObjectPredicateBuilderTests {
+
+class ObjectPredicateTests {
 
     @Test
     void beA_String_shouldReturnObjectPredicate() {

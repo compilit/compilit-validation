@@ -2,10 +2,20 @@ package org.solidcoding.validation.api;
 
 public interface RuleBuilder<T> {
 
-  Rule<T> otherWiseReport(String failMessage, Object... formatArguments);
+    /**
+     * @param message the message you wish to add to the pipe in case of a failed validation.
+     * @param formatArguments the extra arguments you wish to place on the standardized format '%s' placeholders.
+     * @return the finished Rule, ready to validate.
+     */
+    Rule<T> otherWiseReport(String message, Object... formatArguments);
 
-  interface Extended<T> {
+    interface Extended<T> {
 
-    Rule.Extended<T> otherWiseReport(String failMessage, Object... formatArguments);
-  }
+        /**
+         * @param message the message you wish to add to the pipe in case of a failed validation.
+         * @param formatArguments the extra arguments you wish to place on the standardized format '%s' placeholders.
+         * @return the finished Rule, ready to validate.
+         */
+        Rule.Extended<T> otherWiseReport(String message, Object... formatArguments);
+    }
 }

@@ -5,7 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.solidcoding.validation.api.Define;
 import org.solidcoding.validation.api.MakeSure;
 
-import static org.solidcoding.validation.predicates.NumberPredicateBuilder.*;
+import static org.solidcoding.validation.predicates.NumberPredicate.contains;
+import static org.solidcoding.validation.predicates.NumberPredicate.doesNotContain;
+import static org.solidcoding.validation.predicates.NumberPredicate.hasAmountOfDigits;
+import static org.solidcoding.validation.predicates.NumberPredicate.isBetween;
+import static org.solidcoding.validation.predicates.NumberPredicate.isEqualTo;
+import static org.solidcoding.validation.predicates.NumberPredicate.isNotNull;
 
 class NumberPredicateBuilderTests {
 

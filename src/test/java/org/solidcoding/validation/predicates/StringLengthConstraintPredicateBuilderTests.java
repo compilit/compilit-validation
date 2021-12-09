@@ -9,7 +9,7 @@ import org.solidcoding.validation.api.MakeSure;
 
 import java.util.stream.Stream;
 
-import static org.solidcoding.validation.predicates.StringPredicateBuilder.hasALengthBetween;
+import static org.solidcoding.validation.predicates.StringPredicate.hasALengthBetween;
 import static testutil.TestValue.TEST_CONTENT;
 
 class StringLengthConstraintPredicateBuilderTests {

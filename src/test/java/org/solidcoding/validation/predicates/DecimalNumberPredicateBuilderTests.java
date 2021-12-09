@@ -5,7 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.solidcoding.validation.api.Define;
 import org.solidcoding.validation.api.MakeSure;
 
-import static org.solidcoding.validation.predicates.DecimalNumberPredicateBuilder.*;
+import static org.solidcoding.validation.predicates.DecimalNumberPredicate.contains;
+import static org.solidcoding.validation.predicates.DecimalNumberPredicate.doesNotContain;
+import static org.solidcoding.validation.predicates.DecimalNumberPredicate.isBetween;
+import static org.solidcoding.validation.predicates.DecimalNumberPredicate.isEqualTo;
+import static org.solidcoding.validation.predicates.DecimalNumberPredicate.isNotNull;
 
 class DecimalNumberPredicateBuilderTests {
 
