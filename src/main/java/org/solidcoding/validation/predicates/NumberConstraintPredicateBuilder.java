@@ -2,7 +2,7 @@ package org.solidcoding.validation.predicates;
 
 import java.util.function.Predicate;
 
-final class NumberConstraintPredicateBuilder implements ChainingPredicate<Integer, Predicate<Integer>> {
+final class NumberConstraintPredicateBuilder implements ContinuingPredicate<Integer, Predicate<Integer>> {
 
     private final ObjectPredicateBuilder<Integer> originalPredicate;
     private final int first;

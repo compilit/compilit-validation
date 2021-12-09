@@ -1,6 +1,6 @@
 package org.solidcoding.validation.predicates;
 
-public interface ChainingPredicate<T, R> {
+public interface ContinuingPredicate<T, R> {
 
     /**
      * @param second second of the constraints. Can be either the high constraint or the low constraint.

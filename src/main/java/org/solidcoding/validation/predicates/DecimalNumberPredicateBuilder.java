@@ -24,7 +24,7 @@ public final class DecimalNumberPredicateBuilder extends ObjectPredicateBuilder<
      *              constraint.
      * @return a ChainingPredicate to add the second constraint.
      */
-    public static ChainingPredicate<Double, Predicate<Double>> isBetween(double first) {
+    public static ContinuingPredicate<Double, Predicate<Double>> isBetween(double first) {
         return new DecimalNumberConstraintPredicate(first);
     }
 

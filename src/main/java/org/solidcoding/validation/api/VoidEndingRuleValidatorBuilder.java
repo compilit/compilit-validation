@@ -2,11 +2,11 @@ package org.solidcoding.validation.api;
 
 import java.util.function.Function;
 
-final class VoidEndingValidator<T> extends AbstractLoggingValidator<T> implements VoidValidator {
+final class VoidEndingRuleValidatorBuilder<T> extends AbstractLoggingValidator<T> implements VoidEndingValidationBuilder {
 
     private final Runnable runnable;
 
-    VoidEndingValidator(Runnable runnable, ContinuingValidator<T> validator) {
+    VoidEndingRuleValidatorBuilder(Runnable runnable, ContinuingValidationBuilder<T> validator) {
         super(validator);
         this.runnable = runnable;
     }

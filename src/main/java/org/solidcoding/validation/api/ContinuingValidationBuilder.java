@@ -3,14 +3,14 @@ package org.solidcoding.validation.api;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public interface ContinuingValidator<T> extends ThrowingValidator<Boolean> {
+public interface ContinuingValidationBuilder<T> extends ThrowingValidator<Boolean> {
 
     /**
      * @return the failure message;
      */
     String getMessage();
 
-    ContinuingValidator<T> and(Rule<T> rule);
+    ContinuingValidationBuilder<T> and(Rule<T> rule);
 
     /**
      * @return boolean true if all rules pass. False if at least one rule fails.
@@ -24,7 +24,7 @@ public interface ContinuingValidator<T> extends ThrowingValidator<Boolean> {
      * @param <R>      the type you wish to return.
      * @return R in the form of a supplier.
      */
-    <R> ReturningValidator<R> andThen(Supplier<R> supplier);
+    <R> ReturningValidationBuilder<R> andThen(Supplier<R> supplier);
 
     /**
      * Same as validate(); but returns a custom object in the form of a supplier.
@@ -32,7 +32,7 @@ public interface ContinuingValidator<T> extends ThrowingValidator<Boolean> {
      * @param runnable the runnable process which should be started after successful validation.
      * @return R in the form of a supplier.
      */
-    VoidValidator andThen(Runnable runnable);
+    VoidEndingValidationBuilder andThen(Runnable runnable);
 
     /**
      * @param other the backup/default return type if the validation fails.

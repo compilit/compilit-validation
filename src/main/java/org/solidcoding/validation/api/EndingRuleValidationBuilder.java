@@ -3,11 +3,11 @@ package org.solidcoding.validation.api;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-final class EndingValidator<T, R> extends AbstractLoggingValidator<T> implements ReturningValidator<R> {
+final class EndingRuleValidationBuilder<T, R> extends AbstractLoggingValidator<T> implements ReturningValidationBuilder<R> {
 
     private final Supplier<R> supplier;
 
-    EndingValidator(Supplier<R> supplier, ContinuingValidator<T> validator) {
+    EndingRuleValidationBuilder(Supplier<R> supplier, ContinuingValidationBuilder<T> validator) {
         super(validator);
         this.supplier = supplier;
     }

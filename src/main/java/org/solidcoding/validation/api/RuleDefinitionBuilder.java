@@ -1,8 +1,9 @@
 package org.solidcoding.validation.api;
 
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
-final class RuleDefinitionBuilder<T> implements RuleBuilder<T> {
+public final class RuleDefinitionBuilder<T> implements RuleBuilder<T> {
 
     private final Predicate<T> predicate;
 
@@ -18,4 +19,21 @@ final class RuleDefinitionBuilder<T> implements RuleBuilder<T> {
         return new RuleDefinition<>(predicate, failMessage);
     }
 
+    public static final class Extended<T> implements RuleBuilder.Extended<T> {
+        private final BiPredicate<T, Object> predicate;
+
+        public Extended(BiPredicate<T, Object> predicate) {
+            this.predicate = predicate;
+        }
+
+        @Override
+        public Rule.Extended<T> otherWiseReport(String failMessage, Object... formatArguments) {
+            if (formatArguments != null) {
+                var actualMessage = String.format(failMessage, formatArguments);
+                return new RuleDefinition.Extended<>(predicate, actualMessage);
+            }
+            return new RuleDefinition.Extended<>(predicate, failMessage);
+        }
+
+    }
 }

@@ -2,7 +2,7 @@ package org.solidcoding.validation.predicates;
 
 import java.util.function.Predicate;
 
-final class DecimalNumberConstraintPredicate implements ChainingPredicate<Double, Predicate<Double>> {
+final class DecimalNumberConstraintPredicate implements ContinuingPredicate<Double, Predicate<Double>> {
 
     private final ObjectPredicateBuilder<Double> originalPredicate;
     private final double first;

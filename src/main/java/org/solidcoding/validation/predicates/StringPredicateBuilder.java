@@ -97,7 +97,7 @@ public final class StringPredicateBuilder extends ObjectPredicateBuilder<String>
      * @param length the exact length of the String.
      * @return ChainingPredicate to continue adding rules.
      */
-    public static ChainingPredicate<Integer, Predicate<String>> hasALengthBetween(int length) {
+    public static ContinuingPredicate<Integer, Predicate<String>> hasALengthBetween(int length) {
         return new StringLengthConstraintPredicateBuilder(length);
     }
 

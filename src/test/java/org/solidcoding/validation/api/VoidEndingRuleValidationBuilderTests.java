@@ -7,32 +7,32 @@ import org.slf4j.Logger;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
-class VoidEndingValidatorTests {
+class VoidEndingRuleValidationBuilderTests {
 
     private static final String FAIL_MESSAGE = "failure";
 
     @Test
     void orElseThrow_valid_shouldReturnVoid() {
-        var continuingValidator = Mockito.mock(ContinuingValidator.class);
+        var continuingValidator = Mockito.mock(ContinuingValidationBuilder.class);
         Mockito.when(continuingValidator.validate()).thenReturn(true);
-        var validator = new VoidEndingValidator<String>(() -> System.out.println("yay"), continuingValidator);
+        var validator = new VoidEndingRuleValidatorBuilder<String>(() -> System.out.println("yay"), continuingValidator);
         Assertions.assertThat(validator.orElseThrow(RuntimeException::new)).isNull();
     }
 
     @Test
     void orElseThrow_invalid_shouldReturnVoid() {
-        var continuingValidator = Mockito.mock(ContinuingValidator.class);
+        var continuingValidator = Mockito.mock(ContinuingValidationBuilder.class);
         Mockito.when(continuingValidator.validate()).thenReturn(false);
-        var validator = new VoidEndingValidator<String>(() -> fail(), continuingValidator);
+        var validator = new VoidEndingRuleValidatorBuilder<String>(() -> fail(), continuingValidator);
         Assertions.assertThatThrownBy(() -> validator.orElseThrow(RuntimeException::new)).isInstanceOf(RuntimeException.class);
     }
 
     @Test
     void orElseLogInfo_validInput_shouldNotLog() {
         var logger = Mockito.mock(Logger.class);
-        var continuingValidator = Mockito.mock(ContinuingValidator.class);
+        var continuingValidator = Mockito.mock(ContinuingValidationBuilder.class);
         Mockito.when(continuingValidator.validate()).thenReturn(true);
-        var validator = new VoidEndingValidator<String>(() -> System.out.println("yay"), continuingValidator);
+        var validator = new VoidEndingRuleValidatorBuilder<String>(() -> System.out.println("yay"), continuingValidator);
         validator.orElseLogInfo(logger);
         Mockito.verifyNoInteractions(logger);
     }
@@ -40,10 +40,10 @@ class VoidEndingValidatorTests {
     @Test
     void orElseLogInfo_invalidInput_shouldLog() {
         var logger = Mockito.mock(Logger.class);
-        var continuingValidator = Mockito.mock(ContinuingValidator.class);
+        var continuingValidator = Mockito.mock(ContinuingValidationBuilder.class);
         Mockito.when(continuingValidator.validate()).thenReturn(false);
         Mockito.when(continuingValidator.getMessage()).thenReturn(FAIL_MESSAGE);
-        var validator = new VoidEndingValidator<String>(() -> fail(), continuingValidator);
+        var validator = new VoidEndingRuleValidatorBuilder<String>(() -> fail(), continuingValidator);
         validator.orElseLogInfo(logger);
         Mockito.verify(logger).info(FAIL_MESSAGE);
     }
@@ -51,9 +51,9 @@ class VoidEndingValidatorTests {
     @Test
     void orElseLogWarn_validInput_shouldNotLog() {
         var logger = Mockito.mock(Logger.class);
-        var continuingValidator = Mockito.mock(ContinuingValidator.class);
+        var continuingValidator = Mockito.mock(ContinuingValidationBuilder.class);
         Mockito.when(continuingValidator.validate()).thenReturn(true);
-        var validator = new VoidEndingValidator<String>(() -> System.out.println("yay"), continuingValidator);
+        var validator = new VoidEndingRuleValidatorBuilder<String>(() -> System.out.println("yay"), continuingValidator);
         validator.orElseLogWarn(logger);
         Mockito.verifyNoInteractions(logger);
     }
@@ -61,10 +61,10 @@ class VoidEndingValidatorTests {
     @Test
     void orElseLogWarn_invalidInput_shouldLog() {
         var logger = Mockito.mock(Logger.class);
-        var continuingValidator = Mockito.mock(ContinuingValidator.class);
+        var continuingValidator = Mockito.mock(ContinuingValidationBuilder.class);
         Mockito.when(continuingValidator.validate()).thenReturn(false);
         Mockito.when(continuingValidator.getMessage()).thenReturn(FAIL_MESSAGE);
-        var validator = new VoidEndingValidator<String>(() -> fail(), continuingValidator);
+        var validator = new VoidEndingRuleValidatorBuilder<String>(() -> fail(), continuingValidator);
         validator.orElseLogWarn(logger);
         Mockito.verify(logger).warn(FAIL_MESSAGE);
     }
@@ -72,9 +72,9 @@ class VoidEndingValidatorTests {
     @Test
     void orElseLogError_validInput_shouldNotLog() {
         var logger = Mockito.mock(Logger.class);
-        var continuingValidator = Mockito.mock(ContinuingValidator.class);
+        var continuingValidator = Mockito.mock(ContinuingValidationBuilder.class);
         Mockito.when(continuingValidator.validate()).thenReturn(true);
-        var validator = new VoidEndingValidator<String>(() -> System.out.println("yay"), continuingValidator);
+        var validator = new VoidEndingRuleValidatorBuilder<String>(() -> System.out.println("yay"), continuingValidator);
         validator.orElseLogError(logger);
         Mockito.verifyNoInteractions(logger);
     }
@@ -82,10 +82,10 @@ class VoidEndingValidatorTests {
     @Test
     void orElseLogError_invalidInput_shouldLog() {
         var logger = Mockito.mock(Logger.class);
-        var continuingValidator = Mockito.mock(ContinuingValidator.class);
+        var continuingValidator = Mockito.mock(ContinuingValidationBuilder.class);
         Mockito.when(continuingValidator.validate()).thenReturn(false);
         Mockito.when(continuingValidator.getMessage()).thenReturn(FAIL_MESSAGE);
-        var validator = new VoidEndingValidator<String>(() -> fail(), continuingValidator);
+        var validator = new VoidEndingRuleValidatorBuilder<String>(() -> fail(), continuingValidator);
         validator.orElseLogError(logger);
         Mockito.verify(logger).error(FAIL_MESSAGE);
     }

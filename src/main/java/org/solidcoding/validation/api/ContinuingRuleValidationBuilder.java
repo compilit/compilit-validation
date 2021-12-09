@@ -1,19 +1,32 @@
 package org.solidcoding.validation.api;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-final class ContinuingPredicateValidator<T> implements ContinuingValidator<T> {
+final class ContinuingRuleValidationBuilder<T> implements ContinuingValidationBuilder<T> {
 
     static final String DEFAULT_MESSAGE = "Nothing to report";
-    private final List<Rule<T>> ruleDefinitions;
+    private final List<Rule<T>> ruleDefinitions = new ArrayList<>();
+    private final List<Rule.Extended<T>> xRuleDefinitions = new ArrayList<>();
     private final T value;
+    private final Object argument;
     private String message;
+    private final boolean isExtended;
 
-    ContinuingPredicateValidator(List<Rule<T>> ruleDefinitions, T value) {
-        this.ruleDefinitions = ruleDefinitions;
+    ContinuingRuleValidationBuilder(List<Rule<T>> ruleDefinitions, T value) {
+        this.ruleDefinitions.addAll(ruleDefinitions);
         this.value = value;
+        this.argument = null;
+        this.isExtended = false;
+    }
+
+    ContinuingRuleValidationBuilder(List<Rule.Extended<T>> xRuleDefinitions, T value, Object argument) {
+        this.xRuleDefinitions.addAll(xRuleDefinitions);
+        this.value = value;
+        this.argument = argument;
+        this.isExtended = true;
     }
 
     @Override
@@ -24,7 +37,7 @@ final class ContinuingPredicateValidator<T> implements ContinuingValidator<T> {
     }
 
     @Override
-    public ContinuingValidator<T> and(Rule<T> rule) {
+    public ContinuingValidationBuilder<T> and(Rule<T> rule) {
         ruleDefinitions.add(rule);
         return this;
     }
@@ -34,6 +47,14 @@ final class ContinuingPredicateValidator<T> implements ContinuingValidator<T> {
         message = DEFAULT_MESSAGE;
         var stringBuilder = new StringBuilder();
         var isValid = true;
+        if (isExtended) {
+            for (var biRuleDefinition : xRuleDefinitions) {
+                if (!biRuleDefinition.test(value, argument)) {
+                    stringBuilder.append("Broken rule: ").append(biRuleDefinition.getFailMessage()).append("\n");
+                    isValid = false;
+                }
+            }
+        }
         for (var ruleDefinition : ruleDefinitions) {
             if (!ruleDefinition.test(value)) {
                 stringBuilder.append("Broken rule: ").append(ruleDefinition.getFailMessage()).append("\n");
@@ -47,13 +68,13 @@ final class ContinuingPredicateValidator<T> implements ContinuingValidator<T> {
     }
 
     @Override
-    public <R> ReturningValidator<R> andThen(Supplier<R> supplier) {
-        return new EndingValidator<>(supplier, this);
+    public <R> ReturningValidationBuilder<R> andThen(Supplier<R> supplier) {
+        return new EndingRuleValidationBuilder<>(supplier, this);
     }
 
     @Override
-    public VoidValidator andThen(Runnable runnable) {
-        return new VoidEndingValidator<>(runnable, this);
+    public VoidEndingValidationBuilder andThen(Runnable runnable) {
+        return new VoidEndingRuleValidatorBuilder<>(runnable, this);
     }
 
 

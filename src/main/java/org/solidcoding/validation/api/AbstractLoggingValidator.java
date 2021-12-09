@@ -4,9 +4,9 @@ import org.slf4j.Logger;
 
 public abstract class AbstractLoggingValidator<T> implements LoggingValidator {
 
-    protected final ContinuingValidator<T> validator;
+    protected final ContinuingValidationBuilder<T> validator;
 
-    protected AbstractLoggingValidator(ContinuingValidator<T> validator) {
+    protected AbstractLoggingValidator(ContinuingValidationBuilder<T> validator) {
         this.validator = validator;
     }
 

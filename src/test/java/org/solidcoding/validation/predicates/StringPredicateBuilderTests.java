@@ -2,7 +2,7 @@ package org.solidcoding.validation.predicates;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.solidcoding.validation.api.Define;
+import org.solidcoding.validation.newapi.Define;
 import org.solidcoding.validation.api.MakeSure;
 
 import java.util.function.Supplier;

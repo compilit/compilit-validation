@@ -2,7 +2,7 @@ package org.solidcoding.validation.api;
 
 import java.util.function.Function;
 
-public interface ReturningValidator<R> extends ThrowingValidator<R>, LoggingValidator {
+public interface ReturningValidationBuilder<R> extends ThrowingValidator<R>, LoggingValidator {
 
     /**
      * @param other the backup/default return type if the validation fails.

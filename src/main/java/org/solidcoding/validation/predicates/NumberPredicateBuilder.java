@@ -39,7 +39,7 @@ public final class NumberPredicateBuilder extends ObjectPredicateBuilder<Integer
      *                             constraint.
      * @return a ChainingPredicate to add the second constraint.
      */
-    public static ChainingPredicate<Integer, Predicate<Integer>> isBetween(int first) {
+    public static ContinuingPredicate<Integer, Predicate<Integer>> isBetween(int first) {
         return new NumberConstraintPredicateBuilder(first, new ObjectPredicateBuilder<>());
     }
 

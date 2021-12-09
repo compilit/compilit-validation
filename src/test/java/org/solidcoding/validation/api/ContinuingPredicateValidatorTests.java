@@ -12,8 +12,8 @@ class ContinuingPredicateValidatorTests {
         var value = "test";
         var rules = new ArrayList<Rule<String>>();
         rules.add(new RuleDefinition<>(x -> true, "failure"));
-        var predicate = new ContinuingPredicateValidator<>(rules, value);
-        Assertions.assertThat(predicate.getMessage()).isEqualTo(ContinuingPredicateValidator.DEFAULT_MESSAGE);
+        var predicate = new ContinuingRuleValidationBuilder<>(rules, value);
+        Assertions.assertThat(predicate.getMessage()).isEqualTo(ContinuingRuleValidationBuilder.DEFAULT_MESSAGE);
     }
 
     @Test
@@ -21,10 +21,10 @@ class ContinuingPredicateValidatorTests {
         var value = "test";
         var rules = new ArrayList<Rule<String>>();
         rules.add(new RuleDefinition<>(x -> true, "failure"));
-        var predicate = new ContinuingPredicateValidator<>(rules, value);
-        Assertions.assertThat(predicate.getMessage()).isEqualTo(ContinuingPredicateValidator.DEFAULT_MESSAGE);
+        var predicate = new ContinuingRuleValidationBuilder<>(rules, value);
+        Assertions.assertThat(predicate.getMessage()).isEqualTo(ContinuingRuleValidationBuilder.DEFAULT_MESSAGE);
         predicate.validate();
-        Assertions.assertThat(predicate.getMessage()).isEqualTo(ContinuingPredicateValidator.DEFAULT_MESSAGE);
+        Assertions.assertThat(predicate.getMessage()).isEqualTo(ContinuingRuleValidationBuilder.DEFAULT_MESSAGE);
     }
 
     @Test
@@ -33,8 +33,8 @@ class ContinuingPredicateValidatorTests {
         var value = "test";
         var rules = new ArrayList<Rule<String>>();
         rules.add(new RuleDefinition<>(x -> false, "failure"));
-        var predicate = new ContinuingPredicateValidator<>(rules, value);
-        Assertions.assertThat(predicate.getMessage()).isEqualTo(ContinuingPredicateValidator.DEFAULT_MESSAGE);
+        var predicate = new ContinuingRuleValidationBuilder<>(rules, value);
+        Assertions.assertThat(predicate.getMessage()).isEqualTo(ContinuingRuleValidationBuilder.DEFAULT_MESSAGE);
         predicate.validate();
         Assertions.assertThat(predicate.getMessage()).contains(failMessage);
     }
@@ -48,7 +48,7 @@ class ContinuingPredicateValidatorTests {
         var rule1 = new RuleDefinition<String>(x -> false, failMessage1);
         var rule2 = new RuleDefinition<String>(x -> false, failMessage2);
         rules.add(rule1);
-        var predicate = new ContinuingPredicateValidator<>(rules, value);
+        var predicate = new ContinuingRuleValidationBuilder<>(rules, value);
         predicate.and(rule2);
         predicate.validate();
         Assertions.assertThat(predicate.getMessage()).contains(failMessage1);
@@ -64,7 +64,7 @@ class ContinuingPredicateValidatorTests {
         var rule1 = new RuleDefinition<String>(x -> true, failMessage1);
         var rule2 = new RuleDefinition<String>(x -> false, failMessage2);
         rules.add(rule1);
-        var predicate = new ContinuingPredicateValidator<>(rules, value);
+        var predicate = new ContinuingRuleValidationBuilder<>(rules, value);
         predicate.and(rule2);
         predicate.validate();
         Assertions.assertThat(predicate.getMessage()).doesNotContain(failMessage1);
@@ -76,7 +76,7 @@ class ContinuingPredicateValidatorTests {
         var value = "test";
         var rules = new ArrayList<Rule<String>>();
         rules.add(new RuleDefinition<>(x -> true, "failure"));
-        var predicate = new ContinuingPredicateValidator<>(rules, value);
+        var predicate = new ContinuingRuleValidationBuilder<>(rules, value);
         predicate.andThen(() -> true).orElseReturn(false);
         Assertions.assertThat(predicate.validate()).isTrue();
     }
@@ -86,7 +86,7 @@ class ContinuingPredicateValidatorTests {
         var value = "test";
         var rules = new ArrayList<Rule<String>>();
         rules.add(new RuleDefinition<>(x -> false, "failure"));
-        var predicate = new ContinuingPredicateValidator<>(rules, value);
+        var predicate = new ContinuingRuleValidationBuilder<>(rules, value);
         Assertions.assertThat(predicate.andThen(() -> false).orElseReturn(true)).isTrue();
     }
 
@@ -95,7 +95,7 @@ class ContinuingPredicateValidatorTests {
         var value = "test";
         var rules = new ArrayList<Rule<String>>();
         rules.add(new RuleDefinition<>(x -> true, "failure"));
-        var predicate = new ContinuingPredicateValidator<>(rules, value);
+        var predicate = new ContinuingRuleValidationBuilder<>(rules, value);
         Assertions.assertThat(predicate.andThen(() -> true).orElseThrow(RuntimeException::new)).isTrue();
     }
 
@@ -104,7 +104,7 @@ class ContinuingPredicateValidatorTests {
         var value = "test";
         var rules = new ArrayList<Rule<String>>();
         rules.add(new RuleDefinition<>(x -> false, "failure"));
-        var predicate = new ContinuingPredicateValidator<>(rules, value);
+        var predicate = new ContinuingRuleValidationBuilder<>(rules, value);
         Assertions.assertThatThrownBy(() -> predicate.andThen(() -> false).orElseThrow(RuntimeException::new)).isInstanceOf(RuntimeException.class);
     }
 
@@ -113,7 +113,7 @@ class ContinuingPredicateValidatorTests {
         var value = true;
         var rules = new ArrayList<Rule<Boolean>>();
         rules.add(new RuleDefinition<>(x -> false, "failure"));
-        var predicate = new ContinuingPredicateValidator<>(rules, value);
+        var predicate = new ContinuingRuleValidationBuilder<>(rules, value);
         Assertions.assertThat(predicate.andThen(() -> true).orElseReturn(x -> false)).isFalse();
     }
 
@@ -122,7 +122,7 @@ class ContinuingPredicateValidatorTests {
         var value = true;
         var rules = new ArrayList<Rule<Boolean>>();
         rules.add(new RuleDefinition<>(x -> false, "failure"));
-        var predicate = new ContinuingPredicateValidator<>(rules, value);
+        var predicate = new ContinuingRuleValidationBuilder<>(rules, value);
         predicate.andThen(() -> false).orElseReturn(x -> false);
         Assertions.assertThat(predicate.validate()).isFalse();
     }
@@ -132,7 +132,7 @@ class ContinuingPredicateValidatorTests {
         var value = "test";
         var rules = new ArrayList<Rule<String>>();
         rules.add(new RuleDefinition<>(x -> true, "failure"));
-        var predicate = new ContinuingPredicateValidator<>(rules, value);
+        var predicate = new ContinuingRuleValidationBuilder<>(rules, value);
         predicate.andThen(() -> true).orElseReturn(false);
         Assertions.assertThat(predicate.validate()).isTrue();
     }
@@ -142,7 +142,7 @@ class ContinuingPredicateValidatorTests {
         var value = "test";
         var rules = new ArrayList<Rule<String>>();
         rules.add(new RuleDefinition<>(x -> true, "failure"));
-        var predicate = new ContinuingPredicateValidator<>(rules, value);
+        var predicate = new ContinuingRuleValidationBuilder<>(rules, value);
         predicate.andThen(() -> true).orElseReturn(false);
         Assertions.assertThat(predicate.validate()).isTrue();
     }
