@@ -2,11 +2,10 @@ package org.solidcoding.validation.api;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.solidcoding.validation.newapi.Define;
 import testutil.TestObject;
 
 import static org.solidcoding.validation.api.ContinuingRuleValidationBuilder.DEFAULT_MESSAGE;
-import static org.solidcoding.validation.newapi.ObjectPredicateBuilder.isA;
+import static org.solidcoding.validation.predicates.ObjectPredicateRuleBuilder.isA;
 import static org.solidcoding.validation.predicates.StringPredicateBuilder.contains;
 import static org.solidcoding.validation.predicates.StringPredicateBuilder.hasALengthBetween;
 import static org.solidcoding.validation.predicates.StringPredicateBuilder.isAlphabetic;

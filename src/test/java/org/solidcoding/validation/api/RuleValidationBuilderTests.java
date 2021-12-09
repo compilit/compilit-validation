@@ -2,7 +2,6 @@ package org.solidcoding.validation.api;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.solidcoding.validation.newapi.RuleDefinition;
 
 import java.util.List;
 
