@@ -19,44 +19,13 @@ abstract class AbstractLoggingValidator<T> implements LoggingValidator {
   }
 
   @Override
-  public void orElseLogInfo() {
-    orElseLogInfo(LoggerFactory.getLogger(Verifications.class));
+  public void orElseLogMessage() {
+    var logger = LoggerFactory.getLogger(Verifications.class);
+    orElseLogMessage(logger);
   }
 
   @Override
-  public void orElseLogWarn() {
-    orElseLogWarn(LoggerFactory.getLogger(Verifications.class));
-  }
-
-  @Override
-  public void orElseLogError() {
-    orElseLogError(LoggerFactory.getLogger(Verifications.class));
-  }
-
-  @Override
-  public void orElseLogInfo(final Logger logger) {
-    final var isValid = validator.validate();
-    if (!isValid) {
-      logger.info(validator.getMessage());
-      return;
-    }
-    if (runnable != null)
-      runnable.run();
-  }
-
-  @Override
-  public void orElseLogWarn(final Logger logger) {
-    final var isValid = validator.validate();
-    if (!isValid) {
-      logger.warn(validator.getMessage());
-      return;
-    }
-    if (runnable != null)
-      runnable.run();
-  }
-
-  @Override
-  public void orElseLogError(final Logger logger) {
+  public void orElseLogMessage(final Logger logger) {
     final var isValid = validator.validate();
     if (!isValid) {
       logger.error(validator.getMessage());

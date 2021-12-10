@@ -35,70 +35,24 @@ class VoidEndingRuleValidationBuilderTests extends AbstractTestWithContext {
   }
 
   @Test
-  void orElseLogInfo_validInput_shouldNotLog() {
+  void orElseLogMessage_validInput_shouldNotLog() {
     var logger = Mockito.mock(Logger.class);
     var continuingValidator = Mockito.mock(ContinuingValidationBuilder.class);
     Mockito.when(continuingValidator.validate()).thenReturn(true);
     var validator = new VoidEndingRuleValidatorBuilder<String>(super::interact, continuingValidator);
-    validator.orElseLogInfo(logger);
+    validator.orElseLogMessage(logger);
     Mockito.verifyNoInteractions(logger);
     Assertions.assertThat(hasBeenInteractedWith()).isTrue();
   }
 
   @Test
-  void orElseLogInfo_invalidInput_shouldLog() {
+  void orElseLogMessage_invalidInput_shouldLog() {
     var logger = Mockito.mock(Logger.class);
     var continuingValidator = Mockito.mock(ContinuingValidationBuilder.class);
     Mockito.when(continuingValidator.validate()).thenReturn(false);
     Mockito.when(continuingValidator.getMessage()).thenReturn(FAIL_MESSAGE);
     var validator = new VoidEndingRuleValidatorBuilder<String>(super::interact, continuingValidator);
-    validator.orElseLogInfo(logger);
-    Mockito.verify(logger).info(FAIL_MESSAGE);
-    Assertions.assertThat(hasBeenInteractedWith()).isFalse();
-  }
-
-  @Test
-  void orElseLogWarn_validInput_shouldNotLog() {
-    var logger = Mockito.mock(Logger.class);
-    var continuingValidator = Mockito.mock(ContinuingValidationBuilder.class);
-    Mockito.when(continuingValidator.validate()).thenReturn(true);
-    var validator = new VoidEndingRuleValidatorBuilder<String>(super::interact, continuingValidator);
-    validator.orElseLogWarn(logger);
-    Mockito.verifyNoInteractions(logger);
-    Assertions.assertThat(hasBeenInteractedWith()).isTrue();
-  }
-
-  @Test
-  void orElseLogWarn_invalidInput_shouldLog() {
-    var logger = Mockito.mock(Logger.class);
-    var continuingValidator = Mockito.mock(ContinuingValidationBuilder.class);
-    Mockito.when(continuingValidator.validate()).thenReturn(false);
-    Mockito.when(continuingValidator.getMessage()).thenReturn(FAIL_MESSAGE);
-    var validator = new VoidEndingRuleValidatorBuilder<String>(super::interact, continuingValidator);
-    validator.orElseLogWarn(logger);
-    Mockito.verify(logger).warn(FAIL_MESSAGE);
-    Assertions.assertThat(hasBeenInteractedWith()).isFalse();
-  }
-
-  @Test
-  void orElseLogError_validInput_shouldNotLog() {
-    var logger = Mockito.mock(Logger.class);
-    var continuingValidator = Mockito.mock(ContinuingValidationBuilder.class);
-    Mockito.when(continuingValidator.validate()).thenReturn(true);
-    var validator = new VoidEndingRuleValidatorBuilder<String>(super::interact, continuingValidator);
-    validator.orElseLogError(logger);
-    Mockito.verifyNoInteractions(logger);
-    Assertions.assertThat(hasBeenInteractedWith()).isTrue();
-  }
-
-  @Test
-  void orElseLogError_invalidInput_shouldLog() {
-    var logger = Mockito.mock(Logger.class);
-    var continuingValidator = Mockito.mock(ContinuingValidationBuilder.class);
-    Mockito.when(continuingValidator.validate()).thenReturn(false);
-    Mockito.when(continuingValidator.getMessage()).thenReturn(FAIL_MESSAGE);
-    var validator = new VoidEndingRuleValidatorBuilder<String>(super::interact, continuingValidator);
-    validator.orElseLogError(logger);
+    validator.orElseLogMessage(logger);
     Mockito.verify(logger).error(FAIL_MESSAGE);
     Assertions.assertThat(hasBeenInteractedWith()).isFalse();
   }
