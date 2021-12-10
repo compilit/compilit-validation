@@ -56,6 +56,10 @@ public class ObjectPredicate<T> implements Predicate<T>, PredicateAppender<T> {
         return new ObjectPredicate<>(Objects::nonNull);
     }
 
+    static <T> Predicate<T> isNull() {
+        return new ObjectPredicate<>(Objects::isNull);
+    }
+
     static <T> Predicate<T> contains(Object value, Object... values) {
         Predicate<T> predicate = x -> x.toString().contains(value.toString());
         for (final var c : values) {

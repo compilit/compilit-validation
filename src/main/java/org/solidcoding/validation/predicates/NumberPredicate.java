@@ -9,7 +9,7 @@ public final class NumberPredicate extends ObjectPredicate<Integer> {
     }
 
     /**
-     * Checks whether the actual value is present.*
+     * Checks whether the actual value is present.
      *
      * @return Predicate to continue adding rules.
      */
@@ -17,6 +17,14 @@ public final class NumberPredicate extends ObjectPredicate<Integer> {
         return ObjectPredicate.isNotNull();
     }
 
+    /**
+     * Checks whether the actual value is not present.
+     *
+     * @return Predicate to continue adding rules.
+     */
+    public static Predicate<Integer> isNull() {
+        return ObjectPredicate.isNull();
+    }
     /**
      * Check if the actual value is equal to the given one.
      *

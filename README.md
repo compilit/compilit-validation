@@ -4,113 +4,167 @@ A small package that enables validation of (business) rules through a fluent API
 
 # Installation
 
-Get this dependency with the latest version
+Get this dependency with the latest version.
 
-```
-    <dependency>
-      <artifactId>solidcoding-validation</artifactId>
-      <groupId>org.solidcoding</groupId>
-    </dependency>
+```xml
+
+<dependency>
+    <artifactId>solidcoding-validation</artifactId>
+    <groupId>org.solidcoding</groupId>
+</dependency>
 ```
 
 # Usage
 
-The package offers a set of Predicates to define business rules that can be validated through the Validator class. The
-idea is that a rule should be a separate entity that can either be part of an object or passed throughout your
-application. An individual value or object can then be tested against these rules when needed. A rule is in fact an
-extension of the Predicate class. This extension allows you to add a message that is associated with the failure of this
-rule.
+The package offers a set of Predicates to define (business) rules which can then be validated through the Verify class.
+The idea is that a rule should be a separate entity that can either be part of an object or passed throughout your
+application. An individual value or object can then be tested against these rules when needed. A Rule is in fact an
+extension of the Predicate class. And a Rule.Extended is an extension of the BiPredicate class. These extensions allow
+you to add a message that is associated with the potential failure of this rule.
 
-First define a rule (another Predicate containing a fail message) using the Define entrypoint for the fluent API. Here
-are some examples:
+You first define a Rule using the Define entrypoint for the fluent API.
+Then, whenever needed, you validate the rule, using the Verify entrypoint. The fluent API helps you define what needs to
+happen after successful validation or after a failed validation.
 
+Here are some examples:
+
+```java
+class Example {
+    // Normally you would rarely use the 'validate()' method yourself. Instead, you should use the strength of the fluent API to determine what needs to be returned and when.
+
+    Rule<String> rule = Define.thatIt(contains("test")).otherwiseReport("It does not contain 'test'");
+    boolean result = Verify.that("test").compliesWith(rule).validate(); //A basic Predicate validation.
+
+    Rule.Extended<String> rule = Define.thatIt(isA(String.class).where((it, argument) -> it.equals(argument))).otherwiseReport("It does not equal given argument");
+    boolean result = Verify.that("test").compliesWith(rule).whileApplying("some argument").validate(); //A basic BiPredicate validation, which is why the 'whileApplying' method is inserted.
+
+}
 ```
-    var rule = Define.thatIt(contains("test")).otherwiseReport("it does not contain 'test'");
+
+Other examples of rule definitions:
+
+```java
+class Example {
     
-    var rule = Define.thatIt(isEqualTo("test")).otherwiseReport("it is not equal to 'test'");
+    Rule<String> rule = Define.thatIt(isEqualTo("test")).otherwiseReport("It does not equal to 'test'");
 
-    var rule = Define.thatIt(hasALengthOf(4)).otherwiseReport("One or more rules failed");
+    Rule<String> rule = Define.thatIt(hasALengthOf(4)).otherwiseReport("It does not have a length of '4'");
 
-    var rule = Define.thatIt(isA(String.class).where(it -> it.contains("test"))).otherwiseReport("I am a failure");
-   
-    var rule = Define.thatIt(isA(TestClass.class).where(it -> it.hasSomeProperty()).otherwiseReport("I am a failure");
+    Rule<String> rule = Define.thatIt(isA(String.class).where(it -> it.contains("test"))).otherwiseReport("It does not contain 'test'");
+
+    Rule<TestObject> rule = Define.thatIt(isA(TestObject.class).where(it -> it.hasSomeProperty())).otherwiseReport("It doesn't have some property");
+
+    Rule<TestObject> rule = Define.thatIt(isA(TestObject.class).that(TestObject::isAwesome)).otherwiseReport("It is not awesome");
+
+    Rule<String> rule = Define.thatIt(isAlphabetic()).otherwiseReport("It is not alphabetic");
+
+    Rule<Integer> rule = Define.thatIt(isEqualTo(2)).otherwiseReport("It is not equal to '2'");
+
+    Rule<Integer> rule = Define.thatIt(isBetween(1).and(5)).otherwiseReport("It is not between '1' and '5'");
+
+    Rule<Double> rule = Define.thatIt(isBetween(.1).and(.5)).otherwiseReport("It is not between '.1' and '.5'");
+
+    Rule<Integer> rule = Define.thatIt(hasAmountOfDigits(10)).otherwiseReport("It does not have exactly '10' digits");
     
-    var rule = Define.thatIt(isA(TestObject.class).that(x -> x.isAwesome())).otherwiseReport("I am a failure"); 
-
-    var rule = Define.thatIt(isAlphabetic()).otherwiseReport("I am a failure");
-
-    var rule = Define.thatIt(isEqualTo(2)).otherwiseReport("I am a failure");
-
-    var rule = Define.thatIt(isANumber().between(1).and(5)).otherwiseReport("I am a failure");
-
-    var rule = Define.thatIt(hasAmountOfDigits(10)).otherwiseReport("I am a failure");
-    
+}
 ```
 
-Then validate the rule (returning a boolean):
+You can define what Exception should be thrown if a rule is broken:
 
-```
-    var result = MakeSure.that("test").compliesWith(rule).validate();
-```
+```java
+class Example {
 
-Or define what Exception should be thrown if a rule is broken (otherwise also returning a boolean):
+    boolean result = Verify.that("test").compliesWith(rule).orElseThrow(message -> new RuntimeException(message));
 
-```
-    var result = MakeSure.that("test").compliesWith(rule).orElseThrow(new RuntimeException("whoops!));
+}
 ```
 
-You can also chain multiple rules for one value:
+You can define what values should be returned if a rule is broken:
 
+```java
+class Example {
+
+    String result = Verify.that("test").compliesWith(rule).orElseReturn("Some other String");
+
+}
 ```
-    var result = MakeSure.that("test")
-        .compliesWith(rule1)
-        .and(rule2)
-        .orElseThrow(new RuntimeException("whoops!));
+
+You can chain multiple rules for one value:
+
+```java
+class Example {
+
+    boolean verify() {
+        return Verify.that("test")
+                .compliesWith(rule1)
+                .and(rule2)
+                .and(etc)
+                .orElseThrow(message -> new RuntimeException(message));
+    }
+}
 ```
 
 Finally, after validating, it's also possible to chain a process by passing a supplier. Because it returns an actual
 value, the orElse clause is required to finish the statement:
 
-```
-    return MakeSure.that("test")
-        .compliesWith(rule)
-        .andThen(() -> someAction())
-        .orElseThrow(new RuntimeException("whoops!));
+```java
+class Example {
+
+    boolean verify() {
+        return Verify.that("test")
+                .compliesWith(rule)
+                .andThen(() -> someAction())
+                .orElseThrow(message -> new RuntimeException(message));
+    }
+
+}
 ```
 
 Currently, the package offers string Predicates, number Predicates, decimal number predicates and custom object
-predicates. These are all convenience methods and more will likely be added in the future. But the real strength lies in
-adding your own custom predicates.
+predicates.
 
 ### Custom Predicate<T> implementations
 
 Just to be clear, here is an example of how one would define custom, more complex Predicates about some object.
 
-```
-var rule = Define.thatIt(hasSomeAmazingProperties());
+```java
+class Example {
 
-private Predicate<CustomObject> hasSomeAmazingProperties() {
-  return input -> {
-    (...something something input something...)
-  };
+    private final Rule<TestObject> rule = Define.thatIt(isA(CustomObject.class).that(hasSomeAmazingProperties()));
+    //or even simpler, because in the end, it's just a Predicate or BiPredicate...
+    private final Rule<TestObject> rule = Define.thatIt(hasSomeAmazingProperties());
+
+    private Predicate<CustomObject> hasSomeAmazingProperties() {
+        return input -> {
+            // (...some boolean returning validation about 'input'...)
+        };
+    }
+
+    boolean verify() {
+        return Verify.that(value)
+                .compliesWith(rule)
+                .andThen(() -> performThisAction())
+                .orElseThrow(new Exception());
+    }
+
 }
-
-
-MakeSure.that(value)
-    .compliesWith(rule)
-    .andThen(() -> performThisAction())
-    .orElseThrow(new Exception());
 ```
 
 ### When validation takes place
 
 It should be noted that no validation will be taking place until requested by the validate() or the orElse*() methods.
-Requesting the message before validation has taken place will always result in a placeholder message like "Nothing
-to report". If you would like to get the message of a validation. You could do it like this:
+Requesting the message before validation has taken place will always result in a placeholder message like "Nothing to
+report". If you would like to get the message of a validation. You could do it like this:
 
-```
-    var validator = MakeSure.that(value).compliesWith(rule);
-    validator.validate();
-    var actual = validator.getMessage();
+```java
+class Example {
+
+    String verify() {
+        var validator = Verify.that(value).compliesWith(rule);
+        validator.validate();
+        return validator.getMessage();
+    }
+
+}
 ```
 

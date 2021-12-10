@@ -43,6 +43,12 @@ final class ContinuingRuleValidationBuilder<T> implements ContinuingValidationBu
     }
 
     @Override
+    public ContinuingValidationBuilder<T> and(Rule.Extended<T> rule) {
+        xRuleDefinitions.add(rule);
+        return this;
+    }
+
+    @Override
     public boolean validate() {
         final var stringBuilder = new StringBuilder();
         var isValid = true;

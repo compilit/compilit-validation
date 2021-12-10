@@ -12,7 +12,7 @@ final class RuleDefinitionBuilder<T> implements RuleBuilder<T> {
     }
 
     @Override
-    public Rule<T> otherWiseReport(final String message, final Object... formatArguments) {
+    public Rule<T> otherwiseReport(final String message, final Object... formatArguments) {
         if (formatArguments != null) {
             final var actualMessage = String.format(message, formatArguments);
             return new RuleDefinition<>(predicate, actualMessage);
@@ -29,7 +29,7 @@ final class RuleDefinitionBuilder<T> implements RuleBuilder<T> {
         }
 
         @Override
-        public Rule.Extended<T> otherWiseReport(final String message, final Object... formatArguments) {
+        public Rule.Extended<T> otherwiseReport(final String message, final Object... formatArguments) {
             if (formatArguments != null) {
                 final var actualMessage = String.format(message, formatArguments);
                 return new RuleDefinition.Extended<>(predicate, actualMessage);

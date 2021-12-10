@@ -1,8 +1,8 @@
 package org.solidcoding.validation.api;
 
-public final class MakeSure {
+public final class Verify {
 
-    private MakeSure() {
+    private Verify() {
     }
 
     /**

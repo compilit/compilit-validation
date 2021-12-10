@@ -21,4 +21,20 @@ public interface PredicateAppender<T> {
         return predicate;
     }
 
+    /**
+     * @param predicate the custom predicate to test against properties of T.
+     * @return Predicate to continue adding rules.
+     */
+    default Predicate<T> that(final Predicate<T> predicate) {
+        return predicate;
+    }
+
+    /**
+     * @param predicate the custom predicate to test against properties of T.
+     * @return Predicate to continue adding rules.
+     */
+    default BiPredicate<T, Object> that(final BiPredicate<T, Object> predicate) {
+        return predicate;
+    }
+
 }

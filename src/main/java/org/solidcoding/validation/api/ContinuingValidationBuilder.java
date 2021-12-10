@@ -19,6 +19,14 @@ public interface ContinuingValidationBuilder<T> extends ThrowingValidator<Boolea
     ContinuingValidationBuilder<T> and(Rule<T> rule);
 
     /**
+     * Connect your current predicate to another one.
+     *
+     * @param rule the next rule you wish to connect to the pipe.
+     * @return ContinuingValidationBuilder to continue adding rules.
+     */
+    ContinuingValidationBuilder<T> and(Rule.Extended<T> rule);
+
+    /**
      * @return boolean true if all rules pass. False if at least one rule fails.
      */
     boolean validate();

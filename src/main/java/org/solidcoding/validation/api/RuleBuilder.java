@@ -7,7 +7,7 @@ public interface RuleBuilder<T> {
      * @param formatArguments the extra arguments you wish to place on the standardized format '%s' placeholders.
      * @return the finished Rule, ready to validate.
      */
-    Rule<T> otherWiseReport(String message, Object... formatArguments);
+    Rule<T> otherwiseReport(String message, Object... formatArguments);
 
     interface Extended<T> {
 
@@ -16,6 +16,6 @@ public interface RuleBuilder<T> {
          * @param formatArguments the extra arguments you wish to place on the standardized format '%s' placeholders.
          * @return the finished Rule, ready to validate.
          */
-        Rule.Extended<T> otherWiseReport(String message, Object... formatArguments);
+        Rule.Extended<T> otherwiseReport(String message, Object... formatArguments);
     }
 }
