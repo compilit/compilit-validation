@@ -130,9 +130,9 @@ Just to be clear, here is an example of how one would define custom, more comple
 ```java
 class Example {
 
-  private final Rule<TestObject> rule = Define.thatIt(isA(CustomObject.class).that(hasSomeAmazingProperties()));
-  //or even simpler, because in the end, it's just a Predicate or BiPredicate...
-  private final Rule<TestObject> rule = Define.thatIt(hasSomeAmazingProperties());
+  private final Rule<TestObject> rule = Define.thatIt(isA(CustomObject.class).that(hasSomeAmazingProperties())).otherwiseReport("It doesn't have some amazing properties");
+  //or even simpler (but maybe not as clear), because in the end, it's just a Predicate or BiPredicate...
+  private final Rule<TestObject> rule = Define.thatIt(hasSomeAmazingProperties()).otherwiseReport("It doesn't have some amazing properties");
 
   private Predicate<CustomObject> hasSomeAmazingProperties() {
     return input -> {
