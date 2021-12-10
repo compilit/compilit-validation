@@ -50,4 +50,5 @@ final class VoidRuleValidatorBuilder<T> extends RuleDefinitionValidator<T> imple
     else runnable.run();
     return isValid;
   }
+  
 }

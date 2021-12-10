@@ -11,7 +11,7 @@ final class ExtendedRuleArgumentAppender<T> implements ArgumentAppender<T> {
   private final List<Rule.Extended<T>> ruleDefinitions;
   private final T value;
 
-  public ExtendedRuleArgumentAppender(final List<Rule.Extended<T>> ruleDefinitions, final T value) {
+  ExtendedRuleArgumentAppender(final List<Rule.Extended<T>> ruleDefinitions, final T value) {
     this.ruleDefinitions = ruleDefinitions;
     this.value = value;
   }

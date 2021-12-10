@@ -24,7 +24,7 @@ final class RuleDefinitionBuilder<T> implements RuleBuilder<T> {
 
     private final BiPredicate<T, Object> predicate;
 
-    public Extended(final BiPredicate<T, Object> predicate) {
+    Extended(final BiPredicate<T, Object> predicate) {
       this.predicate = predicate;
     }
 
@@ -35,4 +35,5 @@ final class RuleDefinitionBuilder<T> implements RuleBuilder<T> {
     }
 
   }
+
 }

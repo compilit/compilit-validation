@@ -15,7 +15,7 @@ final class RuleValidationBuilder<T> implements ValidationBuilder<T> {
   private final List<Rule<T>> ruleDefinitions;
   private final List<Rule.Extended<T>> xRuleDefinitions;
 
-  public RuleValidationBuilder(final T value) {
+  RuleValidationBuilder(final T value) {
     this.value = value;
     this.ruleDefinitions = new ArrayList<>();
     this.xRuleDefinitions = new ArrayList<>();

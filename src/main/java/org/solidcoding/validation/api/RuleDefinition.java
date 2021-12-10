@@ -45,4 +45,5 @@ final class RuleDefinition<T> implements Rule<T> {
       return predicate.test(value, argument);
     }
   }
+
 }

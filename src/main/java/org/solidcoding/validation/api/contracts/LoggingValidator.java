@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 
 public interface LoggingValidator {
 
-
   /**
    * Users SLF4J API to log the internal message at Error level. Using the Validations class as its logger source.
    *
