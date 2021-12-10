@@ -1,6 +1,7 @@
 package org.solidcoding.validation.api;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 abstract class AbstractLoggingValidator<T> implements LoggingValidator {
 
@@ -15,6 +16,21 @@ abstract class AbstractLoggingValidator<T> implements LoggingValidator {
   protected AbstractLoggingValidator(final Runnable runnable, final ContinuingValidationBuilder<T> validator) {
     this.validator = validator;
     this.runnable = runnable;
+  }
+
+  @Override
+  public void orElseLogInfo() {
+    orElseLogInfo(LoggerFactory.getLogger(Verifications.class));
+  }
+
+  @Override
+  public void orElseLogWarn() {
+    orElseLogWarn(LoggerFactory.getLogger(Verifications.class));
+  }
+
+  @Override
+  public void orElseLogError() {
+    orElseLogError(LoggerFactory.getLogger(Verifications.class));
   }
 
   @Override
