@@ -1,8 +1,8 @@
 package org.solidcoding.validation.api;
 
-public final class Verify {
+public final class Verifications {
 
-    private Verify() {
+    private Verifications() {
     }
 
     /**
@@ -10,7 +10,7 @@ public final class Verify {
      * @param <T>   the type of the value.
      * @return a Validator to add rules to.
      */
-    public static <T> ValidationBuilder<T> that(final T value) {
+    public static <T> ValidationBuilder<T> verifyThat(final T value) {
         return new RuleValidationBuilder<>(value);
     }
 

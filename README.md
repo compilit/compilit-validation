@@ -22,8 +22,8 @@ application. An individual value or object can then be tested against these rule
 extension of the Predicate class. And a Rule.Extended is an extension of the BiPredicate class. These extensions allow
 you to add a message that is associated with the potential failure of this rule.
 
-You first define a Rule using the Define entrypoint for the fluent API.
-Then, whenever needed, you validate the rule, using the Verify entrypoint. The fluent API helps you define what needs to
+You first define a Rule using the Definitions entrypoint for the fluent API.
+Then, whenever needed, you validate the rule, using the Verifications entrypoint. The fluent API helps you define what needs to
 happen after successful validation or after a failed validation.
 
 Here are some examples:

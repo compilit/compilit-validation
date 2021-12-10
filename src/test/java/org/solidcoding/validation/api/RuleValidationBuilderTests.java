@@ -12,14 +12,14 @@ class RuleValidationBuilderTests {
     @Test
     void compliesWith_validInput_shouldReturnValidator() {
         var rule = new RuleDefinition<String>(x -> true, TEST_CONTENT);
-        Assertions.assertThat(Verify.that(TEST_CONTENT).compliesWith(rule))
+        Assertions.assertThat(Verifications.verifyThat(TEST_CONTENT).compliesWith(rule))
                 .isInstanceOf(ContinuingValidationBuilder.class);
     }
 
     @Test
     void compliesWith_invalidInput_shouldReturnValidator() {
         var rule = new RuleDefinition<String>(x -> false, TEST_CONTENT);
-        Assertions.assertThat(Verify.that(TEST_CONTENT).compliesWith(rule))
+        Assertions.assertThat(Verifications.verifyThat(TEST_CONTENT).compliesWith(rule))
                 .isInstanceOf(ContinuingValidationBuilder.class);
     }
 
@@ -29,7 +29,7 @@ class RuleValidationBuilderTests {
         Rule<String> rule2 = new RuleDefinition<>(x -> true, TEST_CONTENT);
         Rule<String> rule3 = new RuleDefinition<>(x -> true, TEST_CONTENT);
         var rules = List.of(rule1, rule2, rule3);
-        Assertions.assertThat(Verify.that(TEST_CONTENT).compliesWith(rules))
+        Assertions.assertThat(Verifications.verifyThat(TEST_CONTENT).compliesWith(rules))
                 .isInstanceOf(ContinuingValidationBuilder.class);
     }
 
@@ -39,7 +39,7 @@ class RuleValidationBuilderTests {
         Rule<String> rule2 = new RuleDefinition<>(x -> true, TEST_CONTENT);
         Rule<String> rule3 = new RuleDefinition<>(x -> true, TEST_CONTENT);
         var rules = List.of(rule1, rule2, rule3);
-        Assertions.assertThat(Verify.that(TEST_CONTENT).compliesWith(rules))
+        Assertions.assertThat(Verifications.verifyThat(TEST_CONTENT).compliesWith(rules))
                 .isInstanceOf(ContinuingValidationBuilder.class);
     }
 
