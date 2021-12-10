@@ -5,37 +5,31 @@ import java.util.function.Predicate;
 
 final class RuleDefinitionBuilder<T> implements RuleBuilder<T> {
 
-    private final Predicate<T> predicate;
+  private final Predicate<T> predicate;
 
-    RuleDefinitionBuilder(final Predicate<T> predicate) {
-        this.predicate = predicate;
+  RuleDefinitionBuilder(final Predicate<T> predicate) {
+    this.predicate = predicate;
+  }
+
+  @Override
+  public Rule<T> otherwiseReport(final String message, final Object... formatArguments) {
+    final var actualMessage = String.format(message, formatArguments);
+    return new RuleDefinition<>(predicate, actualMessage);
+  }
+
+  static final class Extended<T> implements RuleBuilder.Extended<T> {
+
+    private final BiPredicate<T, Object> predicate;
+
+    public Extended(final BiPredicate<T, Object> predicate) {
+      this.predicate = predicate;
     }
 
     @Override
-    public Rule<T> otherwiseReport(final String message, final Object... formatArguments) {
-        if (formatArguments != null) {
-            final var actualMessage = String.format(message, formatArguments);
-            return new RuleDefinition<>(predicate, actualMessage);
-        }
-        return new RuleDefinition<>(predicate, message);
+    public Rule.Extended<T> otherwiseReport(final String message, final Object... formatArguments) {
+      final var actualMessage = String.format(message, formatArguments);
+      return new RuleDefinition.Extended<>(predicate, actualMessage);
     }
 
-    static final class Extended<T> implements RuleBuilder.Extended<T> {
-
-        private final BiPredicate<T, Object> predicate;
-
-        public Extended(final BiPredicate<T, Object> predicate) {
-            this.predicate = predicate;
-        }
-
-        @Override
-        public Rule.Extended<T> otherwiseReport(final String message, final Object... formatArguments) {
-            if (formatArguments != null) {
-                final var actualMessage = String.format(message, formatArguments);
-                return new RuleDefinition.Extended<>(predicate, actualMessage);
-            }
-            return new RuleDefinition.Extended<>(predicate, message);
-        }
-
-    }
+  }
 }
