@@ -1,20 +1,20 @@
-package org.solidcoding.validation.api;
+package org.solidcoding.validation.api.contracts;
 
 import java.util.function.Function;
 
-public interface ReturningValidationBuilder<R> extends ThrowingValidator<R>, LoggingValidator {
+public interface ReturningValidationBuilder<T> extends ThrowingValidator<T>, LoggingValidator {
 
   /**
    * @param other the backup/default return type if the validation fails.
-   * @return R the return type.
+   * @return T the return type.
    */
-  R orElseReturn(R other);
+  T orElseReturn(T other);
 
   /**
    * @param other the backup/default return type if the validation fails with the optional message
    *              that is contained in the Validator.
-   * @return R the return type.
+   * @return T the return type.
    */
-  R orElseReturn(Function<String, R> other);
+  T orElseReturn(Function<String, T> other);
 
 }

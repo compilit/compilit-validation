@@ -2,6 +2,7 @@ package org.solidcoding.validation.api;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.solidcoding.validation.api.contracts.Rule;
 import testutil.TestObject;
 
 import static org.solidcoding.validation.predicates.ObjectPredicate.isA;

@@ -3,6 +3,7 @@ package org.solidcoding.validation.api;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.solidcoding.validation.api.contracts.Rule;
 import testutil.AbstractTestWithContext;
 import testutil.TestObject;
 
@@ -112,4 +113,17 @@ class ApiUsageExampleTests extends AbstractTestWithContext {
     Assertions.assertThat(hasBeenInteractedWith()).isFalse();
   }
 
+  @Test
+  void orElseLogMessage_validInput_shouldReturnTrue() {
+    var input = "test";
+    var rule = defineThatIt(isA(String.class).where(x -> x.equals(input))).otherwiseReport("failure");
+    Assertions.assertThat(Verifications.verifyThat(input).compliesWith(rule).orElseLogMessage()).isTrue();
+  }
+
+  @Test
+  void orElseLogMessage_invalidInput_shouldReturnFalse() {
+    var input = "test";
+    var rule = defineThatIt(isA(String.class).where(x -> x.equals("something else"))).otherwiseReport("failure");
+    Assertions.assertThat(Verifications.verifyThat(input).compliesWith(rule).orElseLogMessage()).isFalse();
+  }
 }

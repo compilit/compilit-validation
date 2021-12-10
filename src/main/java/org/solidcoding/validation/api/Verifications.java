@@ -1,5 +1,7 @@
 package org.solidcoding.validation.api;
 
+import org.solidcoding.validation.api.contracts.ValidationBuilder;
+
 public final class Verifications {
 
   private Verifications() {

@@ -1,5 +1,10 @@
 package org.solidcoding.validation.api;
 
+import org.solidcoding.validation.api.contracts.ArgumentAppender;
+import org.solidcoding.validation.api.contracts.ContinuingValidationBuilder;
+import org.solidcoding.validation.api.contracts.Rule;
+import org.solidcoding.validation.api.contracts.ValidationBuilder;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

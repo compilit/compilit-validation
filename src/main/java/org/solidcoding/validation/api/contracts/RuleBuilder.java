@@ -1,4 +1,4 @@
-package org.solidcoding.validation.api;
+package org.solidcoding.validation.api.contracts;
 
 public interface RuleBuilder<T> {
 

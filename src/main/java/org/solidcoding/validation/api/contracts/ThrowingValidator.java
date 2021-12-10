@@ -1,8 +1,8 @@
-package org.solidcoding.validation.api;
+package org.solidcoding.validation.api.contracts;
 
 import java.util.function.Function;
 
-public interface VoidEndingValidationBuilder extends LoggingValidator, ThrowingValidator<Void> {
+public interface ThrowingValidator<R> {
 
   /**
    * @param throwableFunction the function defining the Exception that needs to be thrown when a
@@ -10,8 +10,8 @@ public interface VoidEndingValidationBuilder extends LoggingValidator, ThrowingV
    *                          validation.
    * @param <E>               the bound of the Exception that needs to be thrown when a rule is
    *                          broken.
+   * @return true if all rules pass.
    */
-  @Override
-  <E extends RuntimeException> Void orElseThrow(Function<String, E> throwableFunction);
+  <E extends RuntimeException> R orElseThrow(Function<String, E> throwableFunction);
 
 }

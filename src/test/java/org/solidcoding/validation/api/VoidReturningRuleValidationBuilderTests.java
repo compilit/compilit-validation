@@ -5,9 +5,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
+import org.solidcoding.validation.api.contracts.Rule;
 import testutil.AbstractTestWithContext;
+import testutil.TestObject;
 
-class VoidEndingRuleValidationBuilderTests extends AbstractTestWithContext {
+import java.util.ArrayList;
+
+import static org.solidcoding.validation.predicates.ObjectPredicate.isA;
+
+class VoidReturningRuleValidationBuilderTests extends AbstractTestWithContext {
 
   private static final String FAIL_MESSAGE = "failure";
 
@@ -18,18 +24,18 @@ class VoidEndingRuleValidationBuilderTests extends AbstractTestWithContext {
 
   @Test
   void orElseThrow_valid_shouldReturnVoid() {
-    var continuingValidator = Mockito.mock(ContinuingValidationBuilder.class);
-    Mockito.when(continuingValidator.validate()).thenReturn(true);
-    var validator = new VoidEndingRuleValidatorBuilder<String>(super::interact, continuingValidator);
+    var rules = new ArrayList<Rule<String>>();
+    rules.add(new RuleDefinition<>(x -> true, "fail"));
+    var validator = new VoidRuleValidatorBuilder<>(rules, "test", super::interact);
     Assertions.assertThat(validator.orElseThrow(RuntimeException::new)).isNull();
     Assertions.assertThat(hasBeenInteractedWith()).isTrue();
   }
 
   @Test
   void orElseThrow_invalid_shouldReturnVoid() {
-    var continuingValidator = Mockito.mock(ContinuingValidationBuilder.class);
-    Mockito.when(continuingValidator.validate()).thenReturn(false);
-    var validator = new VoidEndingRuleValidatorBuilder<String>(super::interact, continuingValidator);
+    var rules = new ArrayList<Rule<String>>();
+    rules.add(new RuleDefinition<>(x -> false, "fail"));
+    var validator = new VoidRuleValidatorBuilder<>(rules, "test", super::interact);
     Assertions.assertThatThrownBy(() -> validator.orElseThrow(RuntimeException::new)).isInstanceOf(RuntimeException.class);
     Assertions.assertThat(hasBeenInteractedWith()).isFalse();
   }
@@ -37,9 +43,10 @@ class VoidEndingRuleValidationBuilderTests extends AbstractTestWithContext {
   @Test
   void orElseLogMessage_validInput_shouldNotLog() {
     var logger = Mockito.mock(Logger.class);
-    var continuingValidator = Mockito.mock(ContinuingValidationBuilder.class);
-    Mockito.when(continuingValidator.validate()).thenReturn(true);
-    var validator = new VoidEndingRuleValidatorBuilder<String>(super::interact, continuingValidator);
+    var rules = new ArrayList<Rule<String>>();
+    rules.add(new RuleDefinition<>(x -> true, "fail"));
+    var validator = new VoidRuleValidatorBuilder<>(rules, "test", super::interact);
+    Verifications.verifyThat("test").compliesWith(rules).andThen(super::interact).orElseLogMessage();
     validator.orElseLogMessage(logger);
     Mockito.verifyNoInteractions(logger);
     Assertions.assertThat(hasBeenInteractedWith()).isTrue();
@@ -48,12 +55,11 @@ class VoidEndingRuleValidationBuilderTests extends AbstractTestWithContext {
   @Test
   void orElseLogMessage_invalidInput_shouldLog() {
     var logger = Mockito.mock(Logger.class);
-    var continuingValidator = Mockito.mock(ContinuingValidationBuilder.class);
-    Mockito.when(continuingValidator.validate()).thenReturn(false);
-    Mockito.when(continuingValidator.getMessage()).thenReturn(FAIL_MESSAGE);
-    var validator = new VoidEndingRuleValidatorBuilder<String>(super::interact, continuingValidator);
+    var rules = new ArrayList<Rule<String>>();
+    rules.add(new RuleDefinition<>(x -> false, FAIL_MESSAGE));
+    var validator = new VoidRuleValidatorBuilder<>(rules, "test", super::interact);
     validator.orElseLogMessage(logger);
-    Mockito.verify(logger).error(FAIL_MESSAGE);
+    Mockito.verify(logger).error(Mockito.anyString());
     Assertions.assertThat(hasBeenInteractedWith()).isFalse();
   }
 }

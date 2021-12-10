@@ -1,14 +1,8 @@
-package org.solidcoding.validation.api;
+package org.solidcoding.validation.api.contracts;
 
-import java.util.function.Function;
 import java.util.function.Supplier;
 
-public interface ContinuingValidationBuilder<T> extends ThrowingValidator<Boolean> {
-
-  /**
-   * @return the message containing information about the validation. Default to 'Nothing to report'.
-   */
-  String getMessage();
+public interface ContinuingValidationBuilder<T> extends ReturningValidationBuilder<T>, Validator {
 
   /**
    * Connect your current predicate to another one.
@@ -27,11 +21,6 @@ public interface ContinuingValidationBuilder<T> extends ThrowingValidator<Boolea
   ContinuingValidationBuilder<T> and(Rule.Extended<T> rule);
 
   /**
-   * @return boolean true if all rules pass. False if at least one rule fails.
-   */
-  boolean validate();
-
-  /**
    * Same as validate(); but returns a custom object in the form of a supplier.
    *
    * @param supplier the supplier which encapsulated the return type.
@@ -46,19 +35,6 @@ public interface ContinuingValidationBuilder<T> extends ThrowingValidator<Boolea
    * @param runnable the runnable process which should be started after successful validation.
    * @return R in the form of a supplier.
    */
-  VoidEndingValidationBuilder andThen(Runnable runnable);
-
-  /**
-   * @param other the backup/default return type if the validation fails.
-   * @return T the return type.
-   */
-  T orElseReturn(T other);
-
-  /**
-   * @param other the backup/default return type if the validation fails with the optional message
-   *              that is contained in the Validator.
-   * @return T the return type.
-   */
-  T orElseReturn(Function<String, T> other);
+  VoidValidationBuilder andThen(Runnable runnable);
 
 }

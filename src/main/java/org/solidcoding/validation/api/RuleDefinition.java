@@ -1,5 +1,7 @@
 package org.solidcoding.validation.api;
 
+import org.solidcoding.validation.api.contracts.Rule;
+
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 

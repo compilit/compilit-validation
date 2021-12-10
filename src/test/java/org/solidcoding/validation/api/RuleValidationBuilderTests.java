@@ -2,6 +2,8 @@ package org.solidcoding.validation.api;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.solidcoding.validation.api.contracts.ContinuingValidationBuilder;
+import org.solidcoding.validation.api.contracts.Rule;
 
 import java.util.List;
 

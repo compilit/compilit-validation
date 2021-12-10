@@ -2,6 +2,7 @@ package org.solidcoding.validation.api;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.solidcoding.validation.api.contracts.ValidationBuilder;
 
 import static org.solidcoding.validation.predicates.StringPredicate.contains;
 import static org.solidcoding.validation.predicates.StringPredicate.hasALengthOf;

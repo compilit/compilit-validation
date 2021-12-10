@@ -1,5 +1,9 @@
 package org.solidcoding.validation.api;
 
+import org.solidcoding.validation.api.contracts.ArgumentAppender;
+import org.solidcoding.validation.api.contracts.ContinuingValidationBuilder;
+import org.solidcoding.validation.api.contracts.Rule;
+
 import java.util.List;
 
 final class ExtendedRuleArgumentAppender<T> implements ArgumentAppender<T> {
