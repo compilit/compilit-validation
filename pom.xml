@@ -5,17 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>solidcoding-parent</artifactId>
-        <groupId>org.solidcoding</groupId>
+        <artifactId>compilit-parent</artifactId>
+        <groupId>com.compilit</groupId>
         <version>1.1.0</version>
     </parent>
 
-    <artifactId>solidcoding-validation</artifactId>
+    <artifactId>compilit-validation</artifactId>
     <version>2.0.1</version>
 
-    <name>Solidcoding validation</name>
+    <name>Compilit validation</name>
     <description>A small package that enables validation of (business) rules through a fluent API.</description>
-    <url>https://github.com/solidcoding-org/solidcoding-validation</url>
+    <url>https://github.com/compilit/compilit-validation</url>
 
     <dependencies>
         <dependency>

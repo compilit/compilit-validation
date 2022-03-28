@@ -1,4 +1,4 @@
-# solidcoding-validation
+# compilit-validation
 
 A small package that enables validation of (business) rules through a fluent API.
 
@@ -9,8 +9,8 @@ Get this dependency with the latest version.
 ```xml
 
 <dependency>
-    <artifactId>solidcoding-validation</artifactId>
-    <groupId>org.solidcoding</groupId>
+    <artifactId>compilit-validation</artifactId>
+    <groupId>com.compilit</groupId>
 </dependency>
 ```
 
