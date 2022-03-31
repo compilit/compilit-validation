@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>compilit-validation</artifactId>
-    <version>2.0.1</version>
+    <version>2.1.0</version>
 
     <name>Compilit validation</name>
     <description>A small package that enables validation of (business) rules through a fluent API.</description>
@@ -21,12 +21,12 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.32</version>
+            <version>1.7.36</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>4.1.0</version>
+            <version>4.3.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

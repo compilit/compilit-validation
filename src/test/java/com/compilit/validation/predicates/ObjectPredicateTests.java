@@ -6,8 +6,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import testutil.TestObject;
 
-import static com.compilit.validation.predicates.StringPredicate.isNotNull;
-
 
 class ObjectPredicateTests {
 

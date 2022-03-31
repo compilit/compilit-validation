@@ -5,11 +5,6 @@ import com.compilit.validation.api.Verifications;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static com.compilit.validation.predicates.NumberPredicate.contains;
-import static com.compilit.validation.predicates.NumberPredicate.doesNotContain;
-import static com.compilit.validation.predicates.NumberPredicate.isEqualTo;
-import static com.compilit.validation.predicates.NumberPredicate.isNotNull;
-
 class NumberPredicateBuilderTests {
 
   @Test

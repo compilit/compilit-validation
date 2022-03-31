@@ -11,10 +11,25 @@ final class ReturningRuleValidationBuilder<T, R> extends RuleDefinitionValidator
 
   private final Supplier<R> supplier;
 
+  ReturningRuleValidationBuilder(final List<Rule<T>> ruleDefinitions, final T value, final Function<T, R> function) {
+    super(ruleDefinitions, value);
+    this.supplier = () -> function.apply(value);
+  }
+
+
+  ReturningRuleValidationBuilder(final List<Rule.Extended<T>> xRuleDefinitions,
+                                 final T value,
+                                 final Object argument,
+                                 final Function<T, R> function) {
+    super(xRuleDefinitions, value, argument);
+    this.supplier = () -> function.apply(value);
+  }
+
   ReturningRuleValidationBuilder(final List<Rule<T>> ruleDefinitions, final T value, final Supplier<R> supplier) {
     super(ruleDefinitions, value);
     this.supplier = supplier;
   }
+
 
   ReturningRuleValidationBuilder(final List<Rule.Extended<T>> xRuleDefinitions,
                                  final T value,

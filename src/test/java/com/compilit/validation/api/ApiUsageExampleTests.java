@@ -97,6 +97,39 @@ class ApiUsageExampleTests extends AbstractTestWithContext {
   }
 
   @Test
+  void useCase_validateAgainstValidOtherInputUsingConsumer_shouldNotThrowException() {
+    var rule = defineThatIt(ObjectPredicate.isA(TestObject.class).where((x, y) -> x.getMessage().equals(y))).otherwiseReport("failure");
+    var rule2 = defineThatIt(ObjectPredicate.isA(TestObject.class).that((x, y) -> x.getMessage().equals(y))).otherwiseReport("failure");
+    var input = new TestObject();
+    Assertions.assertThatNoException().isThrownBy(() -> Verifications.verifyThat(input).compliesWith(rule)
+            .whileApplying(DEFAULT_MESSAGE)
+            .and(rule2)
+            .andThen(x -> {
+              Assertions.assertThat(x).isEqualTo(input);
+              super.interact();
+            })
+            .orElseThrow(RuntimeException::new));
+    Assertions.assertThat(hasBeenInteractedWith()).isTrue();
+  }
+
+  @Test
+  void useCase_validateAgainstValidOtherInputUsingFunction_shouldNotThrowException() {
+    var rule = defineThatIt(ObjectPredicate.isA(TestObject.class).where((x, y) -> x.getMessage().equals(y))).otherwiseReport("failure");
+    var rule2 = defineThatIt(ObjectPredicate.isA(TestObject.class).that((x, y) -> x.getMessage().equals(y))).otherwiseReport("failure");
+    var input = new TestObject();
+    Assertions.assertThatNoException().isThrownBy(
+            () -> Assertions.assertThat(Verifications.verifyThat(input).compliesWith(rule)
+                    .whileApplying(DEFAULT_MESSAGE)
+                    .and(rule2)
+                    .andThen(x -> {
+                      Assertions.assertThat(x).isEqualTo(input);
+                      return super.interactAndReturn();
+                    })
+                    .orElseThrow(RuntimeException::new)).isTrue());
+    Assertions.assertThat(hasBeenInteractedWith()).isTrue();
+  }
+
+  @Test
   void useCase_validateAgainstInvalidOtherInput_shouldThrowException() {
     var rule = defineThatIt(ObjectPredicate.isA(TestObject.class).where((x, y) -> x.getMessage().equals(y))).otherwiseReport("failure");
     var rule2 = defineThatIt(ObjectPredicate.isA(TestObject.class).that((x, y) -> x.getMessage().equals(y))).otherwiseReport("failure");

@@ -1,16 +1,30 @@
 package com.compilit.validation.api;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.compilit.validation.api.contracts.Rule;
 import com.compilit.validation.api.contracts.VoidValidationBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 final class VoidRuleValidatorBuilder<T> extends RuleDefinitionValidator<T> implements VoidValidationBuilder {
 
   private final Runnable runnable;
+
+  VoidRuleValidatorBuilder(final List<Rule<T>> ruleDefinitions, final T value, final Consumer<T> consumer) {
+    super(ruleDefinitions, value);
+    this.runnable = () -> consumer.accept(value);
+  }
+
+  VoidRuleValidatorBuilder(final List<Rule.Extended<T>> xRuleDefinitions,
+                           final T value,
+                           final Object argument,
+                           final Consumer<T> consumer) {
+    super(xRuleDefinitions, value, argument);
+    this.runnable = () -> consumer.accept(value);
+  }
 
   VoidRuleValidatorBuilder(final List<Rule<T>> ruleDefinitions, final T value, final Runnable runnable) {
     super(ruleDefinitions, value);
@@ -47,8 +61,9 @@ final class VoidRuleValidatorBuilder<T> extends RuleDefinitionValidator<T> imple
     if (!isValid) {
       logger.error(getMessage());
     }
-    else runnable.run();
+    if (isValid)
+      runnable.run();
     return isValid;
   }
-  
+
 }

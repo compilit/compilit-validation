@@ -5,11 +5,6 @@ import com.compilit.validation.api.Verifications;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static com.compilit.validation.predicates.DecimalNumberPredicate.contains;
-import static com.compilit.validation.predicates.DecimalNumberPredicate.doesNotContain;
-import static com.compilit.validation.predicates.DecimalNumberPredicate.isEqualTo;
-import static com.compilit.validation.predicates.DecimalNumberPredicate.isNotNull;
-
 class DecimalNumberPredicateBuilderTests {
 
   @Test

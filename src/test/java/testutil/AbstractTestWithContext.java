@@ -8,6 +8,11 @@ public abstract class AbstractTestWithContext {
     testContext.interact();
   }
 
+  public synchronized boolean interactAndReturn() {
+    testContext.interact();
+    return true;
+  }
+
   public synchronized void reset() {
     testContext.reset();
   }

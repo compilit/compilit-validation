@@ -1,10 +1,10 @@
 package com.compilit.validation.api;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.compilit.validation.api.contracts.LoggingValidator;
 import com.compilit.validation.api.contracts.Rule;
 import com.compilit.validation.api.contracts.Validator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;

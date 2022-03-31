@@ -41,7 +41,7 @@ public class ObjectPredicate<T> implements Predicate<T>, PredicateAppender<T> {
    * Check if the actual value is equal to the given one.
    *
    * @param value the exact expected value.
-   * @param <T> the value which you wish to test against the original value.
+   * @param <T>   the value which you wish to test against the original value.
    * @return Predicate to continue adding rules.
    */
   public static <T> Predicate<T> isEqualTo(T value) {

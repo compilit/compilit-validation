@@ -6,6 +6,7 @@ import com.compilit.validation.api.contracts.Rule;
 import com.compilit.validation.api.contracts.VoidValidationBuilder;
 
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -34,6 +35,13 @@ final class ContinuingRuleValidationBuilder<T> extends RuleDefinitionValidator<T
   }
 
   @Override
+  public VoidValidationBuilder andThen(final Consumer<T> consumer) {
+    if (isExtended)
+      return new VoidRuleValidatorBuilder<>(xRuleDefinitions, value, argument, consumer);
+    return new VoidRuleValidatorBuilder<>(ruleDefinitions, value, consumer);
+  }
+
+  @Override
   public <R> ReturningValidationBuilder<R> andThen(final Supplier<R> supplier) {
     if (isExtended)
       return new ReturningRuleValidationBuilder<>(xRuleDefinitions, value, argument, supplier);
@@ -45,6 +53,13 @@ final class ContinuingRuleValidationBuilder<T> extends RuleDefinitionValidator<T
     if (isExtended)
       return new VoidRuleValidatorBuilder<>(xRuleDefinitions, value, argument, runnable);
     return new VoidRuleValidatorBuilder<>(ruleDefinitions, value, runnable);
+  }
+
+  @Override
+  public <R> ReturningValidationBuilder<R> andThen(final Function<T, R> function) {
+    if (isExtended)
+      return new ReturningRuleValidationBuilder<>(xRuleDefinitions, value, argument, function);
+    return new ReturningRuleValidationBuilder<>(ruleDefinitions, value, function);
   }
 
   @Override
