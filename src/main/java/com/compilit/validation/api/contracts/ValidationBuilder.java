@@ -20,6 +20,6 @@ public interface ValidationBuilder<T> {
    * @param rule the rule which the value needs to comply with.
    * @return the Validator to add more rules.
    */
-  ArgumentAppender<T> compliesWith(Rule.Extended<T> rule);
+  ArgumentAppender<T> compliesWith(Rule.WithDualInput<T> rule);
 
 }

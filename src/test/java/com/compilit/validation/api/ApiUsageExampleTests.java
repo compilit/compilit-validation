@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import testutil.AbstractTestWithContext;
 import testutil.TestObject;
 
-import static com.compilit.validation.api.ContinuingRuleValidationBuilder.DEFAULT_MESSAGE;
 import static com.compilit.validation.api.Definitions.defineThatIt;
+import static com.compilit.validation.api.Subject.DEFAULT_MESSAGE;
 
 class ApiUsageExampleTests extends AbstractTestWithContext {
 

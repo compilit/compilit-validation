@@ -14,9 +14,9 @@ class DefinitionsTests {
     Assertions.assertThat(rule1).isInstanceOf(Rule.class);
     var rule2 = Definitions.defineThatIt(ObjectPredicate.isA(TestObject.class).where((x) -> true)).otherwiseReport("fail");
     Assertions.assertThat(rule2).isInstanceOf(Rule.class);
-    var ruleExtended1 = Definitions.defineThatIt((x, y) -> true).otherwiseReport("fail");
-    Assertions.assertThat(ruleExtended1).isInstanceOf(Rule.Extended.class);
-    var ruleExtended2 = Definitions.defineThatIt(ObjectPredicate.isA(TestObject.class).where((x, y) -> x.getMessage().equals(y))).otherwiseReport("fail");
-    Assertions.assertThat(ruleExtended2).isInstanceOf(Rule.Extended.class);
+    var ruleWithDualInput1 = Definitions.defineThatIt((x, y) -> true).otherwiseReport("fail");
+    Assertions.assertThat(ruleWithDualInput1).isInstanceOf(Rule.WithDualInput.class);
+    var ruleWithDualInput2 = Definitions.defineThatIt(ObjectPredicate.isA(TestObject.class).where((x, y) -> x.getMessage().equals(y))).otherwiseReport("fail");
+    Assertions.assertThat(ruleWithDualInput2).isInstanceOf(Rule.WithDualInput.class);
   }
 }

@@ -1,14 +1,11 @@
 package com.compilit.validation.api;
 
-import com.compilit.validation.api.contracts.Rule;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import testutil.AbstractTestWithContext;
-
-import java.util.ArrayList;
 
 class VoidReturningRuleValidationBuilderTests extends AbstractTestWithContext {
 
@@ -21,18 +18,16 @@ class VoidReturningRuleValidationBuilderTests extends AbstractTestWithContext {
 
   @Test
   void orElseThrow_valid_shouldReturnVoid() {
-    var rules = new ArrayList<Rule<String>>();
-    rules.add(new RuleDefinition<>(x -> true, "fail"));
-    var validator = new VoidRuleValidatorBuilder<>(rules, "test", super::interact);
+    var subject = new Subject<>(new RuleDefinition<>(x -> true, FAIL_MESSAGE), "test");
+    var validator = new VoidRuleValidatorBuilder<>(subject, super::interact);
     Assertions.assertThat(validator.orElseThrow(RuntimeException::new)).isNull();
     Assertions.assertThat(hasBeenInteractedWith()).isTrue();
   }
 
   @Test
   void orElseThrow_invalid_shouldReturnVoid() {
-    var rules = new ArrayList<Rule<String>>();
-    rules.add(new RuleDefinition<>(x -> false, "fail"));
-    var validator = new VoidRuleValidatorBuilder<>(rules, "test", super::interact);
+    var subject = new Subject<>(new RuleDefinition<>(x -> false, FAIL_MESSAGE), "test");
+    var validator = new VoidRuleValidatorBuilder<>(subject, super::interact);
     Assertions.assertThatThrownBy(() -> validator.orElseThrow(RuntimeException::new)).isInstanceOf(RuntimeException.class);
     Assertions.assertThat(hasBeenInteractedWith()).isFalse();
   }
@@ -40,10 +35,8 @@ class VoidReturningRuleValidationBuilderTests extends AbstractTestWithContext {
   @Test
   void orElseLogMessage_validInput_shouldNotLog() {
     var logger = Mockito.mock(Logger.class);
-    var rules = new ArrayList<Rule<String>>();
-    rules.add(new RuleDefinition<>(x -> true, "fail"));
-    var validator = new VoidRuleValidatorBuilder<>(rules, "test", super::interact);
-    Verifications.verifyThat("test").compliesWith(rules).andThen(super::interact).orElseLogMessage();
+    var subject = new Subject<>(new RuleDefinition<>(x -> true, FAIL_MESSAGE), "test");
+    var validator = new VoidRuleValidatorBuilder<>(subject, super::interact);
     validator.orElseLogMessage(logger);
     Mockito.verifyNoInteractions(logger);
     Assertions.assertThat(hasBeenInteractedWith()).isTrue();
@@ -52,9 +45,8 @@ class VoidReturningRuleValidationBuilderTests extends AbstractTestWithContext {
   @Test
   void orElseLogMessage_invalidInput_shouldLog() {
     var logger = Mockito.mock(Logger.class);
-    var rules = new ArrayList<Rule<String>>();
-    rules.add(new RuleDefinition<>(x -> false, FAIL_MESSAGE));
-    var validator = new VoidRuleValidatorBuilder<>(rules, "test", super::interact);
+    var subject = new Subject<>(new RuleDefinition<>(x -> false, FAIL_MESSAGE), "test");
+    var validator = new VoidRuleValidatorBuilder<>(subject, super::interact);
     validator.orElseLogMessage(logger);
     Mockito.verify(logger).error(Mockito.anyString());
     Assertions.assertThat(hasBeenInteractedWith()).isFalse();

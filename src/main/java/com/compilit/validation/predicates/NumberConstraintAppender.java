@@ -2,12 +2,12 @@ package com.compilit.validation.predicates;
 
 import java.util.function.Predicate;
 
-final class NumberConstraintAppender
-        implements ConstraintAppender<Integer, Predicate<Integer>> {
+final class NumberConstraintAppender<T extends Number>
+        implements ConstraintAppender<T, Predicate<T>> {
 
-  private final int first;
+  private final T first;
 
-  NumberConstraintAppender(final int first) {
+  NumberConstraintAppender(final T first) {
     this.first = first;
   }
 
@@ -17,11 +17,11 @@ final class NumberConstraintAppender
    * @return Predicate to continue adding rules.
    */
   @Override
-  public Predicate<Integer> and(final Integer second) {
-    if (second > first) {
-      return x -> x <= second && x >= first;
+  public Predicate<T> and(final T second) {
+    if (second.doubleValue() > first.doubleValue()) {
+      return x -> x.doubleValue() <= second.doubleValue() && x.doubleValue() >= first.doubleValue();
     } else {
-      return x -> x <= first && x >= second;
+      return x -> x.doubleValue() <= first.doubleValue() && x.doubleValue() >= second.doubleValue();
     }
   }
 

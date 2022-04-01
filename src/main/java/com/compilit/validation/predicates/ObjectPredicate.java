@@ -17,7 +17,7 @@ public class ObjectPredicate<T> implements Predicate<T>, PredicateAppender<T> {
   }
 
   /**
-   * @param clazz the class of the object to validate. This is only a compiler flag to treat T as
+   * @param clazz the class of the object to validate. This is only a compiler flag to be able to treat T as
    *              its instance.
    * @param <T>   the type upon which the validations are tested.
    * @return GenericPredicateRule to continue adding rules.
@@ -28,7 +28,7 @@ public class ObjectPredicate<T> implements Predicate<T>, PredicateAppender<T> {
   }
 
   /**
-   * @param clazz the class of the object to validate. This is only a compiler flag to treat T as
+   * @param clazz the class of the object to validate. This is only a compiler flag to be able to treat T as
    *              its instance.
    * @param <T>   the type upon which the validations are tested.
    * @return GenericPredicateRule to continue adding rules.
@@ -48,6 +48,17 @@ public class ObjectPredicate<T> implements Predicate<T>, PredicateAppender<T> {
     return new ObjectPredicate<>(x -> Objects.equals(x, value));
   }
 
+  /**
+   * Check if the actual value is not equal to the given one.
+   *
+   * @param value the exact expected value.
+   * @param <T>   the value which you wish to test against the original value.
+   * @return Predicate to continue adding rules.
+   */
+  public static <T> Predicate<T> isNotEqualTo(T value) {
+    return isEqualTo(value).negate();
+  }
+
   static <T> Predicate<T> isNotNull() {
     return new ObjectPredicate<>(Objects::nonNull);
   }
@@ -58,17 +69,15 @@ public class ObjectPredicate<T> implements Predicate<T>, PredicateAppender<T> {
 
   static <T> Predicate<T> contains(Object value, Object... values) {
     Predicate<T> predicate = x -> x.toString().contains(value.toString());
-    for (final var c : values) {
-      predicate = predicate.and(x -> x.toString().contains(c.toString()));
+    for (final var object : values) {
+      predicate = predicate.and(x -> x.toString().contains(object.toString()));
     }
     return new ObjectPredicate<>(predicate);
   }
 
   static <T> Predicate<T> doesNotContain(Object value, Object... values) {
     Predicate<T> predicate = x -> !x.toString().contains(value.toString());
-    for (final var c : values) {
-      predicate = predicate.and(x -> !x.toString().contains(c.toString()));
-    }
+    predicate = predicate.and(contains(value, values).negate());
     return new ObjectPredicate<>(predicate);
   }
 

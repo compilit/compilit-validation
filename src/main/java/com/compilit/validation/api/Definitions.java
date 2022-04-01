@@ -14,8 +14,8 @@ public final class Definitions {
     return new RuleDefinitionBuilder<>(predicate);
   }
 
-  public static <T> RuleBuilder.Extended<T> defineThatIt(BiPredicate<T, Object> predicate) {
-    return new RuleDefinitionBuilder.Extended<>(predicate);
+  public static <T> RuleBuilder.WithDualInput<T> defineThatIt(BiPredicate<T, Object> predicate) {
+    return new RuleDefinitionBuilder.WithDualInput<>(predicate);
   }
 
 }

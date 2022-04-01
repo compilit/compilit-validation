@@ -25,12 +25,12 @@ final class RuleDefinition<T> implements Rule<T> {
     return predicate.test(value);
   }
 
-  static final class Extended<T> implements Rule.Extended<T> {
+  static final class WithDualInput<T> implements Rule.WithDualInput<T> {
 
     private final BiPredicate<T, Object> predicate;
     private final String message;
 
-    Extended(final BiPredicate<T, Object> predicate, final String message) {
+    WithDualInput(final BiPredicate<T, Object> predicate, final String message) {
       this.predicate = predicate;
       this.message = message;
     }

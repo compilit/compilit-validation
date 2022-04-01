@@ -19,7 +19,7 @@ Get this dependency with the latest version.
 The package offers a set of Predicates to define (business) rules which can then be validated through the Verifications
 class. The idea is that a rule should be a separate entity that can either be part of an object or passed throughout
 your application. An individual value or object can then be tested against these rules when needed. A Rule is in fact an
-extension of the Predicate class. And a Rule.Extended is an extension of the BiPredicate class. These extensions allow
+extension of the Predicate class. And a Rule.WithDualInput is an extension of the BiPredicate class. These extensions allow
 you to add a message that is associated with the potential failure of this rule.
 
 You first define a Rule using the Definitions entrypoint for the fluent API. Then, whenever needed, you test a value
@@ -35,7 +35,7 @@ class Example {
   Rule<String> rule = defineThatIt(contains("test")).otherwiseReport("It does not contain 'test'");
   boolean result = verifyThat("test").compliesWith(rule).validate(); //A basic Predicate validation.
 
-  Rule.Extended<String> rule = defineThatIt(isA(String.class).where((it, argument) -> it.equals(argument))).otherwiseReport("It does not equal given argument");
+  Rule.WithDualInput<String> rule = defineThatIt(isA(String.class).where((it, argument) -> it.equals(argument))).otherwiseReport("It does not equal given argument");
   boolean result = verifyThat("test").compliesWith(rule).whileApplying("some argument").validate(); //A basic BiPredicate validation, which is why the 'whileApplying' method is inserted.
 
 }

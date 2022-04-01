@@ -20,18 +20,18 @@ final class RuleDefinitionBuilder<T> implements RuleBuilder<T> {
     return new RuleDefinition<>(predicate, actualMessage);
   }
 
-  static final class Extended<T> implements RuleBuilder.Extended<T> {
+  static final class WithDualInput<T> implements RuleBuilder.WithDualInput<T> {
 
     private final BiPredicate<T, Object> predicate;
 
-    Extended(final BiPredicate<T, Object> predicate) {
+    WithDualInput(final BiPredicate<T, Object> predicate) {
       this.predicate = predicate;
     }
 
     @Override
-    public Rule.Extended<T> otherwiseReport(final String message, final Object... formatArguments) {
+    public Rule.WithDualInput<T> otherwiseReport(final String message, final Object... formatArguments) {
       final var actualMessage = String.format(message, formatArguments);
-      return new RuleDefinition.Extended<>(predicate, actualMessage);
+      return new RuleDefinition.WithDualInput<>(predicate, actualMessage);
     }
 
   }
