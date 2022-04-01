@@ -14,6 +14,7 @@ import static com.compilit.validation.api.Subject.DEFAULT_MESSAGE;
 
 class ApiUsageExampleTests extends AbstractTestWithContext {
 
+  private static final String FAIL_MESSAGE = "I am error";
   private final String passwordRuleFailMessage = "Password did not meet our requirements!";
   private final String goodPassword = "#This%Should*BeAGoodPassword(";
   private final String badPassword = "Whatever";
@@ -70,10 +71,24 @@ class ApiUsageExampleTests extends AbstractTestWithContext {
   }
 
   @Test
-  void useCase_alphabeticInputValidation_shouldNotThrowException() {
-    var alphabeticStringRule1 = Definitions.defineThatIt(StringPredicate.isAlphabetic()).otherwiseReport("It's not alphabetic");
-    var alphabeticStringRule2 = Definitions.defineThatIt(StringPredicate.isNotNumeric()).otherwiseReport("It's not alphabetic");
-    var alphabeticStringRule3 = Definitions.defineThatIt(StringPredicate.isAlphabetic().and(StringPredicate.isNotNumeric())).otherwiseReport("It's not alphabetic");
+  void orElseLogMessage_validInput_shouldReturnTrue() {
+    var input = "test";
+    var rule = defineThatIt(ObjectPredicate.isA(String.class).where(x -> x.equals(input))).otherwiseReport(FAIL_MESSAGE);
+    Assertions.assertThat(Verifications.verifyThat(input).compliesWith(rule).orElseLogMessage()).isTrue();
+  }
+
+  @Test
+  void orElseLogMessage_invalidInput_shouldReturnFalse() {
+    var input = "test";
+    var rule = defineThatIt(ObjectPredicate.isA(String.class).where(x -> x.equals("something else"))).otherwiseReport(FAIL_MESSAGE);
+    Assertions.assertThat(Verifications.verifyThat(input).compliesWith(rule).orElseLogMessage()).isFalse();
+  }
+
+  @Test
+  void alphabeticInputValidationUseCase_validInput_shouldNotThrowException() {
+    var alphabeticStringRule1 = Definitions.defineThatIt(StringPredicate.isAlphabetic()).otherwiseReport(FAIL_MESSAGE);
+    var alphabeticStringRule2 = Definitions.defineThatIt(StringPredicate.isNotNumeric()).otherwiseReport(FAIL_MESSAGE);
+    var alphabeticStringRule3 = Definitions.defineThatIt(StringPredicate.isAlphabetic().and(StringPredicate.isNotNumeric())).otherwiseReport(FAIL_MESSAGE);
     Assertions.assertThatNoException().isThrownBy(
             () -> Verifications.verifyThat("test").compliesWith(alphabeticStringRule1)
                     .and(alphabeticStringRule2)
@@ -84,9 +99,25 @@ class ApiUsageExampleTests extends AbstractTestWithContext {
   }
 
   @Test
-  void useCase_validateAgainstValidOtherInput_shouldNotThrowException() {
-    var rule = defineThatIt(ObjectPredicate.isA(TestObject.class).where((x, y) -> x.getMessage().equals(y))).otherwiseReport("failure");
-    var rule2 = defineThatIt(ObjectPredicate.isA(TestObject.class).that((x, y) -> x.getMessage().equals(y))).otherwiseReport("failure");
+  void alphabeticInputValidationUseCase_invalidInput_shouldThrowException() {
+    var alphabeticStringRule1 = Definitions.defineThatIt(StringPredicate.isAlphabetic()).otherwiseReport(FAIL_MESSAGE);
+    var alphabeticStringRule2 = Definitions.defineThatIt(StringPredicate.isNotNumeric()).otherwiseReport(FAIL_MESSAGE);
+    var alphabeticStringRule3 = Definitions.defineThatIt(StringPredicate.isAlphabetic().and(StringPredicate.isNotNumeric())).otherwiseReport(FAIL_MESSAGE);
+    Assertions.assertThatThrownBy(
+                    () -> Verifications.verifyThat("12345").compliesWith(alphabeticStringRule1)
+                            .and(alphabeticStringRule2)
+                            .and(alphabeticStringRule3)
+                            .andThen(super::interact)
+                            .orElseThrow(RuntimeException::new))
+            .isInstanceOf(RuntimeException.class)
+            .hasMessageContaining(FAIL_MESSAGE);
+    Assertions.assertThat(hasBeenInteractedWith()).isFalse();
+  }
+
+  @Test
+  void validateAgainstOtherInputUseCase_validInput_shouldNotThrowException() {
+    var rule = defineThatIt(ObjectPredicate.isA(TestObject.class).where((x, y) -> x.getMessage().equals(y))).otherwiseReport(FAIL_MESSAGE);
+    var rule2 = defineThatIt(ObjectPredicate.isA(TestObject.class).that((x, y) -> x.getMessage().equals(y))).otherwiseReport(FAIL_MESSAGE);
 
     Assertions.assertThatNoException().isThrownBy(() -> Verifications.verifyThat(new TestObject()).compliesWith(rule)
             .whileApplying(DEFAULT_MESSAGE)
@@ -97,9 +128,24 @@ class ApiUsageExampleTests extends AbstractTestWithContext {
   }
 
   @Test
-  void useCase_validateAgainstValidOtherInputUsingConsumer_shouldNotThrowException() {
-    var rule = defineThatIt(ObjectPredicate.isA(TestObject.class).where((x, y) -> x.getMessage().equals(y))).otherwiseReport("failure");
-    var rule2 = defineThatIt(ObjectPredicate.isA(TestObject.class).that((x, y) -> x.getMessage().equals(y))).otherwiseReport("failure");
+  void validateAgainstOtherInputUseCase_invalidInput_shouldNotThrowException() {
+    var rule = defineThatIt(ObjectPredicate.isA(TestObject.class).where((x, y) -> x.getMessage().equals(y))).otherwiseReport(FAIL_MESSAGE);
+    var rule2 = defineThatIt(ObjectPredicate.isA(TestObject.class).that((x, y) -> x.getMessage().equals(y))).otherwiseReport(FAIL_MESSAGE);
+
+    Assertions.assertThatThrownBy(() -> Verifications.verifyThat(new TestObject()).compliesWith(rule)
+                    .whileApplying("Something else entirely")
+                    .and(rule2)
+                    .andThen(super::interact)
+                    .orElseThrow(RuntimeException::new))
+            .isInstanceOf(RuntimeException.class)
+            .hasMessageContaining(FAIL_MESSAGE);
+    Assertions.assertThat(hasBeenInteractedWith()).isFalse();
+  }
+
+  @Test
+  void validateAgainstOtherInputUsingConsumerUseCase_validInput_shouldNotThrowException() {
+    var rule = defineThatIt(ObjectPredicate.isA(TestObject.class).where((x, y) -> x.getMessage().equals(y))).otherwiseReport(FAIL_MESSAGE);
+    var rule2 = defineThatIt(ObjectPredicate.isA(TestObject.class).that((x, y) -> x.getMessage().equals(y))).otherwiseReport(FAIL_MESSAGE);
     var input = new TestObject();
     Assertions.assertThatNoException().isThrownBy(() -> Verifications.verifyThat(input).compliesWith(rule)
             .whileApplying(DEFAULT_MESSAGE)
@@ -112,10 +158,28 @@ class ApiUsageExampleTests extends AbstractTestWithContext {
     Assertions.assertThat(hasBeenInteractedWith()).isTrue();
   }
 
+
   @Test
-  void useCase_validateAgainstValidOtherInputUsingFunction_shouldNotThrowException() {
-    var rule = defineThatIt(ObjectPredicate.isA(TestObject.class).where((x, y) -> x.getMessage().equals(y))).otherwiseReport("failure");
-    var rule2 = defineThatIt(ObjectPredicate.isA(TestObject.class).that((x, y) -> x.getMessage().equals(y))).otherwiseReport("failure");
+  void validateAgainstOtherInputUsingConsumerUseCase_invalidInput_shouldNotThrowException() {
+    var rule = defineThatIt(ObjectPredicate.isA(TestObject.class).where((x, y) -> x.getMessage().equals(y))).otherwiseReport(FAIL_MESSAGE);
+    var rule2 = defineThatIt(ObjectPredicate.isA(TestObject.class).that((x, y) -> x.getMessage().equals(y))).otherwiseReport(FAIL_MESSAGE);
+    var input = new TestObject();
+    Assertions.assertThatThrownBy(() -> Verifications.verifyThat(input).compliesWith(rule)
+                    .whileApplying("Something else entirely")
+                    .and(rule2)
+                    .andThen(x -> {
+                      super.interact();
+                    })
+                    .orElseThrow(RuntimeException::new))
+            .isInstanceOf(RuntimeException.class)
+            .hasMessageContaining(FAIL_MESSAGE);
+    Assertions.assertThat(hasBeenInteractedWith()).isFalse();
+  }
+
+  @Test
+  void validateAgainstOtherInputUsingFunctionUseCase_validInput_shouldNotThrowException() {
+    var rule = defineThatIt(ObjectPredicate.isA(TestObject.class).where((x, y) -> x.getMessage().equals(y))).otherwiseReport(FAIL_MESSAGE);
+    var rule2 = defineThatIt(ObjectPredicate.isA(TestObject.class).that((x, y) -> x.getMessage().equals(y))).otherwiseReport(FAIL_MESSAGE);
     var input = new TestObject();
     Assertions.assertThatNoException().isThrownBy(
             () -> Assertions.assertThat(Verifications.verifyThat(input).compliesWith(rule)
@@ -130,29 +194,21 @@ class ApiUsageExampleTests extends AbstractTestWithContext {
   }
 
   @Test
-  void useCase_validateAgainstInvalidOtherInput_shouldThrowException() {
-    var rule = defineThatIt(ObjectPredicate.isA(TestObject.class).where((x, y) -> x.getMessage().equals(y))).otherwiseReport("failure");
-    var rule2 = defineThatIt(ObjectPredicate.isA(TestObject.class).that((x, y) -> x.getMessage().equals(y))).otherwiseReport("failure");
-    var validation = Verifications.verifyThat(new TestObject()).compliesWith(rule)
-            .whileApplying("This is not what I would expect")
-            .and(rule2)
-            .andThen(super::interact);
-    Assertions.assertThatThrownBy(() -> validation.orElseThrow(RuntimeException::new))
-            .isInstanceOf(RuntimeException.class);
+  void validateAgainstOtherInputUsingFunctionUseCase_invalidInput_shouldNotThrowException() {
+    var rule = defineThatIt(ObjectPredicate.isA(TestObject.class).where((x, y) -> x.getMessage().equals(y))).otherwiseReport(FAIL_MESSAGE);
+    var rule2 = defineThatIt(ObjectPredicate.isA(TestObject.class).that((x, y) -> x.getMessage().equals(y))).otherwiseReport(FAIL_MESSAGE);
+    var input = new TestObject();
+    Assertions.assertThatThrownBy(
+                    () -> Assertions.assertThat(Verifications.verifyThat(input).compliesWith(rule)
+                            .whileApplying("Something else yet again")
+                            .and(rule2)
+                            .andThen(x -> {
+                              return super.interactAndReturn();
+                            })
+                            .orElseThrow(RuntimeException::new)).isFalse())
+            .isInstanceOf(RuntimeException.class)
+            .hasMessageContaining(FAIL_MESSAGE);
     Assertions.assertThat(hasBeenInteractedWith()).isFalse();
   }
 
-  @Test
-  void orElseLogMessage_validInput_shouldReturnTrue() {
-    var input = "test";
-    var rule = defineThatIt(ObjectPredicate.isA(String.class).where(x -> x.equals(input))).otherwiseReport("failure");
-    Assertions.assertThat(Verifications.verifyThat(input).compliesWith(rule).orElseLogMessage()).isTrue();
-  }
-
-  @Test
-  void orElseLogMessage_invalidInput_shouldReturnFalse() {
-    var input = "test";
-    var rule = defineThatIt(ObjectPredicate.isA(String.class).where(x -> x.equals("something else"))).otherwiseReport("failure");
-    Assertions.assertThat(Verifications.verifyThat(input).compliesWith(rule).orElseLogMessage()).isFalse();
-  }
 }
