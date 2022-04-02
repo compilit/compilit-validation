@@ -60,26 +60,50 @@ public class ObjectPredicate<T> implements Predicate<T>, PredicateAppender<T> {
     return isEqualTo(value).negate();
   }
 
-  static <T> Predicate<T> isNotNull() {
+  /**
+   * check whether the given value is not null.
+   * @param <T>   the value which you wish to test against the original value.
+   * @return a predicate to continue adding predicates or to start your evaluation.
+   */
+  public static <T> Predicate<T> isNotNull() {
     return new ObjectPredicate<>(Objects::nonNull);
   }
 
-  static <T> Predicate<T> isNull() {
+  /**
+   * check whether the given value is null.
+   * @param <T>   the value which you wish to test against the original value.
+   * @return a predicate to continue adding predicates or to start your evaluation.
+   */
+  public static <T> Predicate<T> isNull() {
     return new ObjectPredicate<>(Objects::isNull);
   }
 
-  static <T> Predicate<T> contains(Object value, Object... values) {
-    if (value instanceof Collection<?>) {
-      return collectionContains(value, values);
-    }
+  /**
+   * If the value under test is a Collection, it will check the collection for containment of the given value(s).
+   * Otherwise, it will take the toString value of the value and checks is for containment of the toStrings of the given value(s).
+   * @param value the value of which you wish to check if it is contained in the value under test.
+   * @param values the optional remaining values of which you wish to check if it is contained in the value under test.
+   * @param <T> the type of the object under test.
+   * @return a predicate to continue adding predicates or to start your evaluation.
+   */
+  public static <T> Predicate<T> contains(Object value, Object... values) {
+    Predicate<T> collectionTest = x -> x instanceof Collection<?>;
+    collectionTest = collectionTest.and(collectionContains(value, values));
     Predicate<T> predicate = x -> x.toString().contains(value.toString());
     for (final var object : values) {
       predicate = predicate.and(x -> x.toString().contains(object.toString()));
     }
-    return new ObjectPredicate<>(predicate);
+    return new ObjectPredicate<>(collectionTest.or(predicate));
   }
 
-  static <T> Predicate<T> doesNotContain(Object value, Object... values) {
+  /**
+   * @see ObjectPredicate#contains
+   * @param value the value of which you wish to check if it is not contained in the value under test.
+   * @param values the optional remaining values of which you wish to check if it is not contained in the value under test.
+   * @param <T> the type of the object under test.
+   * @return a predicate to continue adding predicates or to start your evaluation.
+   */
+  public static <T> Predicate<T> doesNotContain(Object value, Object... values) {
     Predicate<T> predicate = x -> true;
     predicate = predicate.and(contains(value, values).negate());
     return new ObjectPredicate<>(predicate);
