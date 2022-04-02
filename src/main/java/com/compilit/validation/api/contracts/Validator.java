@@ -3,7 +3,7 @@ package com.compilit.validation.api.contracts;
 public interface Validator {
 
   /**
-   * @return boolean true if all rules pass. False if at least one rule fails.
+   * @return {@code true} if all rules pass. False if at least one rule fails.
    */
   boolean validate();
 

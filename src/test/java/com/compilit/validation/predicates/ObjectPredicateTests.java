@@ -4,6 +4,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import testutil.TestObject;
 
+import java.util.ArrayList;
+
 import static com.compilit.validation.api.Definitions.defineThatIt;
 import static com.compilit.validation.api.Verifications.verifyThat;
 import static com.compilit.validation.predicates.ObjectPredicate.*;
@@ -46,9 +48,47 @@ class ObjectPredicateTests {
   }
 
   @Test
+  void isEqualTo_validInput_shouldReturnTrue() {
+    Assertions.assertThat(ObjectPredicate.isEqualTo("test").test("test")).isTrue();
+  }
+
+  @Test
+  void isEqualTo_invalidInput_shouldReturnFalse() {
+    Assertions.assertThat(ObjectPredicate.isEqualTo("test").test("Something else")).isFalse();
+  }
+
+  @Test
+  void isNotEqualTo_validInput_shouldReturnTrue() {
+    Assertions.assertThat(ObjectPredicate.isNotEqualTo("test").test("Something else")).isFalse();
+  }
+
+  @Test
+  void isNotEqualTo_invalidInput_shouldReturnFalse() {
+    Assertions.assertThat(ObjectPredicate.isNotEqualTo("test").test("test")).isTrue();
+  }
+
+  @Test
   void isNotNull_shouldAddNotNullPredicate() {
     var rule = defineThatIt(isNotNull()).otherwiseReport("failure");
     Assertions.assertThat(verifyThat(null).compliesWith(rule).validate()).isFalse();
     Assertions.assertThat(verifyThat(new Object()).compliesWith(rule).validate()).isTrue();
+  }
+
+  @Test
+  void contains_singleInput_shouldAssessIfCollectionContainsValue() {
+    var value = "test";
+    var list = new ArrayList<String>();
+    list.add(value);
+    var rule = defineThatIt(contains(value)).otherwiseReport("failure");
+    Assertions.assertThat(verifyThat((Object)list).compliesWith(rule).validate()).isTrue();
+  }
+
+  @Test
+  void contains_collectionInput_shouldAssessIfCollectionContainsCollection() {
+    var value = "test";
+    var list = new ArrayList<String>();
+    list.add(value);
+    var rule = defineThatIt(contains(list)).otherwiseReport("failure");
+    Assertions.assertThat(verifyThat((Object)list).compliesWith(rule).validate()).isTrue();
   }
 }

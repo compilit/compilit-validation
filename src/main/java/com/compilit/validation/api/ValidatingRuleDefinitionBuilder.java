@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
-class ValidatingRuleDefinitionBuilder<T, R> implements ValidatingRuleBuilder {
+class ValidatingRuleDefinitionBuilder<T> implements ValidatingRuleBuilder {
 
   private final T value;
   private final Predicate<T> predicate;
@@ -28,7 +28,7 @@ class ValidatingRuleDefinitionBuilder<T, R> implements ValidatingRuleBuilder {
     return isValid;
   }
 
-  static final class WithDualInput<T, R> implements ValidatingRuleBuilder {
+  static final class WithDualInput<T> implements ValidatingRuleBuilder {
 
     private final T value;
     private final Object argument;
