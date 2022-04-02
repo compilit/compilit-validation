@@ -12,7 +12,7 @@ class ContinuingPredicateValidatorTests {
 
   @Test
   void getMessage_noValidation_shouldReturnDefaultMessage() {
-   var subject = new Subject<>(new RuleDefinition<>(x -> true, "failure"), "test");
+    var subject = new Subject<>(new RuleDefinition<>(x -> true, "failure"), "test");
     var predicate = new ContinuingRuleValidationBuilder<>(subject);
     Assertions.assertThat(predicate.getMessage()).isEqualTo(DEFAULT_MESSAGE);
   }
@@ -54,7 +54,8 @@ class ContinuingPredicateValidatorTests {
     var message2 = "failure2";
     var rule2 = new RuleDefinition<String>(x -> false, message2);
     var subject = new Subject<>(new RuleDefinition<>(x -> true, message1), "test");
-    var predicate = new ContinuingRuleValidationBuilder<>(subject);    predicate.and(rule2);
+    var predicate = new ContinuingRuleValidationBuilder<>(subject);
+    predicate.and(rule2);
     predicate.validate();
     Assertions.assertThat(predicate.getMessage()).doesNotContain(message1);
     Assertions.assertThat(predicate.getMessage()).contains(message2);

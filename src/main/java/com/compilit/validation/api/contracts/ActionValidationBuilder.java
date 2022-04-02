@@ -10,7 +10,7 @@ public interface ActionValidationBuilder<T> {
    * Same as validate(); but returns a custom object in the form of a supplier.
    *
    * @param runnable the runnable process which should be started after successful validation.
-   * @return R in the form of a supplier.
+   * @return VoidValidationBuilder to continue embellishing the validation statement.
    */
   VoidValidationBuilder andThen(Runnable runnable);
 
@@ -19,7 +19,7 @@ public interface ActionValidationBuilder<T> {
    *
    * @param supplier the supplier which encapsulated the return type.
    * @param <R>      the type you wish to return.
-   * @return R in the form of a supplier.
+   * @return ReturningValidationBuilder to continue embellishing the validation statement.
    */
   <R> ReturningValidationBuilder<R> andThen(Supplier<R> supplier);
 
@@ -27,6 +27,7 @@ public interface ActionValidationBuilder<T> {
    * Same as validate(); but after successful validation the consumer operation is performed upon the tested value.
    *
    * @param consumer the function that should be performed after successful validation.
+   * @return ReturningValidationBuilder to continue embellishing the validation statement.
    */
   ReturningValidationBuilder<T> andThen(Consumer<T> consumer);
 
@@ -35,7 +36,7 @@ public interface ActionValidationBuilder<T> {
    *
    * @param function the function that should be performed after successful validation.
    * @param <R>      the return value of the function.
-   * @return R the return value.
+   * @return ReturningValidationBuilder to continue embellishing the validation statement.
    */
   <R> ReturningValidationBuilder<R> andThen(Function<T, R> function);
 

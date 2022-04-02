@@ -10,7 +10,7 @@ public interface ThrowingValidator<R> {
    *                          validation.
    * @param <E>               the bound of the Exception that needs to be thrown when a rule is
    *                          broken.
-   * @return true if all rules pass.
+   * @return R if all rules pass.
    */
   <E extends RuntimeException> R orElseThrow(Function<String, E> throwableFunction);
 

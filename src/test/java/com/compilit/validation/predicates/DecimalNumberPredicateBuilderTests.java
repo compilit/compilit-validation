@@ -1,28 +1,26 @@
 package com.compilit.validation.predicates;
 
-import com.compilit.validation.api.Definitions;
-import com.compilit.validation.api.Verifications;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static com.compilit.validation.api.Definitions.*;
-import static com.compilit.validation.api.Verifications.*;
+import static com.compilit.validation.api.Definitions.defineThatIt;
+import static com.compilit.validation.api.Verifications.verifyThat;
 import static com.compilit.validation.predicates.DecimalNumberPredicate.*;
-import static com.compilit.validation.predicates.DecimalNumberPredicate.isADecimalNumberBetween;
 
 class DecimalNumberPredicateBuilderTests {
 
   @Test
   void validate_doubleMatchingRule_shouldReturnTrue() {
     var value = .2;
-    var rule0 = defineThatIt(isEqualTo(0.2)).otherwiseReport("I am error");
+    var rule0 = defineThatIt(isADecimalNumberEqualTo(0.2)).otherwiseReport("I am error");
     var rule1 = defineThatIt(isADecimalNumberBetween(.0).and(.5)).otherwiseReport("I am error");
     var rule2 = defineThatIt(isADecimalNumberBetween(.5).and(.0)).otherwiseReport("I am error");
     var rule3 = defineThatIt(isADecimalNumberContaining(0, 2)).otherwiseReport("I am error");
     var rule4 = defineThatIt(isADecimalNumberContaining(2)).otherwiseReport("I am error");
     var rule5 = defineThatIt(isADecimalNumberNotContaining(4, 5643)).otherwiseReport("I am error");
     var rule6 = defineThatIt(isNotNull()).otherwiseReport("I am error");
-    var rule7 = defineThatIt(isNotEqualTo(0.1)).otherwiseReport("I am error");
+    var rule7 = defineThatIt(isADecimalNumberNotEqualTo(0.1)).otherwiseReport("I am error");
+    var rule8 = defineThatIt(isNull()).otherwiseReport("I am error");
     Assertions.assertThat(verifyThat(value).compliesWith(rule0).validate()).isTrue();
     Assertions.assertThat(verifyThat(value).compliesWith(rule1).validate()).isTrue();
     Assertions.assertThat(verifyThat(value).compliesWith(rule2).validate()).isTrue();
@@ -31,6 +29,7 @@ class DecimalNumberPredicateBuilderTests {
     Assertions.assertThat(verifyThat(value).compliesWith(rule5).validate()).isTrue();
     Assertions.assertThat(verifyThat(value).compliesWith(rule6).validate()).isTrue();
     Assertions.assertThat(verifyThat(value).compliesWith(rule7).validate()).isTrue();
+    Assertions.assertThat(verifyThat((Double) null).compliesWith(rule8).validate()).isTrue();
   }
 
   @Test
@@ -42,12 +41,14 @@ class DecimalNumberPredicateBuilderTests {
     var rule3 = defineThatIt(isADecimalNumberContaining(54)).otherwiseReport("I am error");
     var rule4 = defineThatIt(isADecimalNumberNotContaining(2)).otherwiseReport("I am error");
     var rule5 = defineThatIt(isNotNull()).otherwiseReport("I am error");
+    var rule6 = defineThatIt(isNull()).otherwiseReport("I am error");
     Assertions.assertThat(verifyThat(value).compliesWith(rule0).validate()).isFalse();
     Assertions.assertThat(verifyThat(value).compliesWith(rule1).validate()).isFalse();
     Assertions.assertThat(verifyThat(value).compliesWith(rule2).validate()).isFalse();
     Assertions.assertThat(verifyThat(value).compliesWith(rule3).validate()).isFalse();
     Assertions.assertThat(verifyThat(value).compliesWith(rule4).validate()).isFalse();
-    Assertions.assertThat(Verifications.<Double>verifyThat(null).compliesWith(rule5).validate()).isFalse();
+    Assertions.assertThat(verifyThat((Double) null).compliesWith(rule5).validate()).isFalse();
+    Assertions.assertThat(verifyThat(value).compliesWith(rule6).validate()).isFalse();
   }
 
   @Test

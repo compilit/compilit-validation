@@ -1,12 +1,11 @@
 package com.compilit.validation.predicates;
 
-import com.compilit.validation.api.Definitions;
 import com.compilit.validation.api.Verifications;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static com.compilit.validation.api.Definitions.*;
-import static com.compilit.validation.api.Verifications.*;
+import static com.compilit.validation.api.Definitions.defineThatIt;
+import static com.compilit.validation.api.Verifications.verifyThat;
 import static com.compilit.validation.predicates.NumberPredicate.*;
 
 class NumberPredicateBuilderTests {

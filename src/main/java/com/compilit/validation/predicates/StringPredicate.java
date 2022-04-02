@@ -18,6 +18,26 @@ public final class StringPredicate extends ObjectPredicate<String> {
   }
 
   /**
+   * Checks whether the actual value is not null, empty or blank/whitespace.
+   *
+   * @return Predicate to continue adding rules.
+   */
+  public static Predicate<String> isNotNullEmptyOrBlank() {
+    return isNullEmptyOrBlank().negate();
+  }
+
+  /**
+   * Checks whether the actual value is null, empty or blank/whitespace.
+   *
+   * @return Predicate to continue adding rules.
+   */
+  public static Predicate<String> isNullEmptyOrBlank() {
+    Predicate<String> isNullOrBlank = x -> x == null || x.isBlank();
+    Predicate<String> isNullOrEmpty = x -> x == null || x.isEmpty();
+    return isNullOrEmpty.or(isNullOrBlank);
+  }
+
+  /**
    * Checks whether the given charSequences are present anywhere in the value.
    *
    * @param value  the exact value that needs to be present in the original value.

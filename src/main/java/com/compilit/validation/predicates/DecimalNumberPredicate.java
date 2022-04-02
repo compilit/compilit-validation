@@ -2,10 +2,9 @@ package com.compilit.validation.predicates;
 
 import java.util.function.Predicate;
 
-public final class DecimalNumberPredicate extends ObjectPredicate<Double> {
+public final class DecimalNumberPredicate {
 
-  private DecimalNumberPredicate(final Predicate<Double> predicate) {
-    super(predicate);
+  private DecimalNumberPredicate() {
   }
 
   /**
@@ -69,6 +68,16 @@ public final class DecimalNumberPredicate extends ObjectPredicate<Double> {
   }
 
   /**
+   * Check if the actual value is equal to the given one.
+   *
+   * @param value the exact expected value.
+   * @return Predicate to continue adding rules.
+   */
+  public static Predicate<Double> isADecimalNumberNotEqualTo(final double value) {
+    return isADecimalNumberEqualTo(value).negate();
+  }
+
+  /**
    * Checks whether the given Integers are present anywhere in the value.
    *
    * @param value  the exact value that needs to be present in the toString of the original value.
@@ -76,7 +85,7 @@ public final class DecimalNumberPredicate extends ObjectPredicate<Double> {
    *               original value.
    * @return Predicate to continue adding rules.
    * @deprecated Because of function ambiguity when importing static parent classes, it is advised to use the isADecimalNumberContaining function.
-   * */
+   */
   @Deprecated
   public static Predicate<Double> contains(final Integer value, final Integer... values) {
     return isADecimalNumberContaining(value, values);
@@ -89,9 +98,9 @@ public final class DecimalNumberPredicate extends ObjectPredicate<Double> {
    * @param values the optional exact values that needs to be present in the toString of the
    *               original value.
    * @return Predicate to continue adding rules.
-   * */
+   */
   public static Predicate<Double> isADecimalNumberContaining(final Integer value, final Integer... values) {
-    return contains(value, (Object[]) values);
+    return ObjectPredicate.contains(value, (Object[]) values);
   }
 
   /**
@@ -102,7 +111,7 @@ public final class DecimalNumberPredicate extends ObjectPredicate<Double> {
    *               value.
    * @return Predicate to continue adding rules.
    * @deprecated Because of function ambiguity when importing static parent classes, it is advised to use the isADecimalNumberNotContaining function.
-   * */
+   */
   @Deprecated
   public static Predicate<Double> doesNotContain(final Integer value, final Integer... values) {
     return isADecimalNumberNotContaining(value, values);
@@ -115,9 +124,9 @@ public final class DecimalNumberPredicate extends ObjectPredicate<Double> {
    * @param values the optional exact values that may not be present in the toString of the original
    *               value.
    * @return Predicate to continue adding rules.
-   * */
+   */
   public static Predicate<Double> isADecimalNumberNotContaining(final Integer value, final Integer... values) {
-    return doesNotContain(value, (Object[]) values);
+    return ObjectPredicate.doesNotContain(value, (Object[]) values);
   }
 
 }

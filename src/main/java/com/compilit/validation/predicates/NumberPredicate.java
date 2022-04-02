@@ -2,10 +2,9 @@ package com.compilit.validation.predicates;
 
 import java.util.function.Predicate;
 
-public final class NumberPredicate extends ObjectPredicate<Integer> {
+public final class NumberPredicate {
 
-  private NumberPredicate(final Predicate<Integer> predicate) {
-    super(predicate);
+  private NumberPredicate() {
   }
 
   /**
@@ -65,7 +64,7 @@ public final class NumberPredicate extends ObjectPredicate<Integer> {
    */
   @Deprecated
   public static Predicate<Integer> hasAmountOfDigits(final int amountOfDigits) {
-    return new NumberPredicate(x -> String.valueOf(x).length() == amountOfDigits);
+    return x -> String.valueOf(x).length() == amountOfDigits;
   }
 
   /**
@@ -73,7 +72,7 @@ public final class NumberPredicate extends ObjectPredicate<Integer> {
    * @return Predicate to continue adding rules.
    */
   public static Predicate<Integer> isAnIntegerWithAmountOfDigits(final int amountOfDigits) {
-    return new NumberPredicate(x -> String.valueOf(x).length() == amountOfDigits);
+    return x -> String.valueOf(x).length() == amountOfDigits;
   }
 
   /**
@@ -104,7 +103,7 @@ public final class NumberPredicate extends ObjectPredicate<Integer> {
    *               original value.
    * @return Predicate to continue adding rules.
    * @deprecated Because of function ambiguity when importing static parent classes, it is advised to use the isAnIntegerContaining function.
-   * */
+   */
   @Deprecated
   public static Predicate<Integer> contains(final Integer value, final Integer... values) {
     return isAnIntegerContaining(value, values);
@@ -117,9 +116,9 @@ public final class NumberPredicate extends ObjectPredicate<Integer> {
    * @param values the optional exact values that needs to be present in the toString of the
    *               original value.
    * @return Predicate to continue adding rules.
-   * */
+   */
   public static Predicate<Integer> isAnIntegerContaining(final Integer value, final Integer... values) {
-    return contains(value, (Object[]) values);
+    return ObjectPredicate.contains(value, (Object[]) values);
   }
 
   /**
@@ -130,7 +129,7 @@ public final class NumberPredicate extends ObjectPredicate<Integer> {
    *               value.
    * @return Predicate to continue adding rules.
    * @deprecated Because of function ambiguity when importing static parent classes, it is advised to use the isAnIntegerNotContaining function.
-   * */
+   */
   @Deprecated
   public static Predicate<Integer> doesNotContain(final Integer value, final Integer... values) {
     return isAnIntegerNotContaining(value, values);
@@ -143,9 +142,9 @@ public final class NumberPredicate extends ObjectPredicate<Integer> {
    * @param values the optional exact values that may not be present in the toString of the original
    *               value.
    * @return Predicate to continue adding rules.
-   * */
+   */
   public static Predicate<Integer> isAnIntegerNotContaining(final Integer value, final Integer... values) {
-    return doesNotContain(value, (Object[]) values);
+    return ObjectPredicate.doesNotContain(value, (Object[]) values);
   }
 
 }

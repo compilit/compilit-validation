@@ -24,7 +24,7 @@ public interface ContinuingValidationBuilder<T> extends ActionValidationBuilder<
    * Performs an intermediate operation upon the tested value after successful validation.
    *
    * @param consumer the supplier which encapsulated the return type.
-   * @return T in the form of a consumer.
+   * @return ActionValidationBuilder to state what needs to happen after successful validation.
    */
   ActionValidationBuilder<T> thenApply(Consumer<T> consumer);
 

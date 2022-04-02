@@ -1,12 +1,10 @@
 package com.compilit.validation.api;
 
-import com.compilit.validation.api.contracts.Rule;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 
-import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;

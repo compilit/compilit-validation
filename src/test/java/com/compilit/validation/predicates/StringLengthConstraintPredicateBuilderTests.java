@@ -1,7 +1,5 @@
 package com.compilit.validation.predicates;
 
-import com.compilit.validation.api.Definitions;
-import com.compilit.validation.api.Verifications;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -9,6 +7,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static com.compilit.validation.api.Definitions.defineThatIt;
+import static com.compilit.validation.api.Verifications.verifyThat;
 import static testutil.TestValue.TEST_CONTENT;
 
 class StringLengthConstraintPredicateBuilderTests {
@@ -48,15 +48,15 @@ class StringLengthConstraintPredicateBuilderTests {
   @ParameterizedTest
   @MethodSource("validTestCases")
   void and_stringMatchingRule_shouldReturnTrue(int first, int second) {
-    var rule0 = Definitions.defineThatIt(StringPredicate.hasALengthBetween(first).and(second)).otherwiseReport("failure");
-    Assertions.assertThat(Verifications.verifyThat(TEST_CONTENT).compliesWith(rule0).validate()).isTrue();
+    var rule0 = defineThatIt(StringPredicate.hasALengthBetween(first).and(second)).otherwiseReport("failure");
+    Assertions.assertThat(verifyThat(TEST_CONTENT).compliesWith(rule0).validate()).isTrue();
   }
 
   @ParameterizedTest
   @MethodSource("invalidTestCases")
   void and_stringNotMatchingRule_shouldReturnFalse(int first, int second) {
-    var rule0 = Definitions.defineThatIt(StringPredicate.hasALengthBetween(first).and(second)).otherwiseReport("failure");
-    Assertions.assertThat(Verifications.verifyThat(TEST_CONTENT).compliesWith(rule0).validate()).isFalse();
+    var rule0 = defineThatIt(StringPredicate.hasALengthBetween(first).and(second)).otherwiseReport("failure");
+    Assertions.assertThat(verifyThat(TEST_CONTENT).compliesWith(rule0).validate()).isFalse();
   }
 
 }

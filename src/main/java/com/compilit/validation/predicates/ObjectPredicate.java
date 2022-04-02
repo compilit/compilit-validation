@@ -1,6 +1,7 @@
 package com.compilit.validation.predicates;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -9,7 +10,7 @@ public class ObjectPredicate<T> implements Predicate<T>, PredicateAppender<T> {
 
   private final List<Predicate<T>> predicates = new ArrayList<>();
 
-  private ObjectPredicate() {
+  ObjectPredicate() {
   }
 
   protected ObjectPredicate(Predicate<T> predicate) {
@@ -68,6 +69,9 @@ public class ObjectPredicate<T> implements Predicate<T>, PredicateAppender<T> {
   }
 
   static <T> Predicate<T> contains(Object value, Object... values) {
+    if (value instanceof Collection<?>) {
+      return collectionContains(value, values);
+    }
     Predicate<T> predicate = x -> x.toString().contains(value.toString());
     for (final var object : values) {
       predicate = predicate.and(x -> x.toString().contains(object.toString()));
@@ -76,9 +80,19 @@ public class ObjectPredicate<T> implements Predicate<T>, PredicateAppender<T> {
   }
 
   static <T> Predicate<T> doesNotContain(Object value, Object... values) {
-    Predicate<T> predicate = x -> !x.toString().contains(value.toString());
+    Predicate<T> predicate = x -> true;
     predicate = predicate.and(contains(value, values).negate());
     return new ObjectPredicate<>(predicate);
+  }
+
+  private static <T> Predicate<T> collectionContains(Object value, Object... values) {
+    Predicate<T> predicate = x -> ((Collection<?>) x).contains(value);
+    if (value instanceof Collection<?>) {
+      for (final var object : values) {
+        predicate = predicate.and(x -> ((Collection<?>) x).contains(object));
+      }
+    }
+    return predicate;
   }
 
   @Override

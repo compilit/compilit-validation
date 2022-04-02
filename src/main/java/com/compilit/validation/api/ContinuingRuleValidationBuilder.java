@@ -31,7 +31,7 @@ final class ContinuingRuleValidationBuilder<T> extends AbstractLoggingValidator<
   }
 
   @Override
-  public  ReturningValidationBuilder<T> andThen(final Consumer<T> consumer) {
+  public ReturningValidationBuilder<T> andThen(final Consumer<T> consumer) {
     return new ReturningRuleValidationBuilder<>(subject, consumer);
   }
 
