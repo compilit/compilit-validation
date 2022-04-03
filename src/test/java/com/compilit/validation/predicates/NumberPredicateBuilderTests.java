@@ -25,6 +25,7 @@ class NumberPredicateBuilderTests {
             .and(isAnIntegerEqualTo(2)
                     .and(isAnIntegerEqualTo(2)))).otherwiseReport("failure");
     var rule8 = defineThatIt(isAnIntegerNotEqualTo(1)).otherwiseReport("failure");
+    var rule9 = defineThatIt(isAnIntegerWithAmountOfDigits(1)).otherwiseReport("failure");
     Assertions.assertThat(verifyThat(value).compliesWith(rule0).validate()).isTrue();
     Assertions.assertThat(verifyThat(value).compliesWith(rule1).validate()).isTrue();
     Assertions.assertThat(verifyThat(value).compliesWith(rule2).validate()).isTrue();
@@ -34,6 +35,7 @@ class NumberPredicateBuilderTests {
     Assertions.assertThat(verifyThat(value).compliesWith(rule6).validate()).isTrue();
     Assertions.assertThat(verifyThat(value).compliesWith(rule7).validate()).isTrue();
     Assertions.assertThat(verifyThat(value).compliesWith(rule8).validate()).isTrue();
+    Assertions.assertThat(verifyThat(value).compliesWith(rule9).validate()).isTrue();
   }
 
   @Test
@@ -50,6 +52,7 @@ class NumberPredicateBuilderTests {
             .and(isAnIntegerEqualTo(2)
                     .and(isAnIntegerEqualTo(1)))).otherwiseReport("failure");
     var rule8 = defineThatIt(isAnIntegerNotEqualTo(2)).otherwiseReport("failure");
+    var rule9 = defineThatIt(isAnIntegerWithAmountOfDigits(10)).otherwiseReport("failure");
     Assertions.assertThat(verifyThat(value).compliesWith(rule0).validate()).isFalse();
     Assertions.assertThat(verifyThat(value).compliesWith(rule1).validate()).isFalse();
     Assertions.assertThat(verifyThat(value).compliesWith(rule2).validate()).isFalse();
@@ -59,6 +62,7 @@ class NumberPredicateBuilderTests {
     Assertions.assertThat(Verifications.<Integer>verifyThat(null).compliesWith(rule6).validate()).isFalse();
     Assertions.assertThat(verifyThat(value).compliesWith(rule7).validate()).isFalse();
     Assertions.assertThat(verifyThat(value).compliesWith(rule8).validate()).isFalse();
+    Assertions.assertThat(verifyThat(value).compliesWith(rule9).validate()).isFalse();
   }
 
   @Test
