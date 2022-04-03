@@ -59,12 +59,12 @@ class ObjectPredicateTests {
 
   @Test
   void isNotEqualTo_validInput_shouldReturnTrue() {
-    Assertions.assertThat(ObjectPredicate.isNotEqualTo("test").test("Something else")).isFalse();
+    Assertions.assertThat(ObjectPredicate.isNotEqualTo("test").test("Something else")).isTrue();
   }
 
   @Test
   void isNotEqualTo_invalidInput_shouldReturnFalse() {
-    Assertions.assertThat(ObjectPredicate.isNotEqualTo("test").test("test")).isTrue();
+    Assertions.assertThat(ObjectPredicate.isNotEqualTo("test").test("test")).isFalse();
   }
 
   @Test
