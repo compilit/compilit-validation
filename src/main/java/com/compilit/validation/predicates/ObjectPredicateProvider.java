@@ -28,7 +28,6 @@ public interface ObjectPredicateProvider<T> {
    * @param <T>   the type upon which the validations are tested.
    * @return GenericPredicateRule to continue adding rules.
    */
-  @SuppressWarnings("unused")
   default <T> PredicateAppender<T> isA(final Class<T> clazz) {
     return ObjectPredicate.isA(clazz);
   }
